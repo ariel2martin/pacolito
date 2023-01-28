@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style></style>
+</head>
+
+<body>
+    <style type="text/css">
+        body {
+            background-color: gray;
+            background-image: url("background.png");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        .esmerilado {
+            box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            height: 200px;
+        }
+
+        .ponepalabras {
+            position: absolute;
+            left: 400px;
+            top: 100px;
+        }
+
+        .borde {
+            background: hsla(0, 0%, 100%, .3);
+            box-shadow: 0 8px 32px 0 rgb(31 38 135 / 37%);
+            backdrop-filter: blur(1.5px);
+            -webkit-backdrop-filter: blur(1.5px);
+            border-radius: 10px;
+            border: 4px solid hsla(0, 0%, 100%, .6);
+            padding: 15px 5px 5px 10px;
+        }
+
+        .v-input {
+            align-items: flex-start;
+            display: flex;
+            flex: 1 1 auto;
+            font-size: 16px;
+            letter-spacing: normal;
+            max-width: 100%;
+            text-align: left;
+            color: rgba(0, 0, 0, .87);
+
+        }
+
+        input {
+
+            outline: none;
+            padding-left: 10px;
+            background-color: transparent;
+            border-style: none;
+            border-radius: 0;
+
+            writing-mode: horizontal-tb !important;
+
+            text-rendering: auto;
+
+            letter-spacing: normal;
+            word-spacing: normal;
+
+            text-transform: none;
+            text-indent: 0px;
+            text-shadow: none;
+            display: inline-block;
+            text-align: start;
+            appearance: auto;
+
+
+
+        }
+
+        .v-text-field {
+
+            padding-top: 12px;
+            margin-top: 4px;
+            line-height: 20px;
+            padding: 8px 0;
+            max-width: 100%;
+
+            width: 100%;
+        }
+    </style>
+    <canvas id="myCanvas" width="400" height="800">
+    </canvas>
+    <div class="ponepalabras esmerilado">
+
+        <div class="v-input borde   v-text-field ">
+
+            <input class="inputletra" type="text" value="nombre">
+
+
+        </div>
+        <div class="v-input borde   v-text-field ">
+
+            <input class="inputletra" type="text" value="apellido">
+
+
+        </div>
+    </div>
+
+
+    <script>
+        var posiciones = [
+            [-17, 778],
+            [40, 658],
+            [40, 900],
+            [167, 658],
+            [167, 900],
+            [232, 778],
+            [293, 658],
+            [293, 900],
+            [355, 778],
+            [480, 778],
+        ];
+        var canvas = document.getElementById("myCanvas");
+
+        canvas.style.left = "20px";
+        canvas.style.top = "20px";
+        canvas.style.position = "absolute";
+        let radio = 20;
+        let color = "white";
+
+        var ctx = canvas.getContext("2d");
+
+
+        // for (t = 1; t < 20; t++) {
+        //     lineasrandom();
+        // }
+        function ponecirculos() {
+            for (let p = 0; p < posiciones.length; p++) {
+                ctx.beginPath();
+                ctx.arc(posiciones[p][1] - 600, posiciones[p][0] + 70, radio, 0, 2 * Math.PI);
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.strokeStyle = color;
+                ctx.stroke();
+
+            }
+        }
+        function hacerlinea(desde, hasta, color, ancho, puntos = 0) {
+            ctx.beginPath();
+            ctx.setLineDash([puntos, puntos]);
+            ctx.lineWidth = ancho;
+            ctx.moveTo(posiciones[desde][1] - 600, posiciones[desde][0] + 70);
+            ctx.lineTo(posiciones[hasta][1] - 600, posiciones[hasta][0] + 70);
+            ctx.strokeStyle = color;
+
+            ctx.stroke();
+            ctx.setLineDash([0, 0]);
+            ponecirculos();
+        }
+        function vaciatodo() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ponecirculos();
+        }
+        function lineasrandom(q) {
+            let desde = randomexcepto();
+            let hasta = randomexcepto(desde);
+            let color = ['', 'red', 'white', 'black', 'blue', 'green', 'yellow', 'gray', 'violet', 'orange', 'red'];
+            let c = randomexcepto();
+            let ancho = parseInt(randomexcepto() / 2 + 1);
+            let puntos = parseInt(randomexcepto() / 2 - 1);
+
+            hacerlinea(desde, hasta, color[c], ancho, puntos);
+        }
+
+
+
+        function randomexcepto(cual = 11) {
+            res = Math.floor(Math.random() * 10);
+            while (res == cual) {
+                res = Math.floor(Math.random() * 10);
+            }
+
+            return res;
+        }
+        var nam = {
+            b1: "KÉTER",
+            b2: "JOJMÁ",
+            b3: "BINÁ",
+            b4: "JESED",
+            b5: "GEVURÁ",
+            b6: "TIFÉRET",
+            b7: "NETZAJ",
+            b8: "HOD",
+            b9: "YESOD",
+            b10: "MALJUT",
+        };
+
+        var inputletra = document.getElementsByClassName("inputletra");
+        inputletra[1].onfocus = function () {
+            this.value = "";
+            //vaciatodo();
+        };
+        inputletra[0].onfocus = function () {
+            this.value = "";
+        };
+
+        for (var i = 0; i < inputletra.length; i++) {
+
+            inputletra[i].onchange = function () {
+                for (t = 1; t <= this.value.length; t++) {
+                    lineasrandom();
+                }
+            };
+        }
+    </script>
+</body>
+
+</html>
