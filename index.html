@@ -2,85 +2,215 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Demo</title>
-    <link href="css/styles.css" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arbol de la vida</title>
+    <script src="calculo.js"></script>
 </head>
 
 <body>
+    <style type="text/css">
+        body {
+            background-color: gray;
+            background-image: url("background.png");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            color: white
+        }
 
-    <header class="py-5 bg-image-full"
-        style="background-image: url('https://source.unsplash.com/wfh8dDlNFOk/1600x900')">
-        <div class="text-center my-5">
-            <div class="container">
-                <div class="row">
-                    <div class="col">
+        .esmerilado {
+            box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            height: 200px;
+        }
 
-                    </div>
-                    <div class="col">
+        .ponepalabras {
+            position: absolute;
+            left: 400px;
+            top: 100px;
+        }
 
-                        <a href="pacolito.html" class="btn btn-outline-warning" role="button">Demo 1</a>
-                        <p class="text-white-50 mb-0">Continúa lo existente</p>
-                    </div>
+        .borde {
+            background: hsla(0, 0%, 100%, 0.3);
+            box-shadow: 0 8px 32px 0 rgb(31 38 135 / 37%);
+            backdrop-filter: blur(1.5px);
+            -webkit-backdrop-filter: blur(1.5px);
+            border-radius: 10px;
+            border: 4px solid hsla(0, 0%, 100%, 0.6);
+            padding: 15px 5px 5px 10px;
+        }
 
-                    <div class="col">
-                        <a href="propuesta.html" class="btn btn-outline-warning" role="button">Demo 2</a>
-                        <p class="text-white-50 mb-0">El recomendado</p>
-                    </div>
-                    <div class="col">
+        .v-input {
+            align-items: flex-start;
+            display: flex;
+            flex: 1 1 auto;
+            font-size: 16px;
+            letter-spacing: normal;
+            max-width: 100%;
+            text-align: left;
+            color: rgba(0, 0, 0, 0.87);
+        }
 
-                    </div>
-                </div>
+        input {
+            outline: none;
+            padding-left: 10px;
+            background-color: transparent;
+            border-style: none;
+            border-radius: 0;
 
-                <div class="row">
-                    <h2 class="text-white  fw-bolder">Para que funcione en Wordpress es necesario utilizar plugins,
-                        y encontrar el/los adecuados.</h2>
-                    <h4 class="text-white  fw-bolder"> La version gratuita
-                        de Wordpress no permite agregar plugins</h4>
+            writing-mode: horizontal-tb !important;
 
-                </div>
-                <div class="row">
-                    <div class="card-group">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Demo 1</h4>
-                                <p class="card-text">cada Letra es independiante, de la A a la O cambia el tamaño
-                                </p>
-                                <p class="card-text">Para esta esta demo tomé una copia de https://tuarboldelavida.net/
-                                </p>
-                                <p class="card-text">Es seguro que funcionará en Wordpress
-                                </p>
-                            </div>
-                        </div>
+            text-rendering: auto;
 
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Demo 2</h4>
-                                <p class="card-text">Se forman lineas al azar según el largo de lo que escriba
-                                </p>
-                                <p class="card-text">Requiere un pluguin que nos permita trabajar
-                                    con < canvas>
-                                </p>
-                                <p class="card-text">Es la opción recomendada, todo se resuelve en forma programática
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+            letter-spacing: normal;
+            word-spacing: normal;
 
-                </div>
-            </div>
+            text-transform: none;
+            text-indent: 0px;
+            text-shadow: none;
+            display: inline-block;
+            text-align: start;
+            appearance: auto;
+        }
 
+        .v-text-field {
+            padding-top: 12px;
+            margin-top: 4px;
+            line-height: 20px;
+            padding: 8px 0;
+            max-width: 100%;
+
+            width: 100%;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid;
+            padding: 5px;
+        }
+    </style>
+    <div id="muestraerror" style="color:red">&nbsp;</div>
+    <canvas id="myCanvas" width="400" height="800">
+    </canvas>
+    <div class="ponepalabras esmerilado">
+        <div class="v-input borde v-text-field">
+            <input class="inputletra" type="text" style="    max-width: 40px;" maxlength="2" value="dia" name="dia" />
+            <input class="inputletra" type="text" style="    max-width: 40px;" maxlength="2" value="mes" name="mes" />
+            <input class="inputletra" type="text" style="    max-width: 40px;" maxlength="4" value="año" name="año" />
+        </div>
+        <div class="v-input borde v-text-field">
+            <input class="inputletra" type="text" value="nombre" name="nombre" />
+        </div>
+        <div class="v-input borde v-text-field">
+            <input class="inputletra" type="text" value="apellido1" name="apellido1" />
+        </div>
+        <div class="v-input borde v-text-field">
+            <input class="inputletra" type="text" value="apellido2" name="apellido2" />
         </div>
 
-    </header>
 
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
+    <div id="ficha"></div>
+    <script>
+        var posiciones = [
+            [-17, 778],
+            [40, 658],
+            [40, 900],
+            [167, 658],
+            [167, 900],
+            [232, 778],
+            [293, 658],
+            [293, 900],
+            [355, 778],
+            [480, 778],
+        ];
+        var canvas = document.getElementById("myCanvas");
 
+        canvas.style.left = "20px";
+        canvas.style.top = "20px";
+        canvas.style.position = "absolute";
+        let radio = 20;
+        let color = "white";
+        var ctx = canvas.getContext("2d");
+
+
+
+        var inputletra = document.getElementsByClassName("inputletra");
+        for (let t = 0; t <= 5; t++) {
+            inputletra[t].onfocus = function () {
+                this.value = "";
+                //vaciatodo();
+            };
+            inputletra[t].onchange = function (e) {
+
+                if (this.name == 'nombre') v_nombre = this.value;
+                if (this.name == 'apellido1') v_apellido1 = this.value;
+                if (this.name == 'apellido2') v_apellido2 = this.value;
+                if (this.name == 'dia') v_dia = this.value;
+                if (this.name == 'mes') v_mes = this.value;
+                if (this.name == 'año') v_año = this.value;
+                muestraerror = "";
+                llenarFicha();
+                setTimeout(resultado, 10);
+
+
+            };
+
+        }
+
+        console.log('aqui');
+        function resultado() {
+            inputletra[3].value = v_nombre;
+            inputletra[4].value = v_apellido1;
+            inputletra[5].value = v_apellido2;
+
+            inputletra[0].value = v_dia;
+            inputletra[1].value = v_mes;
+            inputletra[2].value = v_año;
+
+
+            document.getElementById("muestraerror").textContent = muestraError;
+            let table = document.getElementById("ficha");
+            table.innerHTML = "&nbsp;";
+
+
+            for (let b = 1; b <= 13; b++) {
+                let tr = document.createElement('tr');
+
+                for (let i = 0; i < 3; i++) {
+                    let td = document.createElement('td');
+                    td.innerHTML = ficha[b][i];
+                    tr.appendChild(td);
+                }
+
+                table.appendChild(tr);
+            }
+
+            for (let b = 20; b <= 22; b++) {
+                let tr = document.createElement('tr');
+
+                for (let i = 0; i < 3; i++) {
+                    let td = document.createElement('td');
+                    td.innerHTML = ficha[b][i];
+                    tr.appendChild(td);
+                }
+
+                table.appendChild(tr);
+            }
+
+
+
+        }
+
+    </script>
 </body>
 
 </html>
