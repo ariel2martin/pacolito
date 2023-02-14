@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arbol de la vida</title>
+    <script src="calculo.js"></script>
+</head>
+
+<body>
+    <style type="text/css">
+        body {
+            background-color: gray;
+            background-image: url("background.png");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            color: white
+        }
+
+        .esmerilado {
+            box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            height: 200px;
+        }
+
+        .ponepalabras {
+            position: absolute;
+            left: 400px;
+            top: 100px;
+        }
+
+        .borde {
+            background: hsla(0, 0%, 100%, 0.3);
+            box-shadow: 0 8px 32px 0 rgb(31 38 135 / 37%);
+            backdrop-filter: blur(1.5px);
+            -webkit-backdrop-filter: blur(1.5px);
+            border-radius: 10px;
+            border: 4px solid hsla(0, 0%, 100%, 0.6);
+            padding: 15px 5px 5px 10px;
+        }
+
+        .v-input {
+            align-items: flex-start;
+            display: flex;
+            flex: 1 1 auto;
+            font-size: 16px;
+            letter-spacing: normal;
+            max-width: 100%;
+            text-align: left;
+            color: rgba(0, 0, 0, 0.87);
+        }
+
+        input {
+            outline: none;
+            padding-left: 10px;
+            background-color: transparent;
+            border-style: none;
+            border-radius: 0;
+
+            writing-mode: horizontal-tb !important;
+
+            text-rendering: auto;
+
+            letter-spacing: normal;
+            word-spacing: normal;
+
+            text-transform: none;
+            text-indent: 0px;
+            text-shadow: none;
+            display: inline-block;
+            text-align: start;
+            appearance: auto;
+        }
+
+        .v-text-field {
+            padding-top: 12px;
+            margin-top: 4px;
+            line-height: 20px;
+            padding: 8px 0;
+            max-width: 100%;
+
+            width: 100%;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid;
+            padding: 5px;
+        }
+    </style>
+    <div id="muestraerror" style="color:red">&nbsp;</div>
+    <canvas id="myCanvas" width="400" height="800">
+    </canvas>
+    <div class="ponepalabras esmerilado">
+        <div class="v-input borde v-text-field">
+            <input class="inputletra" type="text" style="    max-width: 40px;" maxlength="2" value="dia" name="dia" />
+            <input class="inputletra" type="text" style="    max-width: 40px;" maxlength="2" value="mes" name="mes" />
+            <input class="inputletra" type="text" style="    max-width: 40px;" maxlength="4" value="año" name="año" />
+        </div>
+        <div class="v-input borde v-text-field">
+            <input class="inputletra" type="text" value="nombre" name="nombre" />
+        </div>
+        <div class="v-input borde v-text-field">
+            <input class="inputletra" type="text" value="apellido1" name="apellido1" />
+        </div>
+        <div class="v-input borde v-text-field">
+            <input class="inputletra" type="text" value="apellido2" name="apellido2" />
+        </div>
+
+
+
+
+    </div>
+    <div id="ficha"></div>
+    <script>
+        var posiciones = [
+            [-17, 778],
+            [40, 658],
+            [40, 900],
+            [167, 658],
+            [167, 900],
+            [232, 778],
+            [293, 658],
+            [293, 900],
+            [355, 778],
+            [480, 778],
+        ];
+        var canvas = document.getElementById("myCanvas");
+
+        canvas.style.left = "20px";
+        canvas.style.top = "20px";
+        canvas.style.position = "absolute";
+        let radio = 20;
+        let color = "white";
+        var ctx = canvas.getContext("2d");
+
+
+
+        var inputletra = document.getElementsByClassName("inputletra");
+        for (let t = 0; t <= 5; t++) {
+            inputletra[t].onfocus = function () {
+                this.value = "";
+                //vaciatodo();
+            };
+            inputletra[t].onchange = function (e) {
+
+                if (this.name == 'nombre') v_nombre = this.value;
+                if (this.name == 'apellido1') v_apellido1 = this.value;
+                if (this.name == 'apellido2') v_apellido2 = this.value;
+                if (this.name == 'dia') v_dia = this.value;
+                if (this.name == 'mes') v_mes = this.value;
+                if (this.name == 'año') v_año = this.value;
+                muestraerror = "";
+                llenarFicha();
+                setTimeout(resultado, 10);
+
+
+            };
+
+        }
+
+        console.log('aqui');
+        function resultado() {
+            inputletra[3].value = v_nombre;
+            inputletra[4].value = v_apellido1;
+            inputletra[5].value = v_apellido2;
+
+            inputletra[0].value = v_dia;
+            inputletra[1].value = v_mes;
+            inputletra[2].value = v_año;
+
+
+            document.getElementById("muestraerror").textContent = muestraError;
+            let table = document.getElementById("ficha");
+            table.innerHTML = "&nbsp;";
+
+
+            for (let b = 1; b <= 13; b++) {
+                let tr = document.createElement('tr');
+
+                for (let i = 0; i < 3; i++) {
+                    let td = document.createElement('td');
+                    td.innerHTML = ficha[b][i];
+                    tr.appendChild(td);
+                }
+
+                table.appendChild(tr);
+            }
+
+            for (let b = 20; b <= 22; b++) {
+                let tr = document.createElement('tr');
+
+                for (let i = 0; i < 3; i++) {
+                    let td = document.createElement('td');
+                    td.innerHTML = ficha[b][i];
+                    tr.appendChild(td);
+                }
+
+                table.appendChild(tr);
+            }
+
+
+
+        }
+
+    </script>
+</body>
+
+</html>

@@ -324,32 +324,32 @@
         estrella.stroke();
         const estrellapattern = ctx.createPattern(estrellaCanvas, "repeat");
 
-        // //ejemplo linea torcida de estrellas
-        // let xx = length * 3;
-        // let region = new Path2D();
-        // let to = { x: 181, y: 592 };
-        // let from = { x: 67, y: 396 };
+        //ejemplo linea torcida de estrellas
+        let xx = length * 3;
+        let region = new Path2D();
+        let to = { x: 181, y: 592 };
+        let from = { x: 67, y: 396 };
 
-        // let lineRadians = Math.atan2(to.y - from.y, to.x - from.x);
-        // const a = from.x - to.x;
-        // const b = from.y - to.y;
-        // let lineLength = Math.sqrt(a * a + b * b);
-        // let zigZagLength = lineLength;
-        // ctx.save();
-        // ctx.beginPath();
-        // ctx.translate(from.x, from.y);
-        // ctx.rotate(lineRadians);
-        // ctx.moveTo(0, 0);
+        let lineRadians = Math.atan2(to.y - from.y, to.x - from.x);
+        const a = from.x - to.x;
+        const b = from.y - to.y;
+        let lineLength = Math.sqrt(a * a + b * b);
+        let zigZagLength = lineLength;
+        ctx.save();
+        ctx.beginPath();
+        ctx.translate(from.x, from.y);
+        ctx.rotate(lineRadians);
+        ctx.moveTo(0, 0);
 
-        // region.moveTo(0, 0);
-        // region.lineTo(0, 0 + xx);
-        // region.lineTo(lineLength, 0 + xx);
-        // region.lineTo(lineLength, 0);
-        // region.lineTo(0, 0);
-        // region.closePath();
-        // ctx.fillStyle = estrellapattern;
-        // ctx.fill(region);
-        // ctx.restore();
+        region.moveTo(0, 0);
+        region.lineTo(0, 0 + xx);
+        region.lineTo(lineLength, 0 + xx);
+        region.lineTo(lineLength, 0);
+        region.lineTo(0, 0);
+        region.closePath();
+        ctx.fillStyle = estrellapattern;
+        ctx.fill(region);
+        ctx.restore();
 
 
         ponecirculos();
