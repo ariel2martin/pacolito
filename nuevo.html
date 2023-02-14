@@ -20,7 +20,6 @@
             background-color: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
             padding: 20px;
-
         }
 
         .borde {
@@ -30,16 +29,12 @@
             -webkit-backdrop-filter: blur(1.5px);
             border-radius: 10px;
             border: 4px solid hsla(0, 0%, 100%, 0.6);
-
         }
 
         .v-input {
-
-
             flex: 1 1 auto;
             font-size: 16px;
             letter-spacing: normal;
-
 
             color: rgba(0, 0, 0, 0.87);
 
@@ -72,8 +67,6 @@
             text-align: start;
             appearance: auto;
         }
-
-
 
         body {
             background-color: black;
@@ -119,166 +112,65 @@
 <body>
     <div class="fondo"></div>
     <div class="titulo">
-        <h1>
-            Configuración Sefirótica
-        </h1>
-        <h3 style="color:red" id="muestraError">&nbsp;</h3>
+        <h1>Configuración Sefirótica</h1>
+        <h3 style="color: red" id="muestraError">&nbsp;</h3>
     </div>
-    <canvas id="arbolCanvas" width="1000" height="1000"> Su navegador no admite el uso de Canvas</canvas>
+    <canvas id="arbolCanvas" width="1000" height="1000">
+        Su navegador no admite el uso de Canvas</canvas>
     <div class="losInputs esmerilado">
-
-        <div class="v-input borde ">
+        <div class="v-input borde">
             <input class="inputletra" type="text" value="Nombre completo" name="nombre" />
         </div>
-        <div class="v-input borde ">
+        <div class="v-input borde">
             <input class="inputletra" type="text" value="Primer apellido" name="apellido" />
         </div>
-        <div class="v-input borde ">
-
+        <div class="v-input borde">
             <input class="inputletra" type="text" value="Segundo apellido" name="apellido2" />
-
         </div>
-        <hr>
-        <label style="color:white">
+        <hr />
+        <label style="color: white">
             Fecha de nacimiento:
-            <div class="v-input borde " style="    text-align: center;">
+            <div class="v-input borde" style="text-align: center">
                 <input class="inputletra" type="date" name="dia" />
             </div>
         </label>
-
-
     </div>
     <script>
-        const color1 = 'yellow';
-        const color2 = 'red';
-        const color3 = 'green';
+        const color1 = "yellow";
+        const color2 = "red";
+        const color3 = "green";
+        const puntosRadio = 20;
 
         const posiciones = [
             [70, 181],
-            [134, 68],
             [134, 294],
-            [265, 67],
+            [134, 68],
             [265, 294],
+            [265, 67],
+
             [330, 182],
-            [396, 67],
             [396, 293],
+            [396, 67],
+
             [461, 181],
             [592, 181],
         ];
-        const muestraErrorDiv = document.getElementById("muestraError");
-
-        let canvas = document.getElementById("arbolCanvas");
-        canvas.style.position = "absolute";
-        let ctx = canvas.getContext("2d");
-
-
-
-
-
-        const patternCanvas = document.createElement("canvas");
-        const patternContext = patternCanvas.getContext("2d");
-        patternCanvas.width = 50;
-        patternCanvas.height = 50;
-        patternContext.fillStyle = "#ffffffff";
-        patternContext.fillRect(0, 0, patternCanvas.width, patternCanvas.height);
-        patternContext.arc(0, 0, 50, 0, 0.5 * Math.PI);
-        patternContext.stroke();
-        // Create our primary canvas and fill it with the pattern
-        const pattern = ctx.createPattern(patternCanvas, "repeat");
-        //ctx.fillStyle = pattern;
-
-        const estrellaCanvas = document.createElement("canvas");
-        const estrella = estrellaCanvas.getContext("2d");
-        var length = 4;
-        estrellaCanvas.width = length * 3;
-        estrellaCanvas.height = length * 3;
-        estrella.fillStyle = "transparent";
-        //estrella.fillRect(0, 0, estrellaCanvas.width, estrellaCanvas.height);
-        estrella.translate(length, length);
-        estrella.beginPath();
-        estrella.globalAlpha = 1;
-        estrella.rotate(Math.PI / 180 * 90);
-        estrella.scale(1, 1);
-        estrella.strokeStyle = color3;
-        estrella.fillStyle = color3;
-        estrella.lineWidth = 1;
-        for (var i = 5; i--;) {
-            estrella.lineTo(0, length);
-            estrella.translate(0, length);
-            estrella.rotate((Math.PI * 2 / 10));
-            estrella.lineTo(0, -length);
-            estrella.translate(0, -length);
-            estrella.rotate(-(Math.PI * 6 / 10));
-        }
-        estrella.lineTo(0, length);
-        estrella.closePath();
-        estrella.fill();
-        estrella.stroke();
-
-
-        const estrellapattern = ctx.createPattern(estrellaCanvas, "repeat");
-
-
-
-        let xx = length * 3;
-        let region = new Path2D();
-        region.moveTo(67, 396);
-        region.lineTo(67, 396 + xx);
-        region.lineTo(181, 592 + xx);
-        region.lineTo(181, 592);
-        region.lineTo(67, 396);
-        region.closePath();
-        ctx.fillStyle = estrellapattern;
-        ctx.fill(region);
-
-        region.moveTo(67, 396);
-        region.lineTo(67, 396 + xx);
-        region.lineTo(293, 396 + xx);
-        region.lineTo(293, 396);
-        region.lineTo(67, 396);
-        region.closePath();
-        ctx.fillStyle = estrellapattern;
-        ctx.fill(region);
-
-
-        ctx.beginPath();
-        ctx.setLineDash([1, 30]);
-        ctx.lineWidth = 4;
-        ctx.moveTo(0, 100);
-        ctx.lineTo(400, 400);
-        ctx.strokeStyle = "red";
-        ctx.lineCap = "round";
-        //        ctx.fill();
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.setLineDash([3, 12]);
-        ctx.lineWidth = 7;
-        ctx.moveTo(0, 150);
-        ctx.lineTo(400, 450);
-        ctx.strokeStyle = "red";
-        ctx.lineCap = "butt";
-        //        ctx.fill();
-        ctx.stroke();
-
-
-
-
-
-
-
-
-
-
-
 
         class Point {
             constructor(x, y) {
                 this.x = x;
                 this.y = y;
+                this.cuantos = 0;
             }
         }
+        let linea = [
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        ];
 
+        let punto = [];
+        for (let p = 0; p < posiciones.length; p++) {
+            punto[p + 1] = new Point(posiciones[p][1], posiciones[p][0]);
+        }
         class Line {
             constructor(fromPoint = null, toPoint = null, zigZagged = false) {
                 this.from = fromPoint;
@@ -289,17 +181,28 @@
                 this.prepareZigZag();
             }
 
-            setFrom(point) { this.from = point; }
+            setFrom(point) {
+                this.from = point;
+            }
 
-            setTo(point) { this.to = toPoint; }
+            setTo(point) {
+                this.to = toPoint;
+            }
 
-            getFrom() { return this.from; }
+            getFrom() {
+                return this.from;
+            }
 
-            getTo() { return this.to; }
+            getTo() {
+                return this.to;
+            }
 
             prepareZigZag() {
                 // Get the radian angle of the line
-                this.lineRadians = Math.atan2(this.to.y - this.from.y, this.to.x - this.from.x);
+                this.lineRadians = Math.atan2(
+                    this.to.y - this.from.y,
+                    this.to.x - this.from.x
+                );
 
                 // Get the length of the line
                 const a = this.from.x - this.to.x;
@@ -307,20 +210,19 @@
                 this.lineLength = Math.sqrt(a * a + b * b);
 
                 // 10 pixels between each zig zag "wave"
-                this.zigzagSpacing = 10;
+                this.zigzagSpacing = 5;
 
                 // Length of one zig zag line - will in reality be doubled see below usage
-                this.oneZigZagLength = 10;
+                this.oneZigZagLength = 1;
 
                 //Length of the last straight bit - so we do not zig zag all the line
-                this.straightLengthWhenZigZag = 30;
+                this.straightLengthWhenZigZag = 5;
 
                 // The length of the zig zag lines
                 this.zigZagLength = this.lineLength - this.straightLengthWhenZigZag;
             }
 
-
-            draw(ctx, color = '#0ff', lineWidth = 2.0) {
+            draw(ctx, color = "#0ff", offset = 0, lineWidth = 2.0) {
                 if (this.dashed) {
                     ctx.setLineDash([4, 2]);
                 } else {
@@ -328,19 +230,19 @@
                 }
 
                 if (this.zigZagged) {
-                    this.drawZigZagged(ctx);
+                    this.drawZigZagged(ctx, offset * 2);
                 } else {
                     ctx.beginPath();
-                    ctx.moveTo(this.from.x, this.from.y);
-                    ctx.lineTo(this.to.x, this.to.y);
+                    console.log(this.from.x + offset, this.from.y + offset);
+                    ctx.moveTo(this.from.x + offset, this.from.y + offset);
+                    ctx.lineTo(this.to.x + offset, this.to.y + offset);
                 }
                 ctx.lineWidth = lineWidth;
                 ctx.strokeStyle = color;
                 ctx.stroke();
-
             }
 
-            drawZigZagged(ctx) {
+            drawZigZagged(ctx, offset = 0) {
                 // Save the current drawing state
                 ctx.save();
 
@@ -348,7 +250,7 @@
                 ctx.beginPath();
 
                 //Set the new 0, 0
-                ctx.translate(this.from.x, this.from.y);
+                ctx.translate(this.from.x + offset, this.from.y + offset);
 
                 // Rotate the canvas so we can treat it like straight
                 ctx.rotate(this.lineRadians);
@@ -359,16 +261,17 @@
                 // Create zig zag lines
                 for (let n = 0; zx < this.zigZagLength; n++) {
                     // The new zig zag x position
-                    zx = ((n + 1) * this.zigzagSpacing);
+                    zx = (n + 1) * this.zigzagSpacing;
 
                     // The new zig zag y position - each and other time up and down
-                    const zy = (n % 2 == 0) ? -this.oneZigZagLength : this.oneZigZagLength;
+                    const zy =
+                        n % 2 == 0 ? -this.oneZigZagLength : this.oneZigZagLength;
 
                     // Draw the an actual line of the zig zag line
                     ctx.lineTo(zx, zy);
                 }
                 // Back to the center vertically
-                ctx.lineTo(this.lineLength - (this.straightLengthWhenZigZag / 2), 0);
+                ctx.lineTo(this.lineLength - this.straightLengthWhenZigZag / 2, 0);
 
                 // Draw the last bit straight
                 ctx.lineTo(this.lineLength, 0);
@@ -386,155 +289,316 @@
             }
         }
 
+        const muestraErrorDiv = document.getElementById("muestraError");
 
-        let aa = new Point(posiciones[1][1], posiciones[1][0]);
-        let bb = new Point(posiciones[4][1], posiciones[4][0]);
-        let cc = new Point(posiciones[7][1], posiciones[7][0]);
+        let canvas = document.getElementById("arbolCanvas");
+        canvas.style.position = "absolute";
+        let ctx = canvas.getContext("2d");
 
-        let queso = new Line(aa, bb, true);
-        queso.draw(ctx);
-        let queso2 = new Line(bb, cc, false);
-        queso2.setDashed(true);
-        queso2.setZigZagged(true);
+        // forma de estrella
+        const estrellaCanvas = document.createElement("canvas");
+        const estrella = estrellaCanvas.getContext("2d");
+        var length = 4;
+        estrellaCanvas.width = length * 3;
+        estrellaCanvas.height = length * 3;
+        estrella.fillStyle = "transparent";
+        estrella.translate(length, length);
+        estrella.beginPath();
+        estrella.globalAlpha = 1;
+        estrella.rotate((Math.PI / 180) * 90);
+        estrella.scale(1, 1);
+        estrella.strokeStyle = color3;
+        estrella.fillStyle = color3;
+        estrella.lineWidth = 1;
+        for (var i = 5; i--;) {
+            estrella.lineTo(0, length);
+            estrella.translate(0, length);
+            estrella.rotate((Math.PI * 2) / 10);
+            estrella.lineTo(0, -length);
+            estrella.translate(0, -length);
+            estrella.rotate(-((Math.PI * 6) / 10));
+        }
+        estrella.lineTo(0, length);
+        estrella.closePath();
+        estrella.fill();
+        estrella.stroke();
+        const estrellapattern = ctx.createPattern(estrellaCanvas, "repeat");
 
-        queso2.draw(ctx);
+        // //ejemplo linea torcida de estrellas
+        // let xx = length * 3;
+        // let region = new Path2D();
+        // let to = { x: 181, y: 592 };
+        // let from = { x: 67, y: 396 };
 
+        // let lineRadians = Math.atan2(to.y - from.y, to.x - from.x);
+        // const a = from.x - to.x;
+        // const b = from.y - to.y;
+        // let lineLength = Math.sqrt(a * a + b * b);
+        // let zigZagLength = lineLength;
+        // ctx.save();
+        // ctx.beginPath();
+        // ctx.translate(from.x, from.y);
+        // ctx.rotate(lineRadians);
+        // ctx.moveTo(0, 0);
 
-
-
-
-
-
-
+        // region.moveTo(0, 0);
+        // region.lineTo(0, 0 + xx);
+        // region.lineTo(lineLength, 0 + xx);
+        // region.lineTo(lineLength, 0);
+        // region.lineTo(0, 0);
+        // region.closePath();
+        // ctx.fillStyle = estrellapattern;
+        // ctx.fill(region);
+        // ctx.restore();
 
 
         ponecirculos();
-        llenarFicha();
-        dibujarFicha();
+
+
+        function ponecirculos() {
+            var innerRadius = 5;
+
+
+            let gradient;
+            for (let p = 0; p < posiciones.length; p++) {
+                ctx.beginPath();
+                ctx.arc(posiciones[p][1], posiciones[p][0], puntosRadio, 0, 2 * Math.PI);
+                gradient = ctx.createRadialGradient(
+                    posiciones[p][1],
+                    posiciones[p][0],
+                    innerRadius,
+                    posiciones[p][1],
+                    posiciones[p][0],
+                    puntosRadio
+                );
+                gradient.addColorStop(0, "yellow");
+                gradient.addColorStop(1, "blue");
+                ctx.fillStyle = gradient;
+                ctx.fill();
+                //ctx.strokeStyle = "blue";
+                //ctx.stroke();
+            }
+        }
 
         var inputletra = document.getElementsByClassName("inputletra");
         for (let t = 0; t < inputletra.length; t++) {
             inputletra[t].onfocus = function () {
                 this.value = "";
-
             };
             inputletra[t].onchange = function (e) {
-
-                if (this.name == 'nombre') v_nombre = this.value;
-                if (this.name == 'apellido') v_apellido1 = this.value;
-                if (this.name == 'apellido2') v_apellido2 = this.value;
-                if (this.name == 'dia') {
-
-                    var d = new Date(this.value + 'T00:00:00');
+                clear();
+                if (this.name == "nombre") v_nombre = this.value;
+                if (this.name == "apellido") v_apellido1 = this.value;
+                if (this.name == "apellido2") v_apellido2 = this.value;
+                if (this.name == "dia") {
+                    var d = new Date(this.value + "T00:00:00");
                     v_año = d.getFullYear();
                     v_mes = d.getMonth() + 1;
                     v_dia = d.getDate();
                     // console.log(v_dia, v_mes, v_año);
                 }
 
-
-
-
-
-
                 // console.log(v_nombre && v_apellido1 && v_apellido2 && v_dia);
                 muestraerror = "&nbsp;";
                 if (v_nombre && v_apellido1 && v_apellido2 && v_dia) {
                     llenarFicha();
+                    inputletra[0].value = v_nombre;
+                    inputletra[1].value = v_apellido1;
+                    inputletra[2].value = v_apellido2;
+
+
                     dibujarFicha();
-                    hacerlinea(2, 3, color1);
-                    hacerlinea(2, 4, color2, 3);
-                    console.log(ficha);
-                    console.log(fichaConSectreto);
+                    //console.log(ficha);
+                    //console.log(fichaConSectreto);
                 }
                 muestraErrorDiv.innerHTML = muestraerror;
                 //setTimeout(resultado, 10);
-
-
             };
-
         }
         function dibujarFicha() {
             for (let t = 1; t <= 7; t++) {
-                dibujaLinea(ficha[t][0]);
+                dibujaLinea(ficha[t][0], color1);
                 if (ficha[t][1] != null) {
-                    if (ficha[t][1] == fichaConSectreto[t]) dibujaLineaSecreta(ficha[t][1]);
-                    else dibujaLinea(ficha[t][1]);
+                    if (ficha[t][1] == fichaConSectreto[t])
+                        dibujaLineaSecreta(ficha[t][1], color1);
+                    else dibujaLinea(ficha[t][1], color1);
                 }
-                if (ficha[t][1] != null) {
-                    if (ficha[t][2] == fichaConSectreto[t]) dibujaLineaSecreta(ficha[t][2]);
-                    else dibujaLinea(ficha[t][2]);
+                if (ficha[t][2] != null) {
+                    if (ficha[t][2] == fichaConSectreto[t])
+                        dibujaLineaSecreta(ficha[t][2], color1);
+                    else dibujaLinea(ficha[t][2], color1);
                 }
-                //console.log(ficha[t][0], ficha[t][1], ficha[t][2], fichaConSectreto[t]);
             }
-        }
+            //ficha 8 en rojo
+            let t = 8;
+            dibujaLinea(ficha[t][0], color2);
+            if (ficha[t][1] != null) {
+                if (ficha[t][1] == fichaConSectreto[t])
+                    dibujaLineaSecreta(ficha[t][1], color2);
+                else dibujaLinea(ficha[t][1], color2);
+            }
+            if (ficha[t][2] != null) {
+                if (ficha[t][2] == fichaConSectreto[t])
+                    dibujaLineaSecreta(ficha[t][2], color2);
+                else dibujaLinea(ficha[t][2], color2);
+            }
+            //ficha 9 en verde
+            t = 9;
+            dibujaLinea(ficha[t][0], color3);
+            if (ficha[t][1] != null) {
+                if (ficha[t][1] == fichaConSectreto[t])
+                    dibujaLineaSecreta(ficha[t][1], color3);
+                else dibujaLinea(ficha[t][1], color3);
+            }
+            if (ficha[t][2] != null) {
+                if (ficha[t][2] == fichaConSectreto[t])
+                    dibujaLineaSecreta(ficha[t][2], color3);
+                else dibujaLinea(ficha[t][2], color3);
+            }
 
-        function dibujaLinea(cual) {
+
+
+        }
+        function dibujaLineaSecreta(cual, color) {
+            dibujaLinea(cual, color, true);
+        }
+        function dibujaLinea(cual, color, zig = false) {
+            //console.log(cual, zig);
+            //cuando hay mas de una linea, que se dibujen una al lado de la otra, si es impar sera a la izq de la pricipal
+            let separacionOffset = 5;
+            let offset =
+                Math.pow(-1, linea[cual]) *
+                separacionOffset *
+                Math.ceil(linea[cual] / 2);
+            //console.log("cuantos:", linea[cual], offset);
+            linea[cual]++;
             switch (cual) {
+                case 1:
+                    punto[1].cuantos++;
+                    punto[3].cuantos++;
+                    new Line(punto[1], punto[3], zig).draw(ctx, color, offset * 0.6);
+                    break;
                 case 2:
-                    hacerlinea(0, 5);
+                    punto[1].cuantos++;
+                    punto[6].cuantos++;
+                    new Line(punto[1], punto[6], zig).draw(ctx, color, offset);
+                    break;
+                case 3:
+                    punto[2].cuantos++;
+                    punto[3].cuantos++;
+                    new Line(punto[2], punto[3], zig).draw(ctx, color, offset);
+                    break;
+                case 4:
+                    punto[2].cuantos++;
+                    punto[6].cuantos++;
+                    new Line(punto[2], punto[6], zig).draw(ctx, color, offset * 1.5);
                     break;
                 case 5:
-                    hacerlinea(2, 4);
+                    punto[2].cuantos++;
+                    punto[4].cuantos++;
+                    new Line(punto[2], punto[4], zig).draw(ctx, color, offset);
+                    break;
+                case 6:
+                    punto[3].cuantos++;
+                    punto[6].cuantos++;
+                    new Line(punto[3], punto[6], zig).draw(ctx, color, offset * 1.5);
+                    break;
+                case 7:
+                    punto[5].cuantos++;
+                    punto[3].cuantos++;
+                    new Line(punto[5], punto[3], zig).draw(ctx, color, offset);
+                    break;
+                case 8:
+                    punto[4].cuantos++;
+                    punto[5].cuantos++;
+                    new Line(punto[4], punto[5], zig).draw(ctx, color, offset);
+                    break;
+                case 9:
+                    punto[4].cuantos++;
+                    punto[6].cuantos++;
+                    new Line(punto[4], punto[6], zig).draw(ctx, color, offset * 0.6);
+                    break;
+                case 10:
+                    punto[4].cuantos++;
+                    punto[7].cuantos++;
+                    new Line(punto[4], punto[7], zig).draw(ctx, color, offset);
                     break;
                 case 11:
-                    hacerlinea(3, 5);
+                    punto[5].cuantos++;
+                    punto[6].cuantos++;
+                    new Line(punto[6], punto[5], zig).draw(ctx, color, offset * 0.6);
                     break;
-
-                case 22:
-                    if (existe2 == 13 && existe3 == 4) {
-                        return true;
-                    } else return false;
+                case 12:
+                    punto[5].cuantos++;
+                    punto[8].cuantos++;
+                    new Line(punto[8], punto[5], zig).draw(ctx, color, offset);
                     break;
-                case 21:
-                    if (existe2 == 12 && existe3 == 3) {
-                        return true;
-                    } else return false;
-                    break;
-                case 20:
-                    if (existe2 == 11 && existe3 == 2) {
-                        return true;
-                    } else return false;
-                    break;
-                case 19:
-                    if (existe2 == 10 && existe3 == 1) {
-                        return true;
-                    } else return false;
-                    break;
-                case 18:
-                    if (existe2 == 9) {
-                        return true;
-                    } else return false;
-                    break;
-                case 17:
-                    if (existe2 == 8) {
-                        return true;
-                    } else return false;
-                    break;
-                case 16:
-                    if (existe2 == 7) {
-                        return true;
-                    } else return false;
-                    break;
-                case 15:
-                    if (existe2 == 6) {
-                        return true;
-                    } else return false;
+                case 13:
+                    punto[7].cuantos++;
+                    punto[6].cuantos++;
+                    new Line(punto[6], punto[7], zig).draw(ctx, color, offset * 0.6);
                     break;
                 case 14:
-                    if (existe2 == 5) {
-                        return true;
-                    } else return false;
+                    punto[9].cuantos++;
+                    punto[6].cuantos++;
+                    new Line(punto[9], punto[6], zig).draw(ctx, color, offset);
+                    break;
+                case 15:
+                    punto[8].cuantos++;
+                    punto[6].cuantos++;
+                    new Line(punto[6], punto[8], zig).draw(ctx, color, offset * 0.6);
+                    break;
+                case 16:
+                    punto[7].cuantos++;
+                    punto[8].cuantos++;
+                    new Line(punto[7], punto[8], zig).draw(ctx, color, offset);
+                    break;
+                case 17:
+                    punto[7].cuantos++;
+                    punto[9].cuantos++;
+                    new Line(punto[7], punto[9], zig).draw(ctx, color, offset * 1.41);
+                    break;
+                case 18:
+                    punto[7].cuantos++;
+                    punto[10].cuantos++;
+                    new Line(punto[7], punto[10], zig).draw(ctx, color, offset * 2);
+                    break;
+                case 19:
+                    punto[8].cuantos++;
+                    punto[9].cuantos++;
+                    new Line(punto[8], punto[9], zig).draw(ctx, color, offset * 1.41);
+                    break;
+
+                case 20:
+                    punto[10].cuantos++;
+                    punto[8].cuantos++;
+                    new Line(punto[8], punto[10], zig).draw(ctx, color, offset * 2);
+                    break;
+                case 21:
+                    punto[10].cuantos++;
+                    punto[9].cuantos++;
+                    new Line(punto[9], punto[10], zig).draw(ctx, color, offset);
+                    break;
+                case 22:
+                    punto[1].cuantos++;
+                    punto[2].cuantos++;
+                    new Line(punto[2], punto[1], zig).draw(ctx, color, offset * 0.6);
                     break;
                 default:
                     return false;
             }
-
+            ponecirculos();
         }
-        function dibujaLineaSecreta(cual) {
-
+        function clear() {
+            linea = [
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            ];
+            for (let p = 0; p < posiciones.length; p++) {
+                punto[p + 1].cuantos = 0;
+            }
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ponecirculos();
         }
-
         function hacerlinea(desde, hasta, color = color1, puntos = 0) {
             ctx.beginPath();
             ctx.setLineDash([puntos, puntos]);
@@ -545,31 +609,6 @@
             ctx.stroke();
             ctx.setLineDash([0, 0]);
             ponecirculos();
-        }
-
-        function ponecirculos() {
-            var innerRadius = 5,
-                outerRadius = 20;
-            let radio = 20;
-            let gradient;
-            for (let p = 0; p < posiciones.length; p++) {
-                ctx.beginPath();
-                ctx.arc(posiciones[p][1], posiciones[p][0], radio, 0, 2 * Math.PI);
-                gradient = ctx.createRadialGradient(
-                    posiciones[p][1],
-                    posiciones[p][0],
-                    innerRadius,
-                    posiciones[p][1],
-                    posiciones[p][0],
-                    outerRadius
-                );
-                gradient.addColorStop(0, "yellow");
-                gradient.addColorStop(1, "blue");
-                ctx.fillStyle = gradient;
-                ctx.fill();
-                //ctx.strokeStyle = "blue";
-                //ctx.stroke();
-            }
         }
     </script>
 </body>

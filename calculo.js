@@ -1,16 +1,27 @@
-let v_nombre = "francísCo";
-let v_apellido1 = "fuentes";
-let v_apellido2 = "siminiani";
-let v_dia = 8;
-let v_mes = 6;
-let v_año = 1977;
+
+// let v_nombre = "francísCo";
+// let v_apellido1 = "fuentes";
+// let v_apellido2 = "siminiani";
+// // v_nombre = "francísCoss";
+// // v_apellido1 = "francísCoss";
+// // v_apellido2 = "francísCoss";
+
+// let v_dia = 8;
+// let v_mes = 6;
+// let v_año = 1977;
+let v_nombre = "";
+let v_apellido1 = "";
+let v_apellido2 = "";
+let v_dia;
+let v_mes;
+let v_año;
 let muestraError = "";
 let ficha = [];
 let secreto = [null, null, null];
 let fichaConSectreto = [
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 ];
-
+let flagFichaLlena = false;
 //let prueba = '¶çHoñü el  Ló  c';
 // let caracteresTodos;
 // for (let t = 14; t <= 255; t++) {
@@ -47,6 +58,7 @@ const alfabeto = [
     ["X", 9, 900],
     ["Y", 1, 1000],
     ["Z", 2, 2000],
+    [" ", 0, 0],
 ];
 
 function llenarFicha() {
@@ -126,6 +138,7 @@ function llenarFicha() {
             ficha[qq][2] = intentaLlenar(qq);
         }
     }
+    flagFichaLlena = true;
 }
 
 function completaConSecreto(cual) {
@@ -412,7 +425,7 @@ function eliminarDiacriticos(texto) {
             "$1"
         )
         .normalize()
-        .replace(/[^[A-ZÑ]]*/g, "")
+        .replace(/[^[A-ZÑ ]]*/g, "")
         .replace(/[[]*/g, "");
 }
 
