@@ -1,20 +1,27 @@
 
-// let v_nombre = "francísCo";
-// let v_apellido1 = "fuentes";
-// let v_apellido2 = "siminiani";
+let v_nombre = "maria elizabeth";
+let v_apellido1 = "pulido";
+let v_apellido2 = "gimenez";
 // // v_nombre = "francísCoss";
 // // v_apellido1 = "francísCoss";
 // // v_apellido2 = "francísCoss";
 
-// let v_dia = 8;
-// let v_mes = 6;
-// let v_año = 1977;
-let v_nombre = "";
-let v_apellido1 = "";
-let v_apellido2 = "";
-let v_dia;
-let v_mes;
-let v_año;
+let v_dia = 19;
+let v_mes = 4;
+let v_año = 1964;
+// let v_nombre = "";
+// let v_apellido1 = "";
+// let v_apellido2 = "";
+// let v_dia;
+// let v_mes;
+// let v_año;
+
+// v_nombre = "francísCoss";
+// v_apellido1 = "francísCoss";
+// v_apellido2 = "francísCoss";
+// v_dia = 8;
+// v_mes = 6;
+// v_año = 1977;
 let muestraError = "";
 let ficha = [];
 let secreto = [null, null, null];
@@ -75,7 +82,7 @@ function llenarFicha() {
     secreto[2] = numeroSecreto(v_apellido2);
 
     ficha[4] = [reduccionA22(v_dia), null, null];
-    ficha[5] = [v_mes, null, null];
+    ficha[5] = [parseInt(v_mes), null, null];
     ficha[6] = [reduccionA22(v_año), null, null];
     ficha[7] = [
         reduccionA22(ficha[1][0] + ficha[2][0] + ficha[3][0]),
@@ -87,6 +94,7 @@ function llenarFicha() {
         null,
         null,
     ];
+    console.log(reduccionA22(ficha[4][0] + ficha[5][0] + ficha[6][0]), ficha[4][0], ficha[5][0], ficha[6][0]);
     ficha[9] = [reduccionA22(ficha[7][0] + ficha[8][0]), null, null];
     ficha[10] = [reduccionA22(ficha[1][0] + ficha[2][0]), null, null];
     ficha[11] = [reduccionA22(ficha[2][0] + ficha[3][0]), null, null];
@@ -99,9 +107,11 @@ function llenarFicha() {
     //Ahora completar familias de numeros
     for (let t = 1; t <= 13; t++) {
         ficha[t][1] = reduccionA9(ficha[t][0]);
+        ficha[t][2] = reduccionA9(ficha[t][1]);
     }
     for (let t = 20; t <= 22; t++) {
         ficha[t][1] = reduccionA9(ficha[t][0]);
+        ficha[t][2] = reduccionA9(ficha[t][1]);
     }
     for (let qq = 7; qq <= 13; qq++) {
         if (ficha[qq][1] == null) {
@@ -349,20 +359,21 @@ function numeroSecreto(que) {
 }
 
 function reduccionA9(que) {
+
     if (que > 22) {
         muestraError =
             "error de interpretacioon en los calculos, por favor avise al administrador";
         return;
     }
     if (que <= 9) return null;
-    if (que == 19) return 1;
+    if (que == 19) return 10;
     let unidades = que % 10;
     let decenas = Math.trunc(que / 10) % 10;
     return unidades + decenas;
 }
 
 function reduccionA22(que) {
-    if (que <= 22) return que;
+    if (que <= 22) return parseInt(que);
     let unidades = que % 10;
     let decenas = Math.trunc(que / 10) % 10;
     let centenas = Math.trunc(que / 100) % 10;
@@ -370,7 +381,7 @@ function reduccionA22(que) {
     let decenamiles = Math.trunc(que / 10000) % 10;
     let centenamiles = Math.trunc(que / 100000) % 10;
     let millones = Math.trunc(que / 1000000) % 10;
-    return reduccionA22(
+    return parseInt(reduccionA22(
         unidades +
         decenas +
         centenas +
@@ -378,7 +389,7 @@ function reduccionA22(que) {
         decenamiles +
         centenamiles +
         millones
-    );
+    ));
 }
 
 function desglosar(que) {
@@ -431,15 +442,4 @@ function eliminarDiacriticos(texto) {
 
 //console.log(caracteresTodos);
 //desglosar(caracteresTodos);
-// let correr = desglosar(prueba);
-// console.log(correr[0], correr[1], correr[2]);
-// console.log(reduccionA22(desglosar('francisco')[1]));
-// console.log(reduccionA22(desglosar(prueba)[2]));
 
-
-
-//llenarFicha();
-//console.log(ficha);
-//let correr = desglosar('siminiani');
-//console.log(correr[0], correr[1], correr[2]);
-//console.warn(muestraError);

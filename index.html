@@ -222,7 +222,7 @@
                 this.zigZagLength = this.lineLength - this.straightLengthWhenZigZag;
             }
 
-            draw(ctx, color = "#0ff", offset = 0, lineWidth = 2.0) {
+            draw(ctx, color = "#0ff", offsetx = 0, offsety = 0, lineWidth = 2.0) {
                 if (this.dashed) {
                     ctx.setLineDash([4, 2]);
                 } else {
@@ -230,19 +230,19 @@
                 }
 
                 if (this.zigZagged) {
-                    this.drawZigZagged(ctx, offset * 2);
+                    this.drawZigZagged(ctx, offsetx, offsety);
                 } else {
                     ctx.beginPath();
-                    console.log(this.from.x + offset, this.from.y + offset);
-                    ctx.moveTo(this.from.x + offset, this.from.y + offset);
-                    ctx.lineTo(this.to.x + offset, this.to.y + offset);
+                    console.log(this.from.x + offsetx, this.from.y + offsety);
+                    ctx.moveTo(this.from.x + offsetx, this.from.y + offsety);
+                    ctx.lineTo(this.to.x + offsetx, this.to.y + offsety);
                 }
                 ctx.lineWidth = lineWidth;
                 ctx.strokeStyle = color;
                 ctx.stroke();
             }
 
-            drawZigZagged(ctx, offset = 0) {
+            drawZigZagged(ctx, offsetx = 0, offsety = 0) {
                 // Save the current drawing state
                 ctx.save();
 
@@ -250,7 +250,7 @@
                 ctx.beginPath();
 
                 //Set the new 0, 0
-                ctx.translate(this.from.x + offset, this.from.y + offset);
+                ctx.translate(this.from.x + offsetx, this.from.y + offsety);
 
                 // Rotate the canvas so we can treat it like straight
                 ctx.rotate(this.lineRadians);
@@ -352,9 +352,8 @@
         // ctx.restore();
 
 
+
         ponecirculos();
-
-
         function ponecirculos() {
             var innerRadius = 5;
 
@@ -476,7 +475,7 @@
                 case 1:
                     punto[1].cuantos++;
                     punto[3].cuantos++;
-                    new Line(punto[1], punto[3], zig).draw(ctx, color, offset * 0.6);
+                    new Line(punto[1], punto[3], zig).draw(ctx, color, offset * 0.5, offset * 0.8);
                     break;
                 case 2:
                     punto[1].cuantos++;
@@ -486,12 +485,12 @@
                 case 3:
                     punto[2].cuantos++;
                     punto[3].cuantos++;
-                    new Line(punto[2], punto[3], zig).draw(ctx, color, offset);
+                    new Line(punto[2], punto[3], zig).draw(ctx, color, 0, offset);
                     break;
                 case 4:
                     punto[2].cuantos++;
                     punto[6].cuantos++;
-                    new Line(punto[2], punto[6], zig).draw(ctx, color, offset * 1.5);
+                    new Line(punto[2], punto[6], zig).draw(ctx, color, offset * 0.8, offset * 0.5);
                     break;
                 case 5:
                     punto[2].cuantos++;
@@ -501,22 +500,22 @@
                 case 6:
                     punto[3].cuantos++;
                     punto[6].cuantos++;
-                    new Line(punto[3], punto[6], zig).draw(ctx, color, offset * 1.5);
+                    new Line(punto[3], punto[6], zig).draw(ctx, color, offset * -0.8, offset * 0.5);
                     break;
                 case 7:
                     punto[5].cuantos++;
                     punto[3].cuantos++;
-                    new Line(punto[5], punto[3], zig).draw(ctx, color, offset);
+                    new Line(punto[5], punto[3], zig).draw(ctx, color, offset, 0);
                     break;
                 case 8:
                     punto[4].cuantos++;
                     punto[5].cuantos++;
-                    new Line(punto[4], punto[5], zig).draw(ctx, color, offset);
+                    new Line(punto[4], punto[5], zig).draw(ctx, color, 0, offset);
                     break;
                 case 9:
                     punto[4].cuantos++;
                     punto[6].cuantos++;
-                    new Line(punto[4], punto[6], zig).draw(ctx, color, offset * 0.6);
+                    new Line(punto[4], punto[6], zig).draw(ctx, color, offset * 0.5, offset * 0.8);
                     break;
                 case 10:
                     punto[4].cuantos++;
@@ -526,7 +525,7 @@
                 case 11:
                     punto[5].cuantos++;
                     punto[6].cuantos++;
-                    new Line(punto[6], punto[5], zig).draw(ctx, color, offset * 0.6);
+                    new Line(punto[6], punto[5], zig).draw(ctx, color, offset * -0.5, offset * 0.8);
                     break;
                 case 12:
                     punto[5].cuantos++;
@@ -536,7 +535,7 @@
                 case 13:
                     punto[7].cuantos++;
                     punto[6].cuantos++;
-                    new Line(punto[6], punto[7], zig).draw(ctx, color, offset * 0.6);
+                    new Line(punto[6], punto[7], zig).draw(ctx, color, offset * -0.5, offset * 0.8);
                     break;
                 case 14:
                     punto[9].cuantos++;
@@ -546,33 +545,33 @@
                 case 15:
                     punto[8].cuantos++;
                     punto[6].cuantos++;
-                    new Line(punto[6], punto[8], zig).draw(ctx, color, offset * 0.6);
+                    new Line(punto[6], punto[8], zig).draw(ctx, color, offset * 0.5, offset * 0.8);
                     break;
                 case 16:
                     punto[7].cuantos++;
                     punto[8].cuantos++;
-                    new Line(punto[7], punto[8], zig).draw(ctx, color, offset);
+                    new Line(punto[7], punto[8], zig).draw(ctx, color, 0, offset);
                     break;
                 case 17:
                     punto[7].cuantos++;
                     punto[9].cuantos++;
-                    new Line(punto[7], punto[9], zig).draw(ctx, color, offset * 1.41);
+                    new Line(punto[7], punto[9], zig).draw(ctx, color, offset * 0.5, offset * 0.8);
                     break;
                 case 18:
                     punto[7].cuantos++;
                     punto[10].cuantos++;
-                    new Line(punto[7], punto[10], zig).draw(ctx, color, offset * 2);
+                    new Line(punto[7], punto[10], zig).draw(ctx, color, offset * 0.8, offset * 0.5);
                     break;
                 case 19:
                     punto[8].cuantos++;
                     punto[9].cuantos++;
-                    new Line(punto[8], punto[9], zig).draw(ctx, color, offset * 1.41);
+                    new Line(punto[8], punto[9], zig).draw(ctx, color, offset * -0.5, offset * 0.8);
                     break;
 
                 case 20:
                     punto[10].cuantos++;
                     punto[8].cuantos++;
-                    new Line(punto[8], punto[10], zig).draw(ctx, color, offset * 2);
+                    new Line(punto[8], punto[10], zig).draw(ctx, color, offset * -0.8, offset * 0.5);
                     break;
                 case 21:
                     punto[10].cuantos++;
@@ -582,12 +581,13 @@
                 case 22:
                     punto[1].cuantos++;
                     punto[2].cuantos++;
-                    new Line(punto[2], punto[1], zig).draw(ctx, color, offset * 0.6);
+                    new Line(punto[2], punto[1], zig).draw(ctx, color, offset * -0.5, offset * 0.8);
                     break;
                 default:
                     return false;
             }
             ponecirculos();
+            //console.log('linea', linea[19]);
         }
         function clear() {
             linea = [
