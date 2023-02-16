@@ -119,6 +119,8 @@
 
     </div>
     <div id="ficha"></div>
+    <div id="secreto" style="position:absolute;left:130px;top:8px"></div>
+
     <script>
         var posiciones = [
             [-17, 778],
@@ -184,9 +186,13 @@
 
             for (let b = 1; b <= 13; b++) {
                 let tr = document.createElement('tr');
-
+                let td = document.createElement('td');
+                td.style.color = "red";
+                td.innerHTML = b;
+                tr.appendChild(td);
                 for (let i = 0; i < 3; i++) {
                     let td = document.createElement('td');
+
                     td.innerHTML = ficha[b][i];
                     tr.appendChild(td);
                 }
@@ -196,7 +202,10 @@
 
             for (let b = 20; b <= 22; b++) {
                 let tr = document.createElement('tr');
-
+                let td = document.createElement('td');
+                td.style.color = "red";
+                td.innerHTML = 'x';
+                tr.appendChild(td);
                 for (let i = 0; i < 3; i++) {
                     let td = document.createElement('td');
                     td.innerHTML = ficha[b][i];
@@ -206,6 +215,32 @@
                 table.appendChild(tr);
             }
 
+            let secreto = document.getElementById("secreto");
+            secreto.innerHTML = "&nbsp;";
+
+
+            for (let b = 1; b <= 13; b++) {
+                let tr = document.createElement('tr');
+
+
+                let td = document.createElement('td');
+                td.innerHTML = fichaConSectreto[b];
+                tr.appendChild(td);
+
+                secreto.appendChild(tr);
+            }
+
+            for (let b = 20; b <= 22; b++) {
+                let tr = document.createElement('tr');
+
+
+                let td = document.createElement('td');
+                td.innerHTML = fichaConSectreto[b];
+                tr.appendChild(td);
+
+
+                secreto.appendChild(tr);
+            }
 
 
         }

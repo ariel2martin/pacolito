@@ -1,14 +1,14 @@
 
-let v_nombre = "maria elizabeth";
-let v_apellido1 = "pulido";
-let v_apellido2 = "gimenez";
+let v_nombre = "maria victoria";
+let v_apellido1 = "jimenez";
+let v_apellido2 = "arrabal";
 // // v_nombre = "francísCoss";
 // // v_apellido1 = "francísCoss";
 // // v_apellido2 = "francísCoss";
 
-let v_dia = 19;
+let v_dia = 24;
 let v_mes = 4;
-let v_año = 1964;
+let v_año = 1977;
 // let v_nombre = "";
 // let v_apellido1 = "";
 // let v_apellido2 = "";
@@ -24,9 +24,9 @@ let v_año = 1964;
 // v_año = 1977;
 let muestraError = "";
 let ficha = [];
-let secreto = [null, null, null];
+let secreto = [];
 let fichaConSectreto = [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 ];
 let flagFichaLlena = false;
 //let prueba = '¶çHoñü el  Ló  c';
@@ -94,7 +94,6 @@ function llenarFicha() {
         null,
         null,
     ];
-    console.log(reduccionA22(ficha[4][0] + ficha[5][0] + ficha[6][0]), ficha[4][0], ficha[5][0], ficha[6][0]);
     ficha[9] = [reduccionA22(ficha[7][0] + ficha[8][0]), null, null];
     ficha[10] = [reduccionA22(ficha[1][0] + ficha[2][0]), null, null];
     ficha[11] = [reduccionA22(ficha[2][0] + ficha[3][0]), null, null];
@@ -113,6 +112,8 @@ function llenarFicha() {
         ficha[t][1] = reduccionA9(ficha[t][0]);
         ficha[t][2] = reduccionA9(ficha[t][1]);
     }
+
+    // Ahora intento llenar las familias
     for (let qq = 7; qq <= 13; qq++) {
         if (ficha[qq][1] == null) {
             ficha[qq][1] = intentaLlenar(qq);
@@ -134,24 +135,32 @@ function llenarFicha() {
             completaConSecreto(r);
         }
     }
+    //ahora vuelvo a intentar completar la familia, el resultado tambien es secreto
     for (let qq = 7; qq <= 13; qq++) {
         if (ficha[qq][1] == null) {
             ficha[qq][1] = intentaLlenar(qq);
+            fichaConSectreto[qq] = ficha[qq][1] || 0;
         } else if (ficha[qq][2] == null) {
             ficha[qq][2] = intentaLlenar(qq);
+            fichaConSectreto[qq] = ficha[qq][2] || 0;
         }
     }
     for (let qq = 20; qq <= 22; qq++) {
         if (ficha[qq][1] == null) {
             ficha[qq][1] = intentaLlenar(qq);
+            fichaConSectreto[qq] = ficha[qq][1] || 0;
         } else if (ficha[qq][2] == null) {
             ficha[qq][2] = intentaLlenar(qq);
+            fichaConSectreto[qq] = ficha[qq][2] || 0;
         }
     }
     flagFichaLlena = true;
+    console.log(ficha[10], fichaConSectreto[10]);
+    console.log(ficha[12], fichaConSectreto[12]);
 }
 
 function completaConSecreto(cual) {
+
     let cualsecreto = secreto[cual - 1];
 
     let existe1 = ficha[cual][0];

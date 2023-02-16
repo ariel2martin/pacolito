@@ -172,10 +172,15 @@
             punto[p + 1] = new Point(posiciones[p][1], posiciones[p][0]);
         }
         class Line {
-            constructor(fromPoint = null, toPoint = null, zigZagged = false) {
+            constructor(
+                fromPoint = null,
+                toPoint = null,
+                zigZagged = false,
+                dashed = false
+            ) {
                 this.from = fromPoint;
                 this.to = toPoint;
-                this.dashed = false;
+                this.dashed = dashed;
                 this.zigZagged = zigZagged;
 
                 this.prepareZigZag();
@@ -224,7 +229,7 @@
 
             draw(ctx, color = "#0ff", offsetx = 0, offsety = 0, lineWidth = 2.0) {
                 if (this.dashed) {
-                    ctx.setLineDash([4, 2]);
+                    ctx.setLineDash([12, 4]);
                 } else {
                     ctx.setLineDash([]);
                 }
@@ -233,7 +238,6 @@
                     this.drawZigZagged(ctx, offsetx, offsety);
                 } else {
                     ctx.beginPath();
-                    console.log(this.from.x + offsetx, this.from.y + offsety);
                     ctx.moveTo(this.from.x + offsetx, this.from.y + offsety);
                     ctx.lineTo(this.to.x + offsetx, this.to.y + offsety);
                 }
@@ -351,33 +355,15 @@
         // ctx.fill(region);
         // ctx.restore();
 
-
-
-        ponecirculos();
-        function ponecirculos() {
-            var innerRadius = 5;
-
-
-            let gradient;
-            for (let p = 0; p < posiciones.length; p++) {
-                ctx.beginPath();
-                ctx.arc(posiciones[p][1], posiciones[p][0], puntosRadio, 0, 2 * Math.PI);
-                gradient = ctx.createRadialGradient(
-                    posiciones[p][1],
-                    posiciones[p][0],
-                    innerRadius,
-                    posiciones[p][1],
-                    posiciones[p][0],
-                    puntosRadio
-                );
-                gradient.addColorStop(0, "yellow");
-                gradient.addColorStop(1, "blue");
-                ctx.fillStyle = gradient;
-                ctx.fill();
-                //ctx.strokeStyle = "blue";
-                //ctx.stroke();
-            }
+        for (let y = 1; y <= 22; y++) {
+            let zig = true;
+            let disc = true;
+            dibujaLinea(y, color1, zig, disc);
+            dibujaLinea(y, color1, zig, disc);
+            dibujaLinea(y, color1, zig, disc);
         }
+        ponecirculos();
+
 
         var inputletra = document.getElementsByClassName("inputletra");
         for (let t = 0; t < inputletra.length; t++) {
@@ -405,7 +391,6 @@
                     inputletra[1].value = v_apellido1;
                     inputletra[2].value = v_apellido2;
 
-
                     dibujarFicha();
                     //console.log(ficha);
                     //console.log(fichaConSectreto);
@@ -414,54 +399,40 @@
                 //setTimeout(resultado, 10);
             };
         }
+
         function dibujarFicha() {
             for (let t = 1; t <= 7; t++) {
-                dibujaLinea(ficha[t][0], color1);
-                if (ficha[t][1] != null) {
-                    if (ficha[t][1] == fichaConSectreto[t])
-                        dibujaLineaSecreta(ficha[t][1], color1);
-                    else dibujaLinea(ficha[t][1], color1);
-                }
-                if (ficha[t][2] != null) {
-                    if (ficha[t][2] == fichaConSectreto[t])
-                        dibujaLineaSecreta(ficha[t][2], color1);
-                    else dibujaLinea(ficha[t][2], color1);
-                }
+                auxDibuja3(t, color1);
             }
             //ficha 8 en rojo
             let t = 8;
-            dibujaLinea(ficha[t][0], color2);
-            if (ficha[t][1] != null) {
-                if (ficha[t][1] == fichaConSectreto[t])
-                    dibujaLineaSecreta(ficha[t][1], color2);
-                else dibujaLinea(ficha[t][1], color2);
-            }
-            if (ficha[t][2] != null) {
-                if (ficha[t][2] == fichaConSectreto[t])
-                    dibujaLineaSecreta(ficha[t][2], color2);
-                else dibujaLinea(ficha[t][2], color2);
-            }
+            auxDibuja3(t, color2);
             //ficha 9 en verde
             t = 9;
-            dibujaLinea(ficha[t][0], color3);
+            auxDibuja3(t, color3);
+            //ficha 10 y 12 en linea discontinua
+            auxDibuja3(10, color1, false, true);
+            auxDibuja3(12, color1, false, true);
+
+
+
+        }
+
+        function auxDibuja3(t, color, zig = false, discontinua = false) {
+            dibujaLinea(ficha[t][0], color, false, discontinua);
             if (ficha[t][1] != null) {
                 if (ficha[t][1] == fichaConSectreto[t])
-                    dibujaLineaSecreta(ficha[t][1], color3);
-                else dibujaLinea(ficha[t][1], color3);
+                    dibujaLinea(ficha[t][1], color, true, discontinua);
+                else dibujaLinea(ficha[t][1], color, false, discontinua);
             }
             if (ficha[t][2] != null) {
                 if (ficha[t][2] == fichaConSectreto[t])
-                    dibujaLineaSecreta(ficha[t][2], color3);
-                else dibujaLinea(ficha[t][2], color3);
+                    dibujaLinea(ficha[t][2], color, true, discontinua);
+                else dibujaLinea(ficha[t][2], color, false, discontinua);
             }
-
-
-
         }
-        function dibujaLineaSecreta(cual, color) {
-            dibujaLinea(cual, color, true);
-        }
-        function dibujaLinea(cual, color, zig = false) {
+
+        function dibujaLinea(cual, color, zig = false, dash = false) {
             //console.log(cual, zig);
             //cuando hay mas de una linea, que se dibujen una al lado de la otra, si es impar sera a la izq de la pricipal
             let separacionOffset = 5;
@@ -475,113 +446,173 @@
                 case 1:
                     punto[1].cuantos++;
                     punto[3].cuantos++;
-                    new Line(punto[1], punto[3], zig).draw(ctx, color, offset * 0.5, offset * 0.8);
+                    new Line(punto[1], punto[3], zig, dash).draw(
+                        ctx,
+                        color,
+                        offset * 0.5,
+                        offset * 0.8
+                    );
                     break;
                 case 2:
                     punto[1].cuantos++;
                     punto[6].cuantos++;
-                    new Line(punto[1], punto[6], zig).draw(ctx, color, offset);
+                    new Line(punto[1], punto[6], zig, dash).draw(ctx, color, offset);
                     break;
                 case 3:
                     punto[2].cuantos++;
                     punto[3].cuantos++;
-                    new Line(punto[2], punto[3], zig).draw(ctx, color, 0, offset);
+                    new Line(punto[2], punto[3], zig, dash).draw(ctx, color, 0, offset);
                     break;
                 case 4:
                     punto[2].cuantos++;
                     punto[6].cuantos++;
-                    new Line(punto[2], punto[6], zig).draw(ctx, color, offset * 0.8, offset * 0.5);
+                    new Line(punto[2], punto[6], zig, dash).draw(
+                        ctx,
+                        color,
+                        offset * 0.8,
+                        offset * 0.5
+                    );
                     break;
                 case 5:
                     punto[2].cuantos++;
                     punto[4].cuantos++;
-                    new Line(punto[2], punto[4], zig).draw(ctx, color, offset);
+                    new Line(punto[2], punto[4], zig, dash).draw(ctx, color, offset);
                     break;
                 case 6:
                     punto[3].cuantos++;
                     punto[6].cuantos++;
-                    new Line(punto[3], punto[6], zig).draw(ctx, color, offset * -0.8, offset * 0.5);
+                    new Line(punto[3], punto[6], zig, dash).draw(
+                        ctx,
+                        color,
+                        offset * -0.8,
+                        offset * 0.5
+                    );
                     break;
                 case 7:
                     punto[5].cuantos++;
                     punto[3].cuantos++;
-                    new Line(punto[5], punto[3], zig).draw(ctx, color, offset, 0);
+                    new Line(punto[5], punto[3], zig, dash).draw(ctx, color, offset, 0);
                     break;
                 case 8:
                     punto[4].cuantos++;
                     punto[5].cuantos++;
-                    new Line(punto[4], punto[5], zig).draw(ctx, color, 0, offset);
+                    new Line(punto[4], punto[5], zig, dash).draw(ctx, color, 0, offset);
                     break;
                 case 9:
                     punto[4].cuantos++;
                     punto[6].cuantos++;
-                    new Line(punto[4], punto[6], zig).draw(ctx, color, offset * 0.5, offset * 0.8);
+                    new Line(punto[4], punto[6], zig, dash).draw(
+                        ctx,
+                        color,
+                        offset * 0.5,
+                        offset * 0.8
+                    );
                     break;
                 case 10:
                     punto[4].cuantos++;
                     punto[7].cuantos++;
-                    new Line(punto[4], punto[7], zig).draw(ctx, color, offset);
+                    new Line(punto[4], punto[7], zig, dash).draw(ctx, color, offset);
                     break;
                 case 11:
                     punto[5].cuantos++;
                     punto[6].cuantos++;
-                    new Line(punto[6], punto[5], zig).draw(ctx, color, offset * -0.5, offset * 0.8);
+                    new Line(punto[6], punto[5], zig, dash).draw(
+                        ctx,
+                        color,
+                        offset * -0.5,
+                        offset * 0.8
+                    );
                     break;
                 case 12:
                     punto[5].cuantos++;
                     punto[8].cuantos++;
-                    new Line(punto[8], punto[5], zig).draw(ctx, color, offset);
+                    new Line(punto[8], punto[5], zig, dash).draw(ctx, color, offset);
                     break;
                 case 13:
                     punto[7].cuantos++;
                     punto[6].cuantos++;
-                    new Line(punto[6], punto[7], zig).draw(ctx, color, offset * -0.5, offset * 0.8);
+                    new Line(punto[6], punto[7], zig, dash).draw(
+                        ctx,
+                        color,
+                        offset * -0.5,
+                        offset * 0.8
+                    );
                     break;
                 case 14:
                     punto[9].cuantos++;
                     punto[6].cuantos++;
-                    new Line(punto[9], punto[6], zig).draw(ctx, color, offset);
+                    new Line(punto[9], punto[6], zig, dash).draw(ctx, color, offset);
                     break;
                 case 15:
                     punto[8].cuantos++;
                     punto[6].cuantos++;
-                    new Line(punto[6], punto[8], zig).draw(ctx, color, offset * 0.5, offset * 0.8);
+                    new Line(punto[6], punto[8], zig, dash).draw(
+                        ctx,
+                        color,
+                        offset * 0.5,
+                        offset * 0.8
+                    );
                     break;
                 case 16:
                     punto[7].cuantos++;
                     punto[8].cuantos++;
-                    new Line(punto[7], punto[8], zig).draw(ctx, color, 0, offset);
+                    new Line(punto[7], punto[8], zig, dash).draw(ctx, color, 0, offset);
                     break;
                 case 17:
                     punto[7].cuantos++;
                     punto[9].cuantos++;
-                    new Line(punto[7], punto[9], zig).draw(ctx, color, offset * 0.5, offset * 0.8);
+                    new Line(punto[7], punto[9], zig, dash).draw(
+                        ctx,
+                        color,
+                        offset * 0.5,
+                        offset * 0.8
+                    );
                     break;
                 case 18:
                     punto[7].cuantos++;
                     punto[10].cuantos++;
-                    new Line(punto[7], punto[10], zig).draw(ctx, color, offset * 0.8, offset * 0.5);
+                    new Line(punto[7], punto[10], zig, dash).draw(
+                        ctx,
+                        color,
+                        offset * 0.8,
+                        offset * 0.5
+                    );
                     break;
                 case 19:
                     punto[8].cuantos++;
                     punto[9].cuantos++;
-                    new Line(punto[8], punto[9], zig).draw(ctx, color, offset * -0.5, offset * 0.8);
+                    new Line(punto[8], punto[9], zig, dash).draw(
+                        ctx,
+                        color,
+                        offset * -0.5,
+                        offset * 0.8
+                    );
                     break;
 
                 case 20:
                     punto[10].cuantos++;
                     punto[8].cuantos++;
-                    new Line(punto[8], punto[10], zig).draw(ctx, color, offset * -0.8, offset * 0.5);
+                    new Line(punto[8], punto[10], zig, dash).draw(
+                        ctx,
+                        color,
+                        offset * -0.8,
+                        offset * 0.5
+                    );
                     break;
                 case 21:
                     punto[10].cuantos++;
                     punto[9].cuantos++;
-                    new Line(punto[9], punto[10], zig).draw(ctx, color, offset);
+                    new Line(punto[9], punto[10], zig, dash).draw(ctx, color, offset);
                     break;
                 case 22:
                     punto[1].cuantos++;
                     punto[2].cuantos++;
-                    new Line(punto[2], punto[1], zig).draw(ctx, color, offset * -0.5, offset * 0.8);
+                    new Line(punto[2], punto[1], zig, dash).draw(
+                        ctx,
+                        color,
+                        offset * -0.5,
+                        offset * 0.8
+                    );
                     break;
                 default:
                     return false;
@@ -589,6 +620,7 @@
             ponecirculos();
             //console.log('linea', linea[19]);
         }
+
         function clear() {
             linea = [
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -599,17 +631,37 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ponecirculos();
         }
-        function hacerlinea(desde, hasta, color = color1, puntos = 0) {
-            ctx.beginPath();
-            ctx.setLineDash([puntos, puntos]);
-            ctx.lineWidth = 2;
-            ctx.moveTo(posiciones[desde][1], posiciones[desde][0]);
-            ctx.lineTo(posiciones[hasta][1], posiciones[hasta][0]);
-            ctx.strokeStyle = color;
-            ctx.stroke();
-            ctx.setLineDash([0, 0]);
-            ponecirculos();
+
+        function ponecirculos() {
+            var innerRadius = 5;
+
+            let gradient;
+            for (let p = 0; p < posiciones.length; p++) {
+                ctx.beginPath();
+                ctx.arc(
+                    posiciones[p][1],
+                    posiciones[p][0],
+                    puntosRadio,
+                    0,
+                    2 * Math.PI
+                );
+                gradient = ctx.createRadialGradient(
+                    posiciones[p][1],
+                    posiciones[p][0],
+                    innerRadius,
+                    posiciones[p][1],
+                    posiciones[p][0],
+                    puntosRadio
+                );
+                gradient.addColorStop(0, "yellow");
+                gradient.addColorStop(1, "blue");
+                ctx.fillStyle = gradient;
+                ctx.fill();
+                //ctx.strokeStyle = "blue";
+                //ctx.stroke();
+            }
         }
+
     </script>
 </body>
 
