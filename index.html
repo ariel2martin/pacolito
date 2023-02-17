@@ -21,7 +21,7 @@
             background-color: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
             padding: 20px;
-            background-color: #0a1445;
+
         }
 
         .borde {
@@ -69,7 +69,7 @@
             text-align: start;
             appearance: auto;
 
-            color: white
+
         }
 
         body {
@@ -89,7 +89,7 @@
 
             background-position-x: -200px;
             background-position-y: -50px;
-            opacity: 0;
+            opacity: 0.3;
         }
 
         #arbolCanvas {
@@ -705,10 +705,13 @@
                 );
                 gradient.addColorStop(0, colorfosforito);
                 gradient.addColorStop(1, "blue");
-                ctx.fillStyle = gradient;
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = "white";
+                ctx.fillStyle = colorfosforito;
                 ctx.fill();
-                //ctx.strokeStyle = "blue";
-                //ctx.stroke();
+
+                // ctx.lineWidth = 3;
+                ctx.stroke();
             }
         }
 
@@ -873,7 +876,7 @@
                 lineWidth = 2.0
             ) {
                 if (this.dashed) {
-                    ctx.lineCap = "butt";
+
                     switch (dashType) {
                         case 1:
                             ctx.setLineDash([12, 4]);
@@ -883,13 +886,13 @@
                             break;
                         case 3:
                             ctx.lineCap = "round";
-
-                            ctx.setLineDash([0, 5]);
+                            lineWidth = 1;
+                            ctx.setLineDash([0, 6]);
                             break;
                         case 4:
-                            ctx.setLineDash([0, 10]);
+                            ctx.setLineDash([0, 5]);
                             ctx.lineCap = "round";
-                            lineWidth = 5;
+                            lineWidth = 3;
                             break;
                         default:
                             ctx.setLineDash([12, 4]);
@@ -908,7 +911,10 @@
                 }
                 ctx.lineWidth = lineWidth;
                 ctx.strokeStyle = color;
+
                 ctx.stroke();
+                ctx.lineCap = "butt"; //reset
+                ctx.setLineDash([]);
             }
 
             drawZigZagged(ctx, offsetx = 0, offsety = 0) {
