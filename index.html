@@ -10,8 +10,8 @@
     <style>
         .losInputs {
             position: absolute;
-            left: 700px;
-            top: 150px;
+            left: 800px;
+            top: 294px;
 
         }
 
@@ -101,6 +101,7 @@
         .titulo {
             position: absolute;
             left: 700px;
+            TOP: 592PX;
             color: antiquewhite;
         }
 
@@ -117,7 +118,7 @@
 <body>
     <div class="fondo"></div>
     <div class="titulo">
-        <h1>Configuración Sefirótica</h1>
+        <h1>CONFIGURACIÓN SEFITÓRICA</h1>
         <h3 style="color: red" id="muestraError">&nbsp;</h3>
     </div>
     <canvas id="arbolCanvas" width="500" height="700">
@@ -142,9 +143,9 @@
     </div>
     <script>
         const color1 = "#15fad9";
-        const color2 = "red";
-        const color3 = "green";
-        const colorfosforito = "#04f87e";
+        const color2 = "#ff1aff";
+        const color3 = "#ffb900";
+        const colorfosforito = "#15fad9";
         const puntosRadio = 20;
 
         function dibujarFicha() {
@@ -705,7 +706,8 @@
                 );
                 gradient.addColorStop(0, colorfosforito);
                 gradient.addColorStop(1, "blue");
-                ctx.lineWidth = 1;
+                ctx.setLineDash([]);
+                ctx.lineWidth = 2;
                 ctx.strokeStyle = "white";
                 ctx.fillStyle = colorfosforito;
                 ctx.fill();
@@ -713,6 +715,10 @@
                 // ctx.lineWidth = 3;
                 ctx.stroke();
             }
+
+
+
+
         }
 
         function dibujaRecuadro() {
@@ -1023,6 +1029,7 @@
 
         ponecirculos();
 
+
         var inputletra = document.getElementsByClassName("inputletra");
         for (let t = 0; t < inputletra.length; t++) {
             inputletra[t].onfocus = function () {
@@ -1058,6 +1065,8 @@
             };
         }
         //dibujaRecuadro()
+
+
     </script>
 </body>
 
