@@ -1,20 +1,20 @@
 
-let v_nombre = "maria victoria";
-let v_apellido1 = "jimenez";
-let v_apellido2 = "arrabal";
-// // v_nombre = "francísCoss";
-// // v_apellido1 = "francísCoss";
-// // v_apellido2 = "francísCoss";
+// let v_nombre = "maria victoria";
+// let v_apellido1 = "jimenez";
+// let v_apellido2 = "arrabal";
+// // // v_nombre = "francísCoss";
+// // // v_apellido1 = "francísCoss";
+// // // v_apellido2 = "francísCoss";
 
-let v_dia = 24;
-let v_mes = 4;
-let v_año = 1977;
-// let v_nombre = "";
-// let v_apellido1 = "";
-// let v_apellido2 = "";
-// let v_dia;
-// let v_mes;
-// let v_año;
+// let v_dia = 24;
+// let v_mes = 4;
+// let v_año = 1977;
+let v_nombre = "";
+let v_apellido1 = "";
+let v_apellido2 = "";
+let v_dia;
+let v_mes;
+let v_año;
 
 // v_nombre = "francísCoss";
 // v_apellido1 = "francísCoss";
@@ -155,8 +155,7 @@ function llenarFicha() {
         }
     }
     flagFichaLlena = true;
-    console.log(ficha[10], fichaConSectreto[10]);
-    console.log(ficha[12], fichaConSectreto[12]);
+
 }
 
 function completaConSecreto(cual) {
