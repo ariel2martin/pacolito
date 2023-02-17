@@ -12,6 +12,7 @@
             position: absolute;
             left: 700px;
             top: 150px;
+
         }
 
         .esmerilado {
@@ -20,6 +21,7 @@
             background-color: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
             padding: 20px;
+            background-color: #0a1445;
         }
 
         .borde {
@@ -36,7 +38,7 @@
             font-size: 16px;
             letter-spacing: normal;
 
-            color: rgba(0, 0, 0, 0.87);
+            color: rgba(0, 0, 255, 0.87);
 
             margin-top: 4px;
             line-height: 20px;
@@ -66,6 +68,8 @@
             display: inline-block;
             text-align: start;
             appearance: auto;
+
+            color: white
         }
 
         body {
@@ -76,8 +80,8 @@
             position: absolute;
             left: 0px;
             top: 0px;
-            height: 1500px;
-            width: 1500px;
+            height: 800px;
+            width: 800px;
             background-image: url(img/1500.jpg);
             background-size: 800px 800px;
             background-repeat: no-repeat;
@@ -105,6 +109,7 @@
         input:-webkit-autofill:focus,
         input:-webkit-autofill:active {
             transition: background-color 9999s ease-in-out 0s;
+            color: white !important;
         }
     </style>
 </head>
@@ -136,7 +141,7 @@
         </label>
     </div>
     <script>
-        const color1 = "yellow";
+        const color1 = "#15fad9";
         const color2 = "red";
         const color3 = "green";
         const puntosRadio = 20;
@@ -710,35 +715,35 @@
             for (let cual = 1; cual <= 10; cual++) {
                 switch (cual) {
                     case 1:
-                        dibujaRecuadroaux(165, 48, punto[cual].cuantos, 3);
+                        dibujaRecuadroaux(170, 28, punto[cual].cuantos, 3);
 
                         break;
                     case 2:
-                        dibujaRecuadroaux(294 + 25, 134 + 13, punto[cual].cuantos, 4);
+                        dibujaRecuadroaux(294 + 45, 134 + 7, punto[cual].cuantos, 4);
                         break;
                     case 3:
-                        dibujaRecuadroaux(67 - 55, 134 + 13, punto[cual].cuantos, 4);
+                        dibujaRecuadroaux(67 - 65, 134 + 7, punto[cual].cuantos, 4);
                         break;
                     case 4:
-                        dibujaRecuadroaux(294 + 25, 265 + 13, punto[cual].cuantos, 4);
+                        dibujaRecuadroaux(294 + 45, 265 + 7, punto[cual].cuantos, 4);
                         break;
                     case 5:
-                        dibujaRecuadroaux(67 - 55, 265 + 13, punto[cual].cuantos, 4);
+                        dibujaRecuadroaux(67 - 65, 265 + 7, punto[cual].cuantos, 4);
                         break;
                     case 6:
-                        dibujaRecuadroaux(182 + 35, 330 + 13, punto[cual].cuantos, 8);
+                        dibujaRecuadroaux(182 + 55, 330 + 7, punto[cual].cuantos, 8);
                         break;
                     case 7:
-                        dibujaRecuadroaux(294 + 25, 396 + 13, punto[cual].cuantos, 5);
+                        dibujaRecuadroaux(294 + 45, 396 + 7, punto[cual].cuantos, 5);
                         break;
                     case 8:
-                        dibujaRecuadroaux(67 - 55, 396 + 13, punto[cual].cuantos, 5);
+                        dibujaRecuadroaux(67 - 65, 396 + 7, punto[cual].cuantos, 5);
                         break;
                     case 9:
-                        dibujaRecuadroaux(182 + 35, 461 + 13, punto[cual].cuantos, 4);
+                        dibujaRecuadroaux(182 + 45, 461 + 7, punto[cual].cuantos, 4);
                         break;
                     case 10:
-                        dibujaRecuadroaux(182 + 35, 592 + 13, punto[cual].cuantos, 3);
+                        dibujaRecuadroaux(182 + 55, 592 + 7, punto[cual].cuantos, 3);
                         break;
 
                     default:
@@ -750,12 +755,12 @@
 
         function dibujaRecuadroaux(x, y, numerador, denominador) {
 
-            let tamaño = 30;
+            let tamaño = 20;
             //console.warn(ctx);
             ctx.save();
             ctx.beginPath();
             ctx.strokeStyle = "white";
-
+            ctx.font = '10px Arial';
             ctx.lineWidth = 1;
             ctx.setLineDash([]);
             ctx.moveTo(x, y);
@@ -767,8 +772,8 @@
 
             ctx.lineTo(x, y);
             ctx.lineTo(x + tamaño, y - tamaño);
-            ctx.strokeText(numerador, x + 4, y - tamaño + 13);
-            ctx.strokeText(denominador, x + tamaño - 10, y - 5);
+            ctx.strokeText(numerador, x + 2, y - tamaño + 11);
+            ctx.strokeText(denominador, x + tamaño - 8, y - 3);
             ctx.stroke();
             ctx.restore();
         }
@@ -867,6 +872,7 @@
                 lineWidth = 2.0
             ) {
                 if (this.dashed) {
+                    ctx.lineCap = "butt";
                     switch (dashType) {
                         case 1:
                             ctx.setLineDash([12, 4]);
@@ -875,10 +881,11 @@
                             ctx.setLineDash([15, 3, 3, 3]);
                             break;
                         case 3:
-                            ctx.setLineDash([1, 1]);
+                            ctx.setLineDash([1, 5]);
                             break;
                         case 4:
-                            ctx.setLineDash([3, 2]);
+                            ctx.setLineDash([2, 4]);
+                            ctx.lineCap = "round";
                             break;
                         default:
                             ctx.setLineDash([12, 4]);
@@ -990,12 +997,11 @@
             // poneSimboloSuma(y);
             //dibujaKarma(y);
             let zig = false;
-            let disc = false;
-            //dibujaLinea(y, color1, zig, disc, 1);
-            //dibujaLinea(y, color1, zig, disc, 1);
-            //dibujaLinea(y, color1, true, disc, 1);
-            //dibujaLinea(y, color1, zig, true, 1);
-            //dibujaLinea(y, color1, true, true, 1);
+            let disc = true;
+            // dibujaLinea(y, color1, zig, disc, 3);
+            // dibujaLinea(y, color1, zig, disc, 4);
+            // dibujaLinea(y, color1, zig, disc, 2);
+
             //dibujaLinea(y, color1, zig, disc, 3);
             //dibujaLinea(y, color1, zig, disc, 4);
             //dibujaKarma(y);
