@@ -73,7 +73,7 @@
         }
 
         body {
-            background-color: black;
+            background-color: #0a1445;
         }
 
         .fondo {
@@ -89,7 +89,7 @@
 
             background-position-x: -200px;
             background-position-y: -50px;
-            opacity: 0.3;
+            opacity: 0;
         }
 
         #arbolCanvas {
@@ -144,6 +144,7 @@
         const color1 = "#15fad9";
         const color2 = "red";
         const color3 = "green";
+        const colorfosforito = "#ccf48c";
         const puntosRadio = 20;
 
         function dibujarFicha() {
@@ -702,7 +703,7 @@
                     posiciones[p][0],
                     puntosRadio
                 );
-                gradient.addColorStop(0, "yellow");
+                gradient.addColorStop(0, colorfosforito);
                 gradient.addColorStop(1, "blue");
                 ctx.fillStyle = gradient;
                 ctx.fill();
@@ -760,7 +761,7 @@
             ctx.save();
             ctx.beginPath();
             ctx.strokeStyle = "white";
-            ctx.font = '10px Arial';
+            ctx.font = '8px Arial';
             ctx.lineWidth = 1;
             ctx.setLineDash([]);
             ctx.moveTo(x, y);
@@ -772,7 +773,7 @@
 
             ctx.lineTo(x, y);
             ctx.lineTo(x + tamaño, y - tamaño);
-            ctx.strokeText(numerador, x + 2, y - tamaño + 11);
+            ctx.strokeText(numerador, x + 2, y - tamaño + 8);
             ctx.strokeText(denominador, x + tamaño - 8, y - 3);
             ctx.stroke();
             ctx.restore();
@@ -1045,7 +1046,7 @@
                 //setTimeout(resultado, 10);
             };
         }
-
+        //dibujaRecuadro()
     </script>
 </body>
 
