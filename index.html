@@ -188,6 +188,7 @@
                     //dibujaKarma(cada);
                 }
             });
+            dibujaRecuadro();
             //console.log(ficha);
             //;
         }
@@ -591,114 +592,70 @@
             linea[cual]++;
             switch (cual) {
                 case 1:
-                    punto[1].cuantos++;
-                    punto[3].cuantos++;
+
                     dibujaKarmaaux(punto[1], punto[3], 0.5, 0.8);
                     break;
                 case 2:
-                    punto[1].cuantos++;
-                    punto[6].cuantos++;
                     dibujaKarmaaux(punto[1], punto[6]);
                     break;
                 case 3:
-                    punto[2].cuantos++;
-                    punto[3].cuantos++;
                     dibujaKarmaaux(punto[2], punto[3]);
                     break;
                 case 4:
-                    punto[2].cuantos++;
-                    punto[6].cuantos++;
                     dibujaKarmaaux(punto[2], punto[6], 0.8, 0.5);
                     break;
                 case 5:
-                    punto[2].cuantos++;
-                    punto[4].cuantos++;
                     dibujaKarmaaux(punto[2], punto[4]);
                     break;
                 case 6:
-                    punto[3].cuantos++;
-                    punto[6].cuantos++;
                     dibujaKarmaaux(punto[3], punto[6], 0.8, -0.5);
                     break;
                 case 7:
-                    punto[3].cuantos++;
-                    punto[5].cuantos++;
                     dibujaKarmaaux(punto[3], punto[5]);
                     break;
                 case 8:
-                    punto[4].cuantos++;
-                    punto[5].cuantos++;
                     dibujaKarmaaux(punto[4], punto[5]);
                     break;
                 case 9:
-                    punto[4].cuantos++;
-                    punto[6].cuantos++;
                     dibujaKarmaaux(punto[4], punto[6], 0.5, 0.8);
                     break;
                 case 10:
-                    punto[4].cuantos++;
-                    punto[7].cuantos++;
                     dibujaKarmaaux(punto[4], punto[7]);
                     break;
                 case 11:
-                    punto[5].cuantos++;
-                    punto[6].cuantos++;
                     dibujaKarmaaux(punto[6], punto[5], -0.5, 0.8);
                     break;
                 case 12:
-                    punto[5].cuantos++;
-                    punto[8].cuantos++;
                     dibujaKarmaaux(punto[5], punto[8]);
                     break;
                 case 13:
-                    punto[7].cuantos++;
-                    punto[6].cuantos++;
                     dibujaKarmaaux(punto[7], punto[6], -0.5, 0.8);
                     break;
                 case 14:
-                    punto[9].cuantos++;
-                    punto[6].cuantos++;
                     dibujaKarmaaux(punto[6], punto[9]);
                     break;
                 case 15:
-                    punto[8].cuantos++;
-                    punto[6].cuantos++;
                     dibujaKarmaaux(punto[6], punto[8], 0.5, 0.8);
                     break;
                 case 16:
-                    punto[7].cuantos++;
-                    punto[8].cuantos++;
                     dibujaKarmaaux(punto[7], punto[8]);
                     break;
                 case 17:
-                    punto[7].cuantos++;
-                    punto[9].cuantos++;
                     dibujaKarmaaux(punto[7], punto[9], 0.5, 0.8);
                     break;
                 case 18:
-                    punto[7].cuantos++;
-                    punto[10].cuantos++;
                     dibujaKarmaaux(punto[7], punto[10], 0.8, 0.5);
                     break;
                 case 19:
-                    punto[8].cuantos++;
-                    punto[9].cuantos++;
                     dibujaKarmaaux(punto[9], punto[8], -0.5, 0.8);
                     break;
-
                 case 20:
-                    punto[10].cuantos++;
-                    punto[8].cuantos++;
                     dibujaKarmaaux(punto[8], punto[10], 0.8, -0.5);
                     break;
                 case 21:
-                    punto[10].cuantos++;
-                    punto[9].cuantos++;
                     dibujaKarmaaux(punto[9], punto[10]);
                     break;
                 case 22:
-                    punto[1].cuantos++;
-                    punto[2].cuantos++;
                     dibujaKarmaaux(punto[2], punto[1], -0.5, 0.8);
                     break;
                 default:
@@ -749,15 +706,83 @@
             }
         }
 
+        function dibujaRecuadro() {
+            for (let cual = 1; cual <= 10; cual++) {
+                switch (cual) {
+                    case 1:
+                        dibujaRecuadroaux(165, 48, punto[cual].cuantos, 3);
+
+                        break;
+                    case 2:
+                        dibujaRecuadroaux(294 + 25, 134 + 13, punto[cual].cuantos, 4);
+                        break;
+                    case 3:
+                        dibujaRecuadroaux(67 - 55, 134 + 13, punto[cual].cuantos, 4);
+                        break;
+                    case 4:
+                        dibujaRecuadroaux(294 + 25, 265 + 13, punto[cual].cuantos, 4);
+                        break;
+                    case 5:
+                        dibujaRecuadroaux(67 - 55, 265 + 13, punto[cual].cuantos, 4);
+                        break;
+                    case 6:
+                        dibujaRecuadroaux(182 + 35, 330 + 13, punto[cual].cuantos, 8);
+                        break;
+                    case 7:
+                        dibujaRecuadroaux(294 + 25, 396 + 13, punto[cual].cuantos, 5);
+                        break;
+                    case 8:
+                        dibujaRecuadroaux(67 - 55, 396 + 13, punto[cual].cuantos, 5);
+                        break;
+                    case 9:
+                        dibujaRecuadroaux(182 + 35, 461 + 13, punto[cual].cuantos, 4);
+                        break;
+                    case 10:
+                        dibujaRecuadroaux(182 + 35, 592 + 13, punto[cual].cuantos, 3);
+                        break;
+
+                    default:
+                        return false;
+                }
+            }
+
+        }
+
+        function dibujaRecuadroaux(x, y, numerador, denominador) {
+
+            let tamaño = 30;
+            //console.warn(ctx);
+            ctx.save();
+            ctx.beginPath();
+            ctx.strokeStyle = "white";
+
+            ctx.lineWidth = 1;
+            ctx.setLineDash([]);
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + tamaño, y);
+            ctx.lineTo(x + tamaño, y - tamaño);
+            ctx.lineTo(x, y - tamaño);
+
+
+
+            ctx.lineTo(x, y);
+            ctx.lineTo(x + tamaño, y - tamaño);
+            ctx.strokeText(numerador, x + 4, y - tamaño + 13);
+            ctx.strokeText(denominador, x + tamaño - 10, y - 5);
+            ctx.stroke();
+            ctx.restore();
+        }
         const posiciones = [
             [70, 181],
             [134, 294],
-            [134, 68],
+            [134, 67],
             [265, 294],
             [265, 67],
-            [330, 182],
-            [396, 293],
+
+            [330, 181],
+            [396, 294],
             [396, 67],
+
             [461, 181],
             [592, 181],
         ];
@@ -1014,6 +1039,7 @@
                 //setTimeout(resultado, 10);
             };
         }
+
     </script>
 </body>
 
