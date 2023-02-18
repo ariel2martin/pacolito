@@ -176,26 +176,54 @@
                 senderosexistentes = senderosexistentes.concat(ficha[t]);
             }
             let karma = [];
+            let karmaduplicado = [];
             karma = ficha[20].concat(ficha[21].concat(ficha[22])); ///para sumar arrays
             //console.log(karma);
-            ///quito duplicados
+            ///todo duplicado lo pongo en karmaduplicado
             for (var i = karma.length - 1; i >= 0; i--) {
-                if (karma.indexOf(karma[i]) !== i) karma.splice(i, 1);
+                if (karma.indexOf(karma[i]) !== i) {
+                    karmaduplicado.push((karma[i]));
+                    karma.splice(i, 1); //me adelanto quitando uno de los duplicados
+                }
             }
+            //ahora, en karmaduplicado puede estar mas de una vez, lo reduzco
+            for (var i = karmaduplicado.length - 1; i >= 0; i--) {
+                if (karmaduplicado.indexOf(karmaduplicado[i]) !== i) {
+                    karmaduplicado.splice(i, 1);
+                }
+            }
+            //ahora quito los nulos, hay max 1 solo en cada array
             karma.splice(karma.indexOf(null), 1);
-            //console.log(karma);
+            karmaduplicado.splice(karmaduplicado.indexOf(null), 1);
+            //ahora quito en karma todos los que esten en karmaduplicado
+            for (var d = karmaduplicado.length - 1; d >= 0; d--) {
+                if (karma.indexOf(karmaduplicado[d]) != -1)
+                    karma.splice(karma.indexOf(karmaduplicado[d]), 1);
+            }
+            //console.log("karma ", karma);
+            //console.log("karmaduplicado ", karmaduplicado);
+
             karma.forEach((cada) => {
                 if (senderosexistentes.indexOf(cada) == -1) {
                     //el sendero no esta ocupado entonces dibujo el camino
                     dibujaKarma(cada);
                 } else {
                     // dibujo un + sobre el sendero
-                    //console.log("simbolo en: ", cada);
                     poneSimboloSuma(cada);
-                    //dibujaKarma(cada);
                 }
             });
+            karmaduplicado.forEach((cada) => {
+                if (senderosexistentes.indexOf(cada) == -1) {
+                    dibujaKarmaDuplicado(cada);
+                } else {
+                    poneSimboloSumaduplicado(cada);
+                }
+            });
+
+            ponecirculos();
             dibujaRecuadro();
+            ponenumerosendero();
+
             //console.log(ficha);
             //;
         }
@@ -217,71 +245,163 @@
         function poneSimboloSuma(sendero) {
             switch (sendero) {
                 case 1:
-                    auxponeSimboloSuma(125, 79);
+                    auxponeSimboloSuma(120, 77);
                     break;
                 case 2:
-                    auxponeSimboloSuma(165, 180);
+                    auxponeSimboloSuma(200, 220);
                     break;
                 case 3:
-                    auxponeSimboloSuma(140, 115);
+                    auxponeSimboloSuma(135, 150);
                     break;
                 case 4:
-                    auxponeSimboloSuma(250, 180);
+                    auxponeSimboloSuma(235, 200);
                     break;
                 case 5:
-                    auxponeSimboloSuma(310, 180);
+                    auxponeSimboloSuma(312, 200);
                     break;
                 case 6:
-                    auxponeSimboloSuma(115, 180);
+                    auxponeSimboloSuma(127, 200);
                     break;
                 case 7:
-                    auxponeSimboloSuma(52, 180);
+                    auxponeSimboloSuma(50, 200);
                     break;
                 case 8:
-                    auxponeSimboloSuma(100, 240);
+                    auxponeSimboloSuma(163, 242);
                     break;
                 case 9:
-                    auxponeSimboloSuma(250, 300);
+                    auxponeSimboloSuma(250, 305);
                     break;
                 case 10:
-                    auxponeSimboloSuma(310, 310);
+                    auxponeSimboloSuma(312, 325);
                     break;
                 case 11:
-                    auxponeSimboloSuma(110, 300);
+                    auxponeSimboloSuma(110, 305);
 
                     break;
                 case 12:
-                    auxponeSimboloSuma(52, 310);
+                    auxponeSimboloSuma(50, 325);
                     break;
                 case 13:
-                    auxponeSimboloSuma(250, 350);
+                    auxponeSimboloSuma(250, 345);
                     break;
                 case 14:
-                    auxponeSimboloSuma(165, 365);
+                    auxponeSimboloSuma(198, 365);
                     break;
                 case 15:
-                    auxponeSimboloSuma(110, 350);
+                    auxponeSimboloSuma(110, 345);
                     break;
                 case 16:
-                    auxponeSimboloSuma(135, 375);
+                    auxponeSimboloSuma(135, 373);
                     break;
                 case 17:
-                    auxponeSimboloSuma(240, 435);
+                    auxponeSimboloSuma(230, 410);
                     break;
                 case 18:
-                    auxponeSimboloSuma(240, 510);
+                    auxponeSimboloSuma(264, 480);
                     break;
                 case 19:
-                    auxponeSimboloSuma(125, 435);
+                    auxponeSimboloSuma(110, 435);
                     break;
                 case 20:
-                    auxponeSimboloSuma(120, 510);
+                    auxponeSimboloSuma(100, 480);
                     break;
                 case 21:
                     auxponeSimboloSuma(165, 490);
                     break;
                 case 22:
-                    auxponeSimboloSuma(240, 79);
+                    auxponeSimboloSuma(245, 77);
+                    break;
+            }
+        }
+        function poneSimboloSumaduplicado(sendero) {
+            switch (sendero) {
+                case 1:
+                    auxponeSimboloSuma(120, 77);
+                    auxponeSimboloSuma(110, 77);
+                    break;
+                case 2:
+                    auxponeSimboloSuma(200, 220);
+                    auxponeSimboloSuma(210, 220);
+                    break;
+                case 3:
+                    auxponeSimboloSuma(135, 150);
+                    auxponeSimboloSuma(145, 150);
+                    break;
+                case 4:
+                    auxponeSimboloSuma(235, 200);
+                    auxponeSimboloSuma(225, 200);
+                    break;
+                case 5:
+                    auxponeSimboloSuma(312, 200);
+                    auxponeSimboloSuma(322, 200);
+                    break;
+                case 6:
+                    auxponeSimboloSuma(127, 200);
+                    auxponeSimboloSuma(137, 200);
+                    break;
+                case 7:
+                    auxponeSimboloSuma(50, 200);
+                    auxponeSimboloSuma(40, 200);
+                    break;
+                case 8:
+                    auxponeSimboloSuma(163, 242);
+                    auxponeSimboloSuma(153, 242);
+                    break;
+                case 9:
+                    auxponeSimboloSuma(250, 305);
+                    auxponeSimboloSuma(260, 305);
+                    break;
+                case 10:
+                    auxponeSimboloSuma(312, 325);
+                    auxponeSimboloSuma(322, 325);
+                    break;
+                case 11:
+                    auxponeSimboloSuma(110, 305);
+                    auxponeSimboloSuma(120, 305);
+                    break;
+                case 12:
+                    auxponeSimboloSuma(50, 325);
+                    auxponeSimboloSuma(40, 325);
+                    break;
+                case 13:
+                    auxponeSimboloSuma(250, 345);
+                    auxponeSimboloSuma(260, 345);
+                    break;
+                case 14:
+                    auxponeSimboloSuma(198, 365);
+                    auxponeSimboloSuma(208, 365);
+                    break;
+                case 15:
+                    auxponeSimboloSuma(110, 345);
+                    auxponeSimboloSuma(100, 345);
+                    break;
+                case 16:
+                    auxponeSimboloSuma(135, 373);
+                    auxponeSimboloSuma(145, 373);
+                    break;
+                case 17:
+                    auxponeSimboloSuma(230, 410);
+                    auxponeSimboloSuma(220, 410);
+                    break;
+                case 18:
+                    auxponeSimboloSuma(264, 480);
+                    auxponeSimboloSuma(274, 480);
+                    break;
+                case 19:
+                    auxponeSimboloSuma(110, 435);
+                    auxponeSimboloSuma(120, 435);
+                    break;
+                case 20:
+                    auxponeSimboloSuma(100, 480);
+                    auxponeSimboloSuma(90, 480);
+                    break;
+                case 21:
+                    auxponeSimboloSuma(165, 490);
+                    auxponeSimboloSuma(155, 490);
+                    break;
+                case 22:
+                    auxponeSimboloSuma(245, 77);
+                    auxponeSimboloSuma(255, 77);
                     break;
             }
         }
@@ -563,7 +683,7 @@
                 default:
                     return false;
             }
-            ponecirculos();
+            //ponecirculos();
             //console.log('linea', linea[19]);
         }
         function dibujaKarmaaux(desde, hasta, offsetx = 1, offsety = 1) {
@@ -590,12 +710,16 @@
             region.lineTo(lineLength, 0);
             region.lineTo(0, 0);
             region.closePath();
-            ctx.fillStyle = estrellapattern;
+
+
             ctx.fill(region);
             ctx.restore();
         }
 
-        function dibujaKarma(cual) {
+        function dibujaKarma(cual, duplicado = false) {
+
+            if (duplicado) ctx.fillStyle = asteriscopattern;
+            else ctx.fillStyle = estrellapattern;
             linea[cual]++;
             switch (cual) {
                 case 1:
@@ -668,9 +792,15 @@
                 default:
                     return false;
             }
-            ponecirculos();
+            //ponecirculos();
             //console.log('linea', linea[19]);
         }
+
+
+        function dibujaKarmaDuplicado(cual) {
+            dibujaKarma(cual, true);
+        };
+
 
         function clear() {
             linea = [
@@ -715,45 +845,130 @@
                 // ctx.lineWidth = 3;
                 ctx.stroke();
             }
-
-
-
-
         }
 
+        function ponenumerosendero() {
+            const pos = [
+                [99, 130, 1],
+                [99, 235, 22],
+                [134, 134, 3],
+                [396, 134, 16],
+                [265, 164, 8],
+                [205, 67, 7],
+                [205, 294, 5],
+                [330, 294, 10],
+                [330, 67, 12],
+                [220, 181, 2],
+                [220, 245, 4],
+                [220, 117, 6],
+
+                [295, 245, 9],
+                [295, 117, 11],
+                [365, 245, 13],
+                [365, 117, 15],
+                [425, 245, 17],
+                [425, 117, 19],
+
+                [480, 245, 18],
+                [480, 117, 20],
+                [370, 181, 14],
+                [500, 181, 21],
+            ];
+
+            let diam = puntosRadio / 2;
+            let gap = diam / 2;
+            let gapx = gap;
+            let gapy = gap;
+
+
+            for (let p = 0; p < pos.length; p++) {
+                if (pos[p][2] < 10) {
+                    ctx.font = '16px Arial';
+                    gapx = gap;
+                    gapy = gap;
+                }
+                else {
+
+
+                    if (pos[p][2] < 20) {
+                        ctx.font = '12px Arial';
+                        gapx = gap + 2;
+                        gapy = gap - 1;
+                    }
+                    else {
+
+                        ctx.font = '10px Arial';
+                        gapx = gap;
+                        gapy = gap - 2;
+                    }
+                }
+                ctx.beginPath();
+                ctx.arc(
+                    pos[p][1],
+                    pos[p][0],
+                    diam,
+                    0,
+                    2 * Math.PI
+                );
+                ctx.fillStyle = "white";
+                ctx.fill();
+                ctx.setLineDash([]);
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = "black";
+                ctx.strokeText(pos[p][2], pos[p][1] - gapx,
+                    pos[p][0] + gapy);
+
+
+                //ctx.stroke();
+            }
+        }
+
+
         function dibujaRecuadro() {
+
             for (let cual = 1; cual <= 10; cual++) {
                 switch (cual) {
                     case 1:
-                        dibujaRecuadroaux(170, 28, punto[cual].cuantos, 3);
+                        dibujaRecuadroaux(170, 28 + 53, punto[cual].cuantos, 3);
+                        //dibujaRecuadroaux(170, 28, punto[cual].cuantos, 3);
 
                         break;
                     case 2:
-                        dibujaRecuadroaux(294 + 45, 134 + 7, punto[cual].cuantos, 4);
+                        dibujaRecuadroaux(294 - 10, 134 + 10, punto[cual].cuantos, 4);
+                        //dibujaRecuadroaux(294 + 45, 134 + 7, punto[cual].cuantos, 4);
                         break;
                     case 3:
-                        dibujaRecuadroaux(67 - 65, 134 + 7, punto[cual].cuantos, 4);
+                        dibujaRecuadroaux(67 - 10, 134 + 10, punto[cual].cuantos, 4);
+                        //dibujaRecuadroaux(67 - 65, 134 + 7, punto[cual].cuantos, 4);
                         break;
                     case 4:
-                        dibujaRecuadroaux(294 + 45, 265 + 7, punto[cual].cuantos, 4);
+                        dibujaRecuadroaux(294 - 10, 265 + 10, punto[cual].cuantos, 4);
+                        //dibujaRecuadroaux(294 + 45, 265 + 7, punto[cual].cuantos, 4);
+                        //     dibujaRecuadroaux(294 - 10, 265 + 7, , 4);
                         break;
                     case 5:
-                        dibujaRecuadroaux(67 - 65, 265 + 7, punto[cual].cuantos, 4);
+                        dibujaRecuadroaux(67 - 10, 265 + 10, punto[cual].cuantos, 4);
+                        //dibujaRecuadroaux(67 - 65, 265 + 7, punto[cual].cuantos, 4);
                         break;
                     case 6:
-                        dibujaRecuadroaux(182 + 55, 330 + 7, punto[cual].cuantos, 8);
+                        dibujaRecuadroaux(182 - 10, 330 + 10, punto[cual].cuantos, 8);
+                        //dibujaRecuadroaux(182 + 55, 330 + 7, punto[cual].cuantos, 8);
                         break;
                     case 7:
-                        dibujaRecuadroaux(294 + 45, 396 + 7, punto[cual].cuantos, 5);
+                        dibujaRecuadroaux(294 - 10, 396 + 10, punto[cual].cuantos, 5);
+                        //dibujaRecuadroaux(294 + 45, 396 + 7, punto[cual].cuantos, 5);
                         break;
                     case 8:
-                        dibujaRecuadroaux(67 - 65, 396 + 7, punto[cual].cuantos, 5);
+                        dibujaRecuadroaux(67 - 10, 396 + 10, punto[cual].cuantos, 5);
+                        //dibujaRecuadroaux(67 - 65, 396 + 7, punto[cual].cuantos, 5);
                         break;
                     case 9:
-                        dibujaRecuadroaux(182 + 45, 461 + 7, punto[cual].cuantos, 4);
+                        dibujaRecuadroaux(182 - 10, 461 + 10, punto[cual].cuantos, 4);
+                        //dibujaRecuadroaux(182 + 45, 461 + 7, punto[cual].cuantos, 4);
                         break;
                     case 10:
-                        dibujaRecuadroaux(182 + 55, 592 + 7, punto[cual].cuantos, 3);
+                        dibujaRecuadroaux(182 - 10, 592 + 10, punto[cual].cuantos, 3);
+                        //dibujaRecuadroaux(182 + 55, 592 + 7, punto[cual].cuantos, 3);
                         break;
 
                     default:
@@ -764,28 +979,39 @@
         }
 
         function dibujaRecuadroaux(x, y, numerador, denominador) {
+            // let tamaño = 20;
+            // ctx.save();
+            // ctx.beginPath();
+            // ctx.strokeStyle = "white";
+            // ctx.font = '10px Courier New';
+            // ctx.lineWidth = 1;
+            // ctx.setLineDash([]);
+            // ctx.moveTo(x, y);
+            // ctx.lineTo(x + tamaño, y);
+            // ctx.lineTo(x + tamaño, y - tamaño);
+            // ctx.lineTo(x, y - tamaño);
+            // ctx.lineTo(x, y);
+            // ctx.lineTo(x + tamaño, y - tamaño);
+            // ctx.strokeText(numerador, x + 2, y - tamaño + 8);
+            // ctx.strokeText(denominador, x + tamaño - 8, y - 3);
+            // ctx.stroke();
+            // ctx.restore();
 
             let tamaño = 20;
-            //console.warn(ctx);
-            ctx.save();
+            let chico = tamaño / 2;
+            let aux = numerador < 10 ? chico - 4 : chico - 9;
             ctx.beginPath();
-            ctx.strokeStyle = "white";
-            ctx.font = '8px Arial';
+            ctx.strokeStyle = "black";
+            ctx.font = '14px sans-serif';
             ctx.lineWidth = 1;
             ctx.setLineDash([]);
-            ctx.moveTo(x, y);
-            ctx.lineTo(x + tamaño, y);
-            ctx.lineTo(x + tamaño, y - tamaño);
-            ctx.lineTo(x, y - tamaño);
-
-
-
-            ctx.lineTo(x, y);
-            ctx.lineTo(x + tamaño, y - tamaño);
-            ctx.strokeText(numerador, x + 2, y - tamaño + 8);
-            ctx.strokeText(denominador, x + tamaño - 8, y - 3);
+            ctx.moveTo(x + 1, y - chico);
+            ctx.lineTo(x + tamaño - 2, y - chico);
+            //ctx.lineTo(x + tamaño, y - tamaño);
+            ctx.strokeText(numerador, x + aux, y - chico - 3);
+            ctx.strokeText(denominador, x + chico - 4, y + 3);
             ctx.stroke();
-            ctx.restore();
+
         }
         const posiciones = [
             [70, 181],
@@ -976,10 +1202,10 @@
         canvas.style.position = "absolute";
         let ctx = canvas.getContext("2d");
 
+        var length = 6;
         // forma de estrella
         const estrellaCanvas = document.createElement("canvas");
         const estrella = estrellaCanvas.getContext("2d");
-        var length = 6;
         estrellaCanvas.width = length * 3;
         estrellaCanvas.height = length * 3;
         estrella.fillStyle = "transparent";
@@ -1005,29 +1231,56 @@
         estrella.stroke();
         const estrellapattern = ctx.createPattern(estrellaCanvas, "repeat");
 
-        // //esto es solo para probar cómo se ve en pantalla
+        // forma de asterisco
 
+        const asteriscoCanvas = document.createElement("canvas");
+        const asterisco = asteriscoCanvas.getContext("2d");
+        asteriscoCanvas.width = length * 3;
+        asteriscoCanvas.height = length * 3;
+        asterisco.fillStyle = "transparent";
+        asterisco.translate(length, length);
+        asterisco.beginPath();
+        asterisco.globalAlpha = 1;
+        asterisco.rotate((Math.PI / 180) * 72);
+        asterisco.scale(1, 1);
+        asterisco.strokeStyle = color1;
+        asterisco.fillStyle = color1;
+        asterisco.lineWidth = 1;
+        for (var i = 9; i--;) {
+            asterisco.lineTo(0, length);
+            asterisco.translate(0, length);
+            //    asterisco.rotate((Math.PI * 2) / 10);
+            asterisco.lineTo(0, -length);
+            asterisco.translate(0, -length);
+            asterisco.rotate(-((Math.PI / 180) * 40));
+
+        }
+        asterisco.lineTo(0, length);
+        asterisco.closePath();
+        asterisco.fill();
+        asterisco.stroke();
+        const asteriscopattern = ctx.createPattern(asteriscoCanvas, "repeat");
+
+
+
+        // //esto es solo para probar cómo se ve en pantalla
         for (let y = 1; y <= 22; y++) {
-            //dibujaLinea(2, color1, 0, 0, 1);
-            //dibujaKarma(1);
-            // poneSimboloSuma(y);
-            //dibujaKarma(y);
             let zig = false;
-            let disc = true;
+            let disc = false;
             // dibujaLinea(y, color1, zig, disc, 4);
             // dibujaLinea(y, color1, zig, disc, 2);
             // dibujaLinea(y, color1, zig, disc, 3);
-
-
-
             //dibujaLinea(y, color1, zig, disc, 3);
             //dibujaLinea(y, color1, zig, disc, 4);
+
+            //poneSimboloSumaduplicado(y);
             //dibujaKarma(y);
-            //poneSimboloSuma(y);
-            //dibujaKarma(y);
+            //dibujaKarmaDuplicado(y);
         }
 
         ponecirculos();
+        //ponenumerosendero();
+        //dibujaRecuadro();
 
 
         var inputletra = document.getElementsByClassName("inputletra");
@@ -1055,7 +1308,7 @@
                     inputletra[0].value = v_nombre;
                     inputletra[1].value = v_apellido1;
                     inputletra[2].value = v_apellido2;
-
+                    clear();
                     dibujarFicha();
                     //console.log(ficha);
                     //console.log(fichaConSectreto);
