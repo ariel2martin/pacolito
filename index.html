@@ -6,13 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Arbol de la vida</title>
-    <script src="calculo.js"></script>
     <style>
         .losInputs {
             position: absolute;
             left: 800px;
             top: 294px;
-
         }
 
         .esmerilado {
@@ -21,7 +19,6 @@
             background-color: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
             padding: 20px;
-
         }
 
         .borde {
@@ -68,8 +65,6 @@
             display: inline-block;
             text-align: start;
             appearance: auto;
-
-
         }
 
         body {
@@ -101,7 +96,7 @@
         .titulo {
             position: absolute;
             left: 700px;
-            TOP: 592PX;
+            top: 592px;
             color: antiquewhite;
         }
 
@@ -148,6 +143,438 @@
         const colorfosforito = "#15fad9";
         const puntosRadio = 20;
 
+        let v_nombre = "";
+        let v_apellido1 = "";
+        let v_apellido2 = "";
+        let v_dia;
+        let v_mes;
+        let v_año;
+        let muestraError = "";
+        let ficha = [];
+        let secreto = [];
+        let fichaConSectreto = [
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        ];
+        let flagFichaLlena = false;
+
+        const alfabeto = [
+            ["A", 1, 1],
+            ["B", 2, 2],
+            ["C", 3, 3],
+            ["CH", 4, 4],
+            ["D", 5, 5],
+            ["E", 6, 6],
+            ["F", 7, 7],
+            ["G", 8, 8],
+            ["H", 9, 9],
+            ["I", 1, 10],
+            ["J", 2, 20],
+            ["K", 3, 30],
+            ["L", 4, 40],
+            ["LL", 5, 50],
+            ["M", 6, 60],
+            ["N", 7, 70],
+            ["Ñ", 8, 80],
+            ["O", 9, 90],
+            ["P", 1, 100],
+            ["Q", 2, 200],
+            ["R", 3, 300],
+            ["S", 4, 400],
+            ["T", 5, 500],
+            ["U", 6, 600],
+            ["V", 7, 700],
+            ["W", 8, 800],
+            ["X", 9, 900],
+            ["Y", 1, 1000],
+            ["Z", 2, 2000],
+            [" ", 0, 0],
+        ];
+
+        function llenarFicha() {
+            v_nombre = desglosar(v_nombre)[0];
+            ficha[1] = [numero(v_nombre), null, null];
+            secreto[0] = numeroSecreto(v_nombre);
+
+            v_apellido1 = desglosar(v_apellido1)[0];
+            ficha[2] = [numero(v_apellido1), null, null];
+            secreto[1] = numeroSecreto(v_apellido1);
+
+            v_apellido2 = desglosar(v_apellido2)[0];
+            ficha[3] = [numero(v_apellido2), null, null];
+            secreto[2] = numeroSecreto(v_apellido2);
+
+            ficha[4] = [reduccionA22(v_dia), null, null];
+            ficha[5] = [parseInt(v_mes), null, null];
+            ficha[6] = [reduccionA22(v_año), null, null];
+            ficha[7] = [
+                reduccionA22(ficha[1][0] + ficha[2][0] + ficha[3][0]),
+                null,
+                null,
+            ];
+            ficha[8] = [
+                reduccionA22(ficha[4][0] + ficha[5][0] + ficha[6][0]),
+                null,
+                null,
+            ];
+            ficha[9] = [reduccionA22(ficha[7][0] + ficha[8][0]), null, null];
+            ficha[10] = [reduccionA22(ficha[1][0] + ficha[2][0]), null, null];
+            ficha[11] = [reduccionA22(ficha[2][0] + ficha[3][0]), null, null];
+            ficha[12] = [reduccionA22(ficha[4][0] + ficha[5][0]), null, null];
+            ficha[13] = [reduccionA22(ficha[5][0] + ficha[6][0]), null, null];
+            ficha[20] = [reduccionA22(ficha[10][0] + ficha[11][0]), null, null];
+            ficha[21] = [reduccionA22(ficha[12][0] + ficha[13][0]), null, null];
+            ficha[22] = [reduccionA22(ficha[20][0] + ficha[21][0]), null, null];
+
+            //Ahora completar familias de numeros
+            for (let t = 1; t <= 13; t++) {
+                ficha[t][1] = reduccionA9(ficha[t][0]);
+                ficha[t][2] = reduccionA9(ficha[t][1]);
+            }
+            for (let t = 20; t <= 22; t++) {
+                ficha[t][1] = reduccionA9(ficha[t][0]);
+                ficha[t][2] = reduccionA9(ficha[t][1]);
+            }
+
+            // Ahora intento llenar las familias
+            for (let qq = 7; qq <= 13; qq++) {
+                if (ficha[qq][1] == null) {
+                    ficha[qq][1] = intentaLlenar(qq);
+                } else if (ficha[qq][2] == null) {
+                    ficha[qq][2] = intentaLlenar(qq);
+                }
+            }
+            for (let qq = 20; qq <= 22; qq++) {
+                if (ficha[qq][1] == null) {
+                    ficha[qq][1] = intentaLlenar(qq);
+                } else if (ficha[qq][2] == null) {
+                    ficha[qq][2] = intentaLlenar(qq);
+                }
+            }
+
+            //ahora solo sobre las familias incompletas rellenamos con el numero secreto. sin repetidos
+            for (let r = 1; r <= 3; r++) {
+                if (!verifFamiliaCompleta(r)) {
+                    completaConSecreto(r);
+                }
+            }
+            //ahora vuelvo a intentar completar la familia, el resultado tambien es secreto
+            for (let qq = 7; qq <= 13; qq++) {
+                if (ficha[qq][1] == null) {
+                    ficha[qq][1] = intentaLlenar(qq);
+                    fichaConSectreto[qq] = ficha[qq][1] || 0;
+                } else if (ficha[qq][2] == null) {
+                    ficha[qq][2] = intentaLlenar(qq);
+                    fichaConSectreto[qq] = ficha[qq][2] || 0;
+                }
+            }
+            for (let qq = 20; qq <= 22; qq++) {
+                if (ficha[qq][1] == null) {
+                    ficha[qq][1] = intentaLlenar(qq);
+                    fichaConSectreto[qq] = ficha[qq][1] || 0;
+                } else if (ficha[qq][2] == null) {
+                    ficha[qq][2] = intentaLlenar(qq);
+                    fichaConSectreto[qq] = ficha[qq][2] || 0;
+                }
+            }
+            flagFichaLlena = true;
+        }
+
+        function completaConSecreto(cual) {
+            let cualsecreto = secreto[cual - 1];
+
+            let existe1 = ficha[cual][0];
+            let existe2 = ficha[cual][1];
+            let existe3 = ficha[cual][2];
+            if (existe1 == cualsecreto) {
+                return;
+            }
+            if (existe2 == cualsecreto) {
+                return;
+            }
+            if (existe3 == cualsecreto) {
+                return;
+            }
+            if (existe2 == null) {
+                ficha[cual][1] = cualsecreto;
+                fichaConSectreto[cual] = cualsecreto;
+                return;
+            } else {
+                if (existe3 == null) {
+                    ficha[cual][2] = cualsecreto;
+                    fichaConSectreto[cual] = cualsecreto;
+                    return;
+                }
+            }
+        }
+
+        function verifFamiliaCompleta(cual) {
+            let copia = [...ficha[cual]];
+            copia.sort(function (a, b) {
+                return b - a;
+            });
+            let existe1 = copia[0];
+            let existe2 = copia[1];
+            let existe3 = copia[2];
+            switch (existe1) {
+                case 22:
+                    if (existe2 == 13 && existe3 == 4) {
+                        return true;
+                    } else return false;
+                    break;
+                case 21:
+                    if (existe2 == 12 && existe3 == 3) {
+                        return true;
+                    } else return false;
+                    break;
+                case 20:
+                    if (existe2 == 11 && existe3 == 2) {
+                        return true;
+                    } else return false;
+                    break;
+                case 19:
+                    if (existe2 == 10 && existe3 == 1) {
+                        return true;
+                    } else return false;
+                    break;
+                case 18:
+                    if (existe2 == 9) {
+                        return true;
+                    } else return false;
+                    break;
+                case 17:
+                    if (existe2 == 8) {
+                        return true;
+                    } else return false;
+                    break;
+                case 16:
+                    if (existe2 == 7) {
+                        return true;
+                    } else return false;
+                    break;
+                case 15:
+                    if (existe2 == 6) {
+                        return true;
+                    } else return false;
+                    break;
+                case 14:
+                    if (existe2 == 5) {
+                        return true;
+                    } else return false;
+                    break;
+                default:
+                    return false;
+            }
+        }
+
+        function intentaLlenar(cual) {
+            let existe1 = ficha[cual][0];
+            let existe2 = ficha[cual][1] || 0;
+            let intento1 = 0;
+            let intento2 = 0;
+            let intento3 = 0;
+            if (cual == 7) {
+                intento1 = [ficha[1][0], ficha[1][1]];
+                intento2 = [ficha[2][0], ficha[2][1]];
+                intento3 = [ficha[3][0], ficha[3][1]];
+                return combinacionesDeSumas3(
+                    intento1,
+                    intento2,
+                    intento3,
+                    existe1,
+                    existe2
+                );
+            }
+            if (cual == 8) {
+                intento1 = [ficha[4][0], ficha[4][1]];
+                intento2 = [ficha[5][0], ficha[5][1]];
+                intento3 = [ficha[6][0], ficha[6][1]];
+                return combinacionesDeSumas3(
+                    intento1,
+                    intento2,
+                    intento3,
+                    existe1,
+                    existe2
+                );
+            }
+            if (cual == 9) {
+                intento1 = [ficha[7][0], ficha[7][1]];
+                intento2 = [ficha[8][0], ficha[8][1]];
+                return combinacionesDeSumas2(intento1, intento2, existe1, existe2);
+            }
+            if (cual == 10) {
+                intento1 = [ficha[1][0], ficha[1][1]];
+                intento2 = [ficha[2][0], ficha[2][1]];
+                return combinacionesDeSumas2(intento1, intento2, existe1, existe2);
+            }
+            if (cual == 11) {
+                intento1 = [ficha[2][0], ficha[2][1]];
+                intento2 = [ficha[3][0], ficha[3][1]];
+                return combinacionesDeSumas2(intento1, intento2, existe1, existe2);
+            }
+            if (cual == 12) {
+                intento1 = [ficha[4][0], ficha[4][1]];
+                intento2 = [ficha[5][0], ficha[5][1]];
+                return combinacionesDeSumas2(intento1, intento2, existe1, existe2);
+            }
+            if (cual == 13) {
+                intento1 = [ficha[5][0], ficha[5][1]];
+                intento2 = [ficha[6][0], ficha[6][1]];
+                return combinacionesDeSumas2(intento1, intento2, existe1, existe2);
+            }
+            if (cual == 20) {
+                intento1 = [ficha[10][0], ficha[10][1]];
+                intento2 = [ficha[11][0], ficha[11][1]];
+                return combinacionesDeSumas2(intento1, intento2, existe1, existe2);
+            }
+            if (cual == 21) {
+                intento1 = [ficha[12][0], ficha[12][1]];
+                intento2 = [ficha[13][0], ficha[13][1]];
+                return combinacionesDeSumas2(intento1, intento2, existe1, existe2);
+            }
+            if (cual == 22) {
+                intento1 = [ficha[20][0], ficha[20][1]];
+                intento2 = [ficha[21][0], ficha[21][1]];
+                return combinacionesDeSumas2(intento1, intento2, existe1, existe2);
+            }
+        }
+        function combinacionesDeSumas3(
+            intento1,
+            intento2,
+            intento3,
+            existe1,
+            existe2
+        ) {
+            let resultado;
+            for (let r = 0; r <= 1; r++) {
+                if (intento1[r] == null) {
+                    break;
+                }
+                for (let s = 0; s <= 1; s++) {
+                    if (intento2[s] == null) {
+                        break;
+                    }
+                    for (let t = 0; t <= 1; t++) {
+                        if (intento3[t] == null) {
+                            break;
+                        }
+                        resultado = reduccionA22(intento1[r] + intento2[s] + intento3[t]);
+                        if (resultado != existe1 && resultado != existe2) {
+                            return resultado;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+        function combinacionesDeSumas2(intento1, intento2, existe1, existe2) {
+            let resultado;
+            for (let r = 0; r <= 1; r++) {
+                if (intento1[r] == null) {
+                    break;
+                }
+                for (let s = 0; s <= 1; s++) {
+                    if (intento2[s] == null) {
+                        break;
+                    }
+                    resultado = reduccionA22(intento1[r] + intento2[s]);
+                    if (resultado != existe1 && resultado != existe2) {
+                        return resultado;
+                    }
+                }
+            }
+            return null;
+        }
+
+        function numero(que) {
+            return reduccionA22(desglosar(que)[1]);
+        }
+        function numeroSecreto(que) {
+            return reduccionA22(desglosar(que)[2]);
+        }
+
+        function reduccionA9(que) {
+            if (que > 22) {
+                muestraError =
+                    "error de interpretacioon en los calculos, por favor avise al administrador";
+                return;
+            }
+            if (que <= 9) return null;
+            if (que == 19) return 10;
+            let unidades = que % 10;
+            let decenas = Math.trunc(que / 10) % 10;
+            return unidades + decenas;
+        }
+
+        function reduccionA22(que) {
+            if (que <= 22) return parseInt(que);
+            let unidades = que % 10;
+            let decenas = Math.trunc(que / 10) % 10;
+            let centenas = Math.trunc(que / 100) % 10;
+            let miles = Math.trunc(que / 1000) % 10;
+            let decenamiles = Math.trunc(que / 10000) % 10;
+            let centenamiles = Math.trunc(que / 100000) % 10;
+            let millones = Math.trunc(que / 1000000) % 10;
+            return parseInt(
+                reduccionA22(
+                    unidades +
+                    decenas +
+                    centenas +
+                    miles +
+                    decenamiles +
+                    centenamiles +
+                    millones
+                )
+            );
+        }
+
+        function desglosar(que) {
+            //que las letras esten en el alfabeto
+            que = que.toUpperCase();
+            que = eliminarDiacriticos(que);
+            let sumaNormal = 0,
+                sumaOculta = 0;
+            let letra, valor, valorsecreto;
+            for (let t = 0; t < que.length; t++) {
+                letra = que[t];
+                if (letra == "C" && t < que.length - 1 && que[t + 1] == "H") {
+                    letra = "CH";
+                    t++;
+                }
+                if (letra == "L" && t < que.length - 1 && que[t + 1] == "L") {
+                    letra = "LL";
+                    t++;
+                }
+                let puntero = 0;
+                try {
+                    while (alfabeto[puntero][0] != letra) {
+                        puntero++;
+                    }
+                } catch {
+                    muestraError = "la letra " + letra + " no está en el diccionario";
+                    return;
+                }
+                valor = alfabeto[puntero][1];
+                valorsecreto = alfabeto[puntero][2];
+                //console.log(letra, valor, valorsecreto);
+                sumaNormal = sumaNormal + alfabeto[puntero][1];
+                sumaOculta = sumaOculta + alfabeto[puntero][2];
+            }
+            //console.log('filtrado: ', que);
+            return [que, sumaNormal, sumaOculta];
+        }
+
+        function eliminarDiacriticos(texto) {
+            return texto
+                .normalize("NFD")
+                .replace(
+                    /([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,
+                    "$1"
+                )
+                .normalize()
+                .replace(/[^[A-ZÑ ]]*/g, "")
+                .replace(/[[]*/g, "");
+        }
+
         function dibujarFicha() {
             for (let t = 1; t <= 7; t++) {
                 auxDibuja3(t, color1);
@@ -182,7 +609,7 @@
             ///todo duplicado lo pongo en karmaduplicado
             for (var i = karma.length - 1; i >= 0; i--) {
                 if (karma.indexOf(karma[i]) !== i) {
-                    karmaduplicado.push((karma[i]));
+                    karmaduplicado.push(karma[i]);
                     karma.splice(i, 1); //me adelanto quitando uno de los duplicados
                 }
             }
@@ -245,7 +672,7 @@
         function poneSimboloSuma(sendero) {
             switch (sendero) {
                 case 1:
-                    auxponeSimboloSuma(120, 77);
+                    auxponeSimboloSuma(120, 82);
                     break;
                 case 2:
                     auxponeSimboloSuma(200, 220);
@@ -309,15 +736,15 @@
                     auxponeSimboloSuma(165, 490);
                     break;
                 case 22:
-                    auxponeSimboloSuma(245, 77);
+                    auxponeSimboloSuma(245, 82);
                     break;
             }
         }
         function poneSimboloSumaduplicado(sendero) {
             switch (sendero) {
                 case 1:
-                    auxponeSimboloSuma(120, 77);
-                    auxponeSimboloSuma(110, 77);
+                    auxponeSimboloSuma(120, 82);
+                    auxponeSimboloSuma(110, 82);
                     break;
                 case 2:
                     auxponeSimboloSuma(200, 220);
@@ -357,7 +784,7 @@
                     break;
                 case 11:
                     auxponeSimboloSuma(110, 305);
-                    auxponeSimboloSuma(120, 305);
+                    auxponeSimboloSuma(100, 305);
                     break;
                 case 12:
                     auxponeSimboloSuma(50, 325);
@@ -400,8 +827,8 @@
                     auxponeSimboloSuma(155, 490);
                     break;
                 case 22:
-                    auxponeSimboloSuma(245, 77);
-                    auxponeSimboloSuma(255, 77);
+                    auxponeSimboloSuma(245, 82);
+                    auxponeSimboloSuma(255, 82);
                     break;
             }
         }
@@ -711,19 +1138,16 @@
             region.lineTo(0, 0);
             region.closePath();
 
-
             ctx.fill(region);
             ctx.restore();
         }
 
         function dibujaKarma(cual, duplicado = false) {
-
             if (duplicado) ctx.fillStyle = asteriscopattern;
             else ctx.fillStyle = estrellapattern;
             linea[cual]++;
             switch (cual) {
                 case 1:
-
                     dibujaKarmaaux(punto[1], punto[3], 0.5, 0.8);
                     break;
                 case 2:
@@ -796,11 +1220,9 @@
             //console.log('linea', linea[19]);
         }
 
-
         function dibujaKarmaDuplicado(cual) {
             dibujaKarma(cual, true);
-        };
-
+        }
 
         function clear() {
             linea = [
@@ -849,15 +1271,15 @@
 
         function ponenumerosendero() {
             const pos = [
-                [99, 130, 1],
-                [99, 235, 22],
+                [106, 117, 1],
+                [106, 245, 22],
                 [134, 134, 3],
                 [396, 134, 16],
                 [265, 164, 8],
-                [205, 67, 7],
-                [205, 294, 5],
-                [330, 294, 10],
-                [330, 67, 12],
+                [200, 67, 7],
+                [200, 294, 5],
+                [331, 294, 10],
+                [331, 67, 12],
                 [220, 181, 2],
                 [220, 245, 4],
                 [220, 117, 6],
@@ -878,54 +1300,40 @@
             let diam = puntosRadio / 2;
             let gap = diam / 2;
             let gapx = gap;
-            let gapy = gap;
-
+            let gapy = gap - 1;
 
             for (let p = 0; p < pos.length; p++) {
+                ctx.font = "12px sans-serif";
                 if (pos[p][2] < 10) {
-                    ctx.font = '16px Arial';
-                    gapx = gap;
-                    gapy = gap;
+                    //     ctx.font = "16px Arial";
+                    gapx = gap - 2;
+                    //gapy = gap;
+                } else {
+                    //     if (pos[p][2] < 20) {
+                    // ctx.font = "12px Arial";
+                    gapx = gap + 2;
+                    //gapy = gap;
+                    //     } else {
+                    //         ctx.font = "10px Arial";
+                    //         gapx = gap;
+                    //         gapy = gap - 2;
+                    //     }
                 }
-                else {
 
-
-                    if (pos[p][2] < 20) {
-                        ctx.font = '12px Arial';
-                        gapx = gap + 2;
-                        gapy = gap - 1;
-                    }
-                    else {
-
-                        ctx.font = '10px Arial';
-                        gapx = gap;
-                        gapy = gap - 2;
-                    }
-                }
                 ctx.beginPath();
-                ctx.arc(
-                    pos[p][1],
-                    pos[p][0],
-                    diam,
-                    0,
-                    2 * Math.PI
-                );
+                ctx.arc(pos[p][1], pos[p][0], diam, 0, 2 * Math.PI);
                 ctx.fillStyle = "white";
                 ctx.fill();
                 ctx.setLineDash([]);
                 ctx.lineWidth = 1;
                 ctx.strokeStyle = "black";
-                ctx.strokeText(pos[p][2], pos[p][1] - gapx,
-                    pos[p][0] + gapy);
-
+                ctx.strokeText(pos[p][2], pos[p][1] - gapx, pos[p][0] + gapy);
 
                 //ctx.stroke();
             }
         }
 
-
         function dibujaRecuadro() {
-
             for (let cual = 1; cual <= 10; cual++) {
                 switch (cual) {
                     case 1:
@@ -975,7 +1383,6 @@
                         return false;
                 }
             }
-
         }
 
         function dibujaRecuadroaux(x, y, numerador, denominador) {
@@ -1002,7 +1409,7 @@
             let aux = numerador < 10 ? chico - 4 : chico - 9;
             ctx.beginPath();
             ctx.strokeStyle = "black";
-            ctx.font = '14px sans-serif';
+            ctx.font = "14px sans-serif";
             ctx.lineWidth = 1;
             ctx.setLineDash([]);
             ctx.moveTo(x + 1, y - chico);
@@ -1011,7 +1418,6 @@
             ctx.strokeText(numerador, x + aux, y - chico - 3);
             ctx.strokeText(denominador, x + chico - 4, y + 3);
             ctx.stroke();
-
         }
         const posiciones = [
             [70, 181],
@@ -1108,7 +1514,6 @@
                 lineWidth = 2.0
             ) {
                 if (this.dashed) {
-
                     switch (dashType) {
                         case 1:
                             ctx.setLineDash([12, 4]);
@@ -1232,56 +1637,54 @@
         const estrellapattern = ctx.createPattern(estrellaCanvas, "repeat");
 
         // forma de asterisco
-
+        let lengthnueva = 7;
         const asteriscoCanvas = document.createElement("canvas");
         const asterisco = asteriscoCanvas.getContext("2d");
         asteriscoCanvas.width = length * 3;
         asteriscoCanvas.height = length * 3;
         asterisco.fillStyle = "transparent";
-        asterisco.translate(length, length);
+        asterisco.translate(length * 3 / 2, length * 3 / 2);
         asterisco.beginPath();
         asterisco.globalAlpha = 1;
-        asterisco.rotate((Math.PI / 180) * 72);
+        //asterisco.rotate((Math.PI / 180) * 72);
         asterisco.scale(1, 1);
         asterisco.strokeStyle = color1;
         asterisco.fillStyle = color1;
-        asterisco.lineWidth = 1;
+        asterisco.lineWidth = 2;
         for (var i = 9; i--;) {
-            asterisco.lineTo(0, length);
-            asterisco.translate(0, length);
+            asterisco.lineTo(0, lengthnueva);
+            asterisco.translate(0, lengthnueva);
             //    asterisco.rotate((Math.PI * 2) / 10);
-            asterisco.lineTo(0, -length);
-            asterisco.translate(0, -length);
+            asterisco.lineTo(0, -lengthnueva);
+            asterisco.translate(0, -lengthnueva);
             asterisco.rotate(-((Math.PI / 180) * 40));
-
         }
-        asterisco.lineTo(0, length);
+        asterisco.lineTo(0, lengthnueva);
         asterisco.closePath();
         asterisco.fill();
         asterisco.stroke();
         const asteriscopattern = ctx.createPattern(asteriscoCanvas, "repeat");
 
-
-
         // //esto es solo para probar cómo se ve en pantalla
         for (let y = 1; y <= 22; y++) {
             let zig = false;
             let disc = false;
-            // dibujaLinea(y, color1, zig, disc, 4);
+            dibujaLinea(y, color1, zig, disc, 4);
             // dibujaLinea(y, color1, zig, disc, 2);
             // dibujaLinea(y, color1, zig, disc, 3);
             //dibujaLinea(y, color1, zig, disc, 3);
             //dibujaLinea(y, color1, zig, disc, 4);
 
+
+            poneSimboloSuma(y);
             //poneSimboloSumaduplicado(y);
-            //dibujaKarma(y);
-            //dibujaKarmaDuplicado(y);
+            // if (y % 2 == 1) dibujaKarma(y);
+            // else dibujaKarmaDuplicado(y);
         }
 
         ponecirculos();
-        //ponenumerosendero();
+        ponenumerosendero();
         //dibujaRecuadro();
-
 
         var inputletra = document.getElementsByClassName("inputletra");
         for (let t = 0; t < inputletra.length; t++) {
@@ -1317,9 +1720,6 @@
                 //setTimeout(resultado, 10);
             };
         }
-        //dibujaRecuadro()
-
-
     </script>
 </body>
 
