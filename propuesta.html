@@ -92,6 +92,13 @@
 
             width: 100%;
         }
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            transition: background-color 9999s ease-in-out 0s;
+        }
     </style>
     <canvas id="myCanvas" width="400" height="800">
     </canvas>
@@ -99,7 +106,7 @@
 
         <div class="v-input borde   v-text-field ">
 
-            <input class="inputletra" type="text" value="nombre">
+            <input class="inputletra" type="text" value="nombre" name="nombre">
 
 
         </div>
