@@ -9,12 +9,12 @@
 // let v_dia = 24;
 // let v_mes = 4;
 // let v_año = 1977;
-let v_nombre = "";
-let v_apellido1 = "";
-let v_apellido2 = "";
-let v_dia;
-let v_mes;
-let v_año;
+let v_nombre = "vivianne";
+let v_apellido1 = "burguete";
+let v_apellido2 = "martinez";
+let v_dia = 26;
+let v_mes = 12;
+let v_año = 1971;
 
 // v_nombre = "francísCoss";
 // v_apellido1 = "francísCoss";
@@ -112,7 +112,7 @@ function llenarFicha() {
         ficha[t][1] = reduccionA9(ficha[t][0]);
         ficha[t][2] = reduccionA9(ficha[t][1]);
     }
-
+    console.log(ficha);
     // Ahora intento llenar las familias
     for (let qq = 7; qq <= 13; qq++) {
         if (ficha[qq][1] == null) {
@@ -128,7 +128,7 @@ function llenarFicha() {
             ficha[qq][2] = intentaLlenar(qq);
         }
     }
-
+    console.log(ficha);
     //ahora solo sobre las familias incompletas rellenamos con el numero secreto. sin repetidos
     for (let r = 1; r <= 3; r++) {
         if (!verifFamiliaCompleta(r)) {
@@ -249,90 +249,93 @@ function verifFamiliaCompleta(cual) {
 function intentaLlenar(cual) {
     let existe1 = ficha[cual][0];
     let existe2 = ficha[cual][1] || 0;
-    let intento1 = 0;
-    let intento2 = 0;
-    let intento3 = 0;
+    let existe3 = ficha[cual][2] || 0;
+    let intento1;
+    let intento2;
+    let intento3;
     if (cual == 7) {
-        intento1 = [ficha[1][0], ficha[1][1]];
-        intento2 = [ficha[2][0], ficha[2][1]];
-        intento3 = [ficha[3][0], ficha[3][1]];
+        intento1 = ficha[1];
+        intento2 = ficha[2];
+        intento3 = ficha[3];
         return combinacionesDeSumas3(
             intento1,
             intento2,
             intento3,
             existe1,
-            existe2
+            existe2, existe3
         );
     }
     if (cual == 8) {
-        intento1 = [ficha[4][0], ficha[4][1]];
-        intento2 = [ficha[5][0], ficha[5][1]];
-        intento3 = [ficha[6][0], ficha[6][1]];
+        intento1 = ficha[4];
+        intento2 = ficha[5];
+        intento3 = ficha[6];
         return combinacionesDeSumas3(
             intento1,
             intento2,
             intento3,
             existe1,
-            existe2
+            existe2, existe3
         );
     }
     if (cual == 9) {
-        intento1 = [ficha[7][0], ficha[7][1]];
-        intento2 = [ficha[8][0], ficha[8][1]];
-        return combinacionesDeSumas2(intento1, intento2, existe1, existe2);
+        intento1 = ficha[7];
+        intento2 = ficha[8];
+        return combinacionesDeSumas2(intento1, intento2, existe1, existe2, existe3);
     }
     if (cual == 10) {
-        intento1 = [ficha[1][0], ficha[1][1]];
-        intento2 = [ficha[2][0], ficha[2][1]];
-        return combinacionesDeSumas2(intento1, intento2, existe1, existe2);
+        intento1 = ficha[1];
+        intento2 = ficha[2];
+        return combinacionesDeSumas2(intento1, intento2, existe1, existe2, existe3);
     }
     if (cual == 11) {
-        intento1 = [ficha[2][0], ficha[2][1]];
-        intento2 = [ficha[3][0], ficha[3][1]];
-        return combinacionesDeSumas2(intento1, intento2, existe1, existe2);
+        intento1 = ficha[2];
+        intento2 = ficha[3];
+        return combinacionesDeSumas2(intento1, intento2, existe1, existe2, existe3);
     }
     if (cual == 12) {
-        intento1 = [ficha[4][0], ficha[4][1]];
-        intento2 = [ficha[5][0], ficha[5][1]];
-        return combinacionesDeSumas2(intento1, intento2, existe1, existe2);
+        intento1 = ficha[4];
+        intento2 = ficha[5];
+        return combinacionesDeSumas2(intento1, intento2, existe1, existe2, existe3);
     }
     if (cual == 13) {
-        intento1 = [ficha[5][0], ficha[5][1]];
-        intento2 = [ficha[6][0], ficha[6][1]];
-        return combinacionesDeSumas2(intento1, intento2, existe1, existe2);
+        intento1 = ficha[5];
+        intento2 = ficha[6];
+        return combinacionesDeSumas2(intento1, intento2, existe1, existe2, existe3);
     }
     if (cual == 20) {
-        intento1 = [ficha[10][0], ficha[10][1]];
-        intento2 = [ficha[11][0], ficha[11][1]];
-        return combinacionesDeSumas2(intento1, intento2, existe1, existe2);
+        intento1 = ficha[10];
+        intento2 = ficha[11];
+        return combinacionesDeSumas2(intento1, intento2, existe1, existe2, existe3);
     }
     if (cual == 21) {
-        intento1 = [ficha[12][0], ficha[12][1]];
-        intento2 = [ficha[13][0], ficha[13][1]];
-        return combinacionesDeSumas2(intento1, intento2, existe1, existe2);
+        intento1 = ficha[12];
+        intento2 = ficha[13];
+        return combinacionesDeSumas2(intento1, intento2, existe1, existe2, existe3);
     }
     if (cual == 22) {
-        intento1 = [ficha[20][0], ficha[20][1]];
-        intento2 = [ficha[21][0], ficha[21][1]];
-        return combinacionesDeSumas2(intento1, intento2, existe1, existe2);
+        intento1 = ficha[20];
+        intento2 = ficha[21];
+        return combinacionesDeSumas2(intento1, intento2, existe1, existe2, existe3);
     }
 }
-function combinacionesDeSumas3(intento1, intento2, intento3, existe1, existe2) {
+
+
+function combinacionesDeSumas3(intento1, intento2, intento3, existe1, existe2, existe3) {
     let resultado;
-    for (let r = 0; r <= 1; r++) {
+    for (let r = 0; r <= 2; r++) {
         if (intento1[r] == null) {
             break;
         }
-        for (let s = 0; s <= 1; s++) {
+        for (let s = 0; s <= 2; s++) {
             if (intento2[s] == null) {
                 break;
             }
-            for (let t = 0; t <= 1; t++) {
+            for (let t = 0; t <= 2; t++) {
                 if (intento3[t] == null) {
                     break;
                 }
                 resultado = reduccionA22(intento1[r] + intento2[s] + intento3[t]);
-                if (resultado != existe1 && resultado != existe2) {
+                if (resultado != existe1 && resultado != existe2 && resultado != existe3) {
                     return resultado;
                 }
             }
@@ -340,18 +343,18 @@ function combinacionesDeSumas3(intento1, intento2, intento3, existe1, existe2) {
     }
     return null;
 }
-function combinacionesDeSumas2(intento1, intento2, existe1, existe2) {
+function combinacionesDeSumas2(intento1, intento2, existe1, existe2, existe3) {
     let resultado;
-    for (let r = 0; r <= 1; r++) {
+    for (let r = 0; r <= 2; r++) {
         if (intento1[r] == null) {
             break;
         }
-        for (let s = 0; s <= 1; s++) {
+        for (let s = 0; s <= 2; s++) {
             if (intento2[s] == null) {
                 break;
             }
             resultado = reduccionA22(intento1[r] + intento2[s]);
-            if (resultado != existe1 && resultado != existe2) {
+            if (resultado != existe1 && resultado != existe2 && resultado != existe3) {
                 return resultado;
             }
         }
