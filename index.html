@@ -10,14 +10,16 @@
         .losInputs {
             position: absolute;
             left: 800px;
-            top: 180px;
+            top: 210px;
+            width: 232px;
         }
 
         .losInputs2 {
             position: absolute;
             left: 800px;
-            top: 460px;
-            width: 182px
+            top: 510px;
+            width: 232px;
+            padding: 12px;
         }
 
         .esmerilado {
@@ -42,15 +44,14 @@
             font-size: 16px;
             letter-spacing: normal;
 
-            color: rgba(0, 0, 255, 0.87);
-
             margin-top: 4px;
-            line-height: 20px;
-            padding: 8px 0;
+
             max-width: 100%;
 
             width: 100%;
             background-color: "snow";
+            font: inherit;
+            padding-left: 8px;
         }
 
         input {
@@ -59,7 +60,7 @@
             background-color: transparent;
             border-style: none;
             border-radius: 0;
-
+            padding: 0.7 0 0 0;
             writing-mode: horizontal-tb !important;
 
             text-rendering: auto;
@@ -74,9 +75,11 @@
             text-align: start;
             appearance: auto;
             border: 0 !important;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
 
-        body {
+        .arbolsinuso {
             background-color: #0a1445;
         }
 
@@ -108,57 +111,73 @@
             top: 650px;
             color: antiquewhite;
         }
+
+        table,
+        th,
+        td {
+            border: 1px solid;
+            padding: 5px;
+            color: honeydew;
+        }
     </style>
 </head>
 
-<body id="arbol">
-    <div class="fondo"></div>
-    <div class="titulo">
-        <h3 style="color: red" id="muestraError">&nbsp;</h3>
-    </div>
-    <canvas id="arbolCanvas" width="500" height="700">
-        Su navegador no admite el uso de Canvas</canvas>
-    <div class="losInputs esmerilado">
-        <div class="v-input borde" style=" BACKGROUND-COLOR: SNOW;">
-            <input class="inputletra" type="text" value="Nombre completo" name="nombre" />
+<body>
+    <div class="arbolsinuso">
+        <div class="fondo"></div>
+        <div class="titulo">
+            <h3 style="color: red" id="muestraError">&nbsp;</h3>
         </div>
-        <div class="v-input borde" style=" BACKGROUND-COLOR: SNOW;">
-            <input class="inputletra" type="text" value="Primer apellido" name="apellido" />
-        </div>
-        <div class="v-input borde" style=" BACKGROUND-COLOR: SNOW;">
-            <input class="inputletra" type="text" value="Segundo apellido" name="apellido2" />
-        </div>
-        <hr />
-        <label style="color: white">
-            Fecha de nacimiento:
-            <div class="v-input borde" style="text-align: center ;BACKGROUND-COLOR: SNOW;">
-                <input class="inputletra" type="date" name="dia" />
+        <canvas id="arbolCanvas" width="500" height="700">
+            Su navegador no admite el uso de Canvas</canvas>
+        <div class="losInputs esmerilado">
+            <div class="v-input borde" style="background-color: SNOW">
+                <input class="inputletra" type="text" value="Nombre completo" name="nombre" style="padding: 0em" />
             </div>
-        </label>
-    </div>
-    <div class="losInputs2 esmerilado">
-        <div class="v-input borde" style=" BACKGROUND-COLOR: SNOW;">
-            <input type="radio" name="alfabeto" checked value="Castellano94">Castellano hasta 1994<br>
-
-            <input type="radio" name="alfabeto" value="Castellano95">Castellano desde 1995<br>
-            <input type="radio" name="alfabeto" value="internacional">Alfabeto internacional<br>
-            <input type="radio" name="alfabeto" value="italiano">Alfabeto Italiano<br>
-            <input type="radio" name="alfabeto" value="portugues">Alfabeto Portugués<br>
-            <input type="radio" name="alfabeto" value="aleman">Alfabeto alemán<br>
-
+            <div class="v-input borde" style="background-color: SNOW">
+                <input class="inputletra" type="text" value="Primer apellido" name="apellido" style="padding: 0em" />
+            </div>
+            <div class="v-input borde" style="background-color: SNOW">
+                <input class="inputletra" type="text" value="Segundo apellido" name="apellido2" style="padding: 0em" />
+            </div>
+            <hr />
+            <label style="color: white">
+                Fecha de nacimiento:
+                <div class="v-input borde" style="text-align: center; background-color: SNOW">
+                    <input class="inputletra" type="date" name="dia" />
+                </div>
+            </label>
         </div>
+        <div class="losInputs2 esmerilado">
+            <div class="v-input borde" style="background-color: SNOW">
+                <input type="radio" name="alfabeto" checked value="Castellano94" />Castellano hasta 1994<br />
 
-
+                <input type="radio" name="alfabeto" value="Castellano95" />Castellano
+                desde 1995<br />
+                <input type="radio" name="alfabeto" value="internacional" />Alfabeto
+                internacional<br />
+                <input type="radio" name="alfabeto" value="italiano" />Alfabeto
+                Italiano<br />
+                <input type="radio" name="alfabeto" value="portugues" />Alfabeto
+                Portugués<br />
+                <input type="radio" name="alfabeto" value="aleman" />Alfabeto
+                alemán<br />
+            </div>
+        </div>
+        <div id="ficha" style="position: absolute; left: 620px; top: 150px"></div>
+        <div id="secreto" style="position: absolute; left: 750px; top: 150px"></div>
     </div>
     <script>
-
         const color1 = "#15fad9";
         const color2 = "#ff1aff";
         const color3 = "#ffb900";
         const colorfosforito = "#15fad9";
         const puntosRadio = 20;
+        const fileSuelto = false;
 
-        let v_alfabeto = 'Castellano94';
+        if (fileSuelto) document.body.style.backgroundColor = "#0a1445";
+
+        let v_alfabeto = "Castellano94";
         let v_nombre;
         let v_apellido1;
         let v_apellido2;
@@ -207,143 +226,143 @@
             [" ", 0, 0],
         ];
         const Castellano95 = [
-            ['A', 1, 1],
-            ['B', 2, 2],
-            ['C', 3, 3],
-            ['D', 4, 4],
-            ['E', 5, 5],
-            ['F', 6, 6],
-            ['G', 7, 7],
-            ['H', 8, 8],
-            ['I', 9, 9],
-            ['J', 1, 10],
-            ['K', 2, 20],
-            ['L', 3, 30],
-            ['M', 4, 40],
-            ['N', 5, 50],
-            ['Ñ', 6, 60],
-            ['O', 7, 70],
-            ['P', 8, 80],
-            ['Q', 9, 90],
-            ['R', 1, 100],
-            ['S', 2, 200],
-            ['T', 3, 300],
-            ['U', 4, 400],
-            ['V', 5, 500],
-            ['W', 6, 600],
-            ['X', 7, 700],
-            ['Y', 8, 800],
-            ['Z', 9, 900],
+            ["A", 1, 1],
+            ["B", 2, 2],
+            ["C", 3, 3],
+            ["D", 4, 4],
+            ["E", 5, 5],
+            ["F", 6, 6],
+            ["G", 7, 7],
+            ["H", 8, 8],
+            ["I", 9, 9],
+            ["J", 1, 10],
+            ["K", 2, 20],
+            ["L", 3, 30],
+            ["M", 4, 40],
+            ["N", 5, 50],
+            ["Ñ", 6, 60],
+            ["O", 7, 70],
+            ["P", 8, 80],
+            ["Q", 9, 90],
+            ["R", 1, 100],
+            ["S", 2, 200],
+            ["T", 3, 300],
+            ["U", 4, 400],
+            ["V", 5, 500],
+            ["W", 6, 600],
+            ["X", 7, 700],
+            ["Y", 8, 800],
+            ["Z", 9, 900],
             [" ", 0, 0],
         ];
         const internacional = [
-            ['A', 1, 1],
-            ['B', 2, 2],
-            ['C', 3, 3],
-            ['D', 4, 4],
-            ['E', 5, 5],
-            ['F', 6, 6],
-            ['G', 7, 7],
-            ['H', 8, 8],
-            ['I', 9, 9],
-            ['J', 1, 10],
-            ['K', 2, 20],
-            ['L', 3, 30],
-            ['M', 4, 40],
-            ['N', 5, 50],
+            ["A", 1, 1],
+            ["B", 2, 2],
+            ["C", 3, 3],
+            ["D", 4, 4],
+            ["E", 5, 5],
+            ["F", 6, 6],
+            ["G", 7, 7],
+            ["H", 8, 8],
+            ["I", 9, 9],
+            ["J", 1, 10],
+            ["K", 2, 20],
+            ["L", 3, 30],
+            ["M", 4, 40],
+            ["N", 5, 50],
 
-            ['O', 6, 60],
-            ['P', 7, 70],
-            ['Q', 8, 80],
-            ['R', 9, 90],
-            ['S', 1, 100],
-            ['T', 2, 200],
-            ['U', 3, 300],
-            ['V', 4, 400],
-            ['W', 5, 500],
-            ['X', 6, 600],
-            ['Y', 7, 700],
-            ['Z', 8, 800],
+            ["O", 6, 60],
+            ["P", 7, 70],
+            ["Q", 8, 80],
+            ["R", 9, 90],
+            ["S", 1, 100],
+            ["T", 2, 200],
+            ["U", 3, 300],
+            ["V", 4, 400],
+            ["W", 5, 500],
+            ["X", 6, 600],
+            ["Y", 7, 700],
+            ["Z", 8, 800],
             [" ", 0, 0],
         ];
         const italiano = [
-            ['A', 1, 1],
-            ['B', 2, 2],
-            ['C', 3, 3],
-            ['D', 4, 4],
-            ['E', 5, 5],
-            ['F', 6, 6],
-            ['G', 7, 7],
-            ['H', 9, 9],
-            ['I', 8, 8],
-            ['L', 1, 10],
-            ['M', 2, 20],
-            ['N', 3, 30],
-            ['O', 4, 40],
-            ['P', 5, 50],
-            ['Q', 6, 60],
-            ['R', 7, 70],
-            ['S', 8, 80],
-            ['T', 9, 90],
-            ['U', 1, 100],
-            ['V', 2, 200],
-            ['Z', 3, 300],
+            ["A", 1, 1],
+            ["B", 2, 2],
+            ["C", 3, 3],
+            ["D", 4, 4],
+            ["E", 5, 5],
+            ["F", 6, 6],
+            ["G", 7, 7],
+            ["H", 9, 9],
+            ["I", 8, 8],
+            ["L", 1, 10],
+            ["M", 2, 20],
+            ["N", 3, 30],
+            ["O", 4, 40],
+            ["P", 5, 50],
+            ["Q", 6, 60],
+            ["R", 7, 70],
+            ["S", 8, 80],
+            ["T", 9, 90],
+            ["U", 1, 100],
+            ["V", 2, 200],
+            ["Z", 3, 300],
             [" ", 0, 0],
         ];
         const portugues = [
-            ['A', 1, 1],
-            ['B', 2, 2],
-            ['C', 3, 3],
-            ['D', 4, 4],
-            ['E', 5, 5],
-            ['F', 6, 6],
-            ['G', 7, 7],
-            ['H', 8, 8],
-            ['I', 9, 9],
-            ['J', 1, 10],
-            ['K', 2, 20],
-            ['L', 3, 30],
-            ['M', 4, 40],
-            ['N', 5, 50],
-            ['O', 6, 60],
-            ['P', 7, 70],
-            ['Q', 8, 80],
-            ['R', 9, 90],
-            ['S', 1, 100],
-            ['T', 2, 200],
-            ['U', 3, 300],
-            ['V', 4, 400],
-            ['X', 5, 500],
-            ['Y', 6, 600],
-            ['Z', 7, 700],
+            ["A", 1, 1],
+            ["B", 2, 2],
+            ["C", 3, 3],
+            ["D", 4, 4],
+            ["E", 5, 5],
+            ["F", 6, 6],
+            ["G", 7, 7],
+            ["H", 8, 8],
+            ["I", 9, 9],
+            ["J", 1, 10],
+            ["K", 2, 20],
+            ["L", 3, 30],
+            ["M", 4, 40],
+            ["N", 5, 50],
+            ["O", 6, 60],
+            ["P", 7, 70],
+            ["Q", 8, 80],
+            ["R", 9, 90],
+            ["S", 1, 100],
+            ["T", 2, 200],
+            ["U", 3, 300],
+            ["V", 4, 400],
+            ["X", 5, 500],
+            ["Y", 6, 600],
+            ["Z", 7, 700],
             [" ", 0, 0],
         ];
         const aleman = [
-            ['A', 1, 1],
-            ['B', 2, 2],
-            ['C', 3, 3],
-            ['D', 4, 4],
-            ['E', 5, 5],
-            ['F', 6, 6],
-            ['G', 7, 7],
-            ['H', 8, 8],
-            ['I', 9, 9],
-            ['J', 1, 10],
-            ['K', 2, 20],
-            ['L', 3, 30],
-            ['M', 4, 40],
-            ['N', 5, 50],
-            ['O', 6, 60],
-            ['P', 7, 70],
-            ['Q', 8, 80],
-            ['R', 9, 90],
-            ['S', 1, 100],
-            ['T', 2, 200],
-            ['U', 3, 300],
-            ['V', 4, 400],
-            ['W', 5, 500],
-            ['X', 6, 600],
-            ['Z', 7, 700],
+            ["A", 1, 1],
+            ["B", 2, 2],
+            ["C", 3, 3],
+            ["D", 4, 4],
+            ["E", 5, 5],
+            ["F", 6, 6],
+            ["G", 7, 7],
+            ["H", 8, 8],
+            ["I", 9, 9],
+            ["J", 1, 10],
+            ["K", 2, 20],
+            ["L", 3, 30],
+            ["M", 4, 40],
+            ["N", 5, 50],
+            ["O", 6, 60],
+            ["P", 7, 70],
+            ["Q", 8, 80],
+            ["R", 9, 90],
+            ["S", 1, 100],
+            ["T", 2, 200],
+            ["U", 3, 300],
+            ["V", 4, 400],
+            ["W", 5, 500],
+            ["X", 6, 600],
+            ["Z", 7, 700],
             [" ", 0, 0],
         ];
         function llenarFicha() {
@@ -766,12 +785,13 @@
                     alfabetoElegido = aleman;
                     que = quitarLetrsaNoEsten(que, alfabetoElegido);
                     break;
-                default: alfabetoElegido = alfabeto;
+                default:
+                    alfabetoElegido = alfabeto;
                     que = quitarLetrsaNoEsten(que, alfabetoElegido);
             }
             for (let t = 0; t < que.length; t++) {
                 letra = que[t];
-                if (v_alfabeto == 'Castellano94') {
+                if (v_alfabeto == "Castellano94") {
                     if (letra == "C" && t < que.length - 1 && que[t + 1] == "H") {
                         letra = "CH";
                         t++;
@@ -801,25 +821,21 @@
             const texto = [...que];
             var result = "";
             let flag;
-            texto.forEach(letra => {
+            texto.forEach((letra) => {
                 flag = true;
                 for (const item of alfabetoElegido) {
-
                     if (item[0] === letra) {
                         result = result + letra;
                         flag = false;
                         break;
                     }
                 }
-                if (flag) { alert("Se quitó la letra " + letra + " porque no está en el diccionario"); }
-
+                if (flag) {
+                    alert(
+                        "Se quitó la letra " + letra + " porque no está en el diccionario"
+                    );
+                }
             });
-
-
-
-
-
-
 
             return result;
         }
@@ -914,7 +930,9 @@
             dibujaRecuadro();
             ponenumerosendero();
 
-            //console.log(ficha);
+            console.log(ficha);
+
+            if (fileSuelto) poneTabla();
             //;
         }
         function auxponeSimboloSuma(x, y) {
@@ -1682,6 +1700,66 @@
             ctx.strokeText(denominador, x + chico - 4, y + 3);
             ctx.stroke();
         }
+
+        function poneTabla() {
+            let table = document.getElementById("ficha");
+            table.innerHTML = "&nbsp;";
+
+            for (let b = 1; b <= 13; b++) {
+                let tr = document.createElement("tr");
+                let td = document.createElement("td");
+                td.style.color = "red";
+                td.innerHTML = b;
+                tr.appendChild(td);
+                for (let i = 0; i < 3; i++) {
+                    let td = document.createElement("td");
+
+                    td.innerHTML = ficha[b][i];
+                    tr.appendChild(td);
+                }
+
+                table.appendChild(tr);
+            }
+
+            for (let b = 20; b <= 22; b++) {
+                let tr = document.createElement("tr");
+                let td = document.createElement("td");
+                td.style.color = "red";
+                td.innerHTML = "x";
+                tr.appendChild(td);
+                for (let i = 0; i < 3; i++) {
+                    let td = document.createElement("td");
+                    td.innerHTML = ficha[b][i];
+                    tr.appendChild(td);
+                }
+
+                table.appendChild(tr);
+            }
+
+            let secreto = document.getElementById("secreto");
+            secreto.innerHTML = "&nbsp;";
+
+            for (let b = 1; b <= 13; b++) {
+                let tr = document.createElement("tr");
+
+                let td = document.createElement("td");
+                td.innerHTML = fichaConSectreto[b];
+                tr.appendChild(td);
+
+                secreto.appendChild(tr);
+            }
+
+            for (let b = 20; b <= 22; b++) {
+                let tr = document.createElement("tr");
+
+                let td = document.createElement("td");
+                td.innerHTML = fichaConSectreto[b];
+                tr.appendChild(td);
+
+                secreto.appendChild(tr);
+            }
+        }
+
         const posiciones = [
             [70, 181],
             [134, 294],
@@ -1984,10 +2062,11 @@
             };
         }
         const radioBtns = document.querySelectorAll('input[name="alfabeto"]');
-        radioBtns.forEach(radioBtn => {
-            radioBtn.addEventListener('change', () => {
-
-                v_alfabeto = document.querySelector('input[name="alfabeto"]:checked').value;
+        radioBtns.forEach((radioBtn) => {
+            radioBtn.addEventListener("change", () => {
+                v_alfabeto = document.querySelector(
+                    'input[name="alfabeto"]:checked'
+                ).value;
                 console.log(v_alfabeto);
 
                 if (v_nombre && v_apellido1 && v_apellido2 && v_dia) {
@@ -2001,14 +2080,8 @@
                     //console.log(fichaConSectreto);
                 }
                 muestraErrorDiv.innerHTML = muestraError;
-
-
-
-
             });
         });
-        alfabeto
-
     </script>
 </body>
 
