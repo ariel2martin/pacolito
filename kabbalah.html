@@ -78,6 +78,8 @@
             border: 0 !important;
             margin-top: 10px;
             margin-bottom: 10px;
+
+            appearance: none;
         }
 
         .arbolsinuso {
@@ -151,7 +153,9 @@
         </div>
         <div class="losInputs2 esmerilado">
             <div class="v-input borde" style="background-color: SNOW">
-                <select id="alfabeto" style="width: 200px;">
+                <select id="alfabeto" style="    background-size: 0;
+    padding-right: 0;">
+                    <!-- style="width: 200px" -->
                     <option value="Castellano94" selected>Castellano hasta 1994</option>
                     <option value="Castellano95">Castellano desde 1995</option>
                     <option value="internacional">Alfabeto internacional</option>
@@ -159,13 +163,6 @@
                     <option value="portugues">Alfabeto Portugués</option>
                     <option value="aleman">Alfabeto alemán</option>
                 </select>
-
-
-
-
-
-
-
             </div>
         </div>
 
@@ -173,12 +170,12 @@
         <div id="secreto" style="position: absolute; left: 1350px; top: 60px"></div>
     </div>
     <script>
+        const fileSuelto = false;
         const color1 = "#15fad9";
         const color2 = "#ff1aff";
         const color3 = "#ffb900";
         const colorfosforito = "#15fad9";
         const puntosRadio = 20;
-        const fileSuelto = true;
 
         let v_alfabeto = "Castellano94";
         let v_nombre;
@@ -388,8 +385,7 @@
 
             document.getElementsByClassName("losInputs")[0].style.top =
                 posiciones[0][0] - puntosRadio / 2 + "px";
-            document.getElementsByClassName("losInputs2")[0].style.top =
-                "350px";
+            document.getElementsByClassName("losInputs2")[0].style.top = "350px";
         }
 
         function llenarFicha() {
@@ -2113,10 +2109,7 @@
                 //console.log(fichaConSectreto);
             }
             muestraErrorDiv.innerHTML = muestraError;
-
         });
-
-
     </script>
 </body>
 
