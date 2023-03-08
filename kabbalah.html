@@ -2075,27 +2075,48 @@
                 //setTimeout(resultado, 10);
             };
         }
-        const radioBtns = document.querySelectorAll('input[name="alfabeto"]');
-        radioBtns.forEach((radioBtn) => {
-            radioBtn.addEventListener("change", () => {
-                v_alfabeto = document.querySelector(
-                    'input[name="alfabeto"]:checked'
-                ).value;
-                console.log(v_alfabeto);
+        // const radioBtns = document.querySelectorAll('input[name="alfabeto"]');
+        // radioBtns.forEach((radioBtn) => {
+        //     radioBtn.addEventListener("change", () => {
+        //         v_alfabeto = document.querySelector(
+        //             'input[name="alfabeto"]:checked'
+        //         ).value;
+        //         console.log(v_alfabeto);
 
-                if (v_nombre && v_apellido1 && v_apellido2 && v_dia) {
-                    llenarFicha();
-                    inputletra[0].value = v_nombre;
-                    inputletra[1].value = v_apellido1;
-                    inputletra[2].value = v_apellido2;
-                    clear();
-                    dibujarFicha();
-                    //console.log(ficha);
-                    //console.log(fichaConSectreto);
-                }
-                muestraErrorDiv.innerHTML = muestraError;
-            });
+        //         if (v_nombre && v_apellido1 && v_apellido2 && v_dia) {
+        //             llenarFicha();
+        //             inputletra[0].value = v_nombre;
+        //             inputletra[1].value = v_apellido1;
+        //             inputletra[2].value = v_apellido2;
+        //             clear();
+        //             dibujarFicha();
+        //             //console.log(ficha);
+        //             //console.log(fichaConSectreto);
+        //         }
+        //         muestraErrorDiv.innerHTML = muestraError;
+        //     });
+        // });
+
+        const miSelect = document.getElementById("alfabeto");
+        miSelect.addEventListener("change", function () {
+            v_alfabeto = miSelect.value;
+            //console.log(v_alfabeto);
+
+            if (v_nombre && v_apellido1 && v_apellido2 && v_dia) {
+                llenarFicha();
+                inputletra[0].value = v_nombre;
+                inputletra[1].value = v_apellido1;
+                inputletra[2].value = v_apellido2;
+                clear();
+                dibujarFicha();
+                //console.log(ficha);
+                //console.log(fichaConSectreto);
+            }
+            muestraErrorDiv.innerHTML = muestraError;
+
         });
+
+
     </script>
 </body>
 
