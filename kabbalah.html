@@ -166,11 +166,11 @@
             </div>
         </div>
 
-        <div id="ficha" style="position: absolute; left: 1220px; top: 60px"></div>
-        <div id="secreto" style="position: absolute; left: 1350px; top: 60px"></div>
+        <div id="ficha" style="position: absolute; left: 1220px; top: 88px"></div>
+        <div id="secreto" style="position: absolute; left: 1350px; top: 88px"></div>
     </div>
     <script>
-        const fileSuelto = false;
+        const fileSuelto = true;
         const color1 = "#15fad9";
         const color2 = "#ff1aff";
         const color3 = "#ffb900";
@@ -384,8 +384,8 @@
             document.body.style.backgroundColor = "#0a1445";
 
             document.getElementsByClassName("losInputs")[0].style.top =
-                posiciones[0][0] - puntosRadio / 2 + "px";
-            document.getElementsByClassName("losInputs2")[0].style.top = "350px";
+                (posiciones[5][0] - 114) + "px";
+            document.getElementsByClassName("losInputs2")[0].style.top = (posiciones[5][0] - 114 + 283) + "px";;
         }
 
         function llenarFicha() {
@@ -687,28 +687,22 @@
             }
         }
 
-        function combinacionesDeSumas3(
-            intento1,
-            intento2,
-            intento3,
-            existe1,
-            existe2
-        ) {
+        function combinacionesDeSumas3(intento1, intento2, intento3, existe1, existe2, existe3) {
             let resultado;
-            for (let r = 0; r <= 1; r++) {
+            for (let r = 0; r <= 2; r++) {
                 if (intento1[r] == null) {
                     break;
                 }
-                for (let s = 0; s <= 1; s++) {
+                for (let s = 0; s <= 2; s++) {
                     if (intento2[s] == null) {
                         break;
                     }
-                    for (let t = 0; t <= 1; t++) {
+                    for (let t = 0; t <= 2; t++) {
                         if (intento3[t] == null) {
                             break;
                         }
                         resultado = reduccionA22(intento1[r] + intento2[s] + intento3[t]);
-                        if (resultado != existe1 && resultado != existe2) {
+                        if (resultado != existe1 && resultado != existe2 && resultado != existe3) {
                             return resultado;
                         }
                     }
@@ -716,24 +710,28 @@
             }
             return null;
         }
-        function combinacionesDeSumas2(intento1, intento2, existe1, existe2) {
+        function combinacionesDeSumas2(intento1, intento2, existe1, existe2, existe3) {
             let resultado;
-            for (let r = 0; r <= 1; r++) {
+            for (let r = 0; r <= 2; r++) {
                 if (intento1[r] == null) {
                     break;
                 }
-                for (let s = 0; s <= 1; s++) {
+                for (let s = 0; s <= 2; s++) {
                     if (intento2[s] == null) {
                         break;
                     }
                     resultado = reduccionA22(intento1[r] + intento2[s]);
-                    if (resultado != existe1 && resultado != existe2) {
+                    if (resultado != existe1 && resultado != existe2 && resultado != existe3) {
                         return resultado;
                     }
                 }
             }
             return null;
         }
+
+
+
+
 
         function numero(que) {
             return reduccionA22(desglosar(que)[1]);
