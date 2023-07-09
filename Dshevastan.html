@@ -31,14 +31,14 @@
       .esencia {
         position: absolute;
         left: 800px;
-        top: 310px;
+        top: 290px;
         width: 232px;
       }
 
       .apartirde {
         position: absolute;
         left: 500px;
-        top: 490px;
+        top: 460px;
         width: 530px;
       }
 
@@ -98,6 +98,7 @@
 
         max-width: 100%;
         width: auto;
+        height: 35px;
 
         background-color: "snow";
         font: inherit;
@@ -143,7 +144,7 @@
         top: 0px;
         height: 750px;
         width: 800px;
-        background-image: url(https://elarboldemivida.es/wp-content/uploads/2023/02/1500.jpg);
+        background-image: url(https://imageup.me/images/ff9646bf-e797-4969-9fb9-da8d3d771f5c.png?v=285550);
         background-size: 800px 800px;
         background-repeat: no-repeat;
         background-position: top left;
@@ -185,33 +186,36 @@
         Su navegador no admite el uso de Canvas</canvas
       >
       <div class="losInputs esmerilado">
-        <div class="v-input borde" style="background-color: SNOW">
-          <input
-            class="inputletra"
-            type="text"
-            value="Nombre completo"
-            name="nombre"
-            style="padding: 0em"
-          />
-        </div>
-        <div class="v-input borde" style="background-color: SNOW">
-          <input
-            class="inputletra"
-            type="text"
-            value="Primer apellido"
-            name="apellido"
-            style="padding: 0em"
-          />
-        </div>
-        <div class="v-input borde" style="background-color: SNOW">
-          <input
-            class="inputletra"
-            type="text"
-            value="Segundo apellido"
-            name="apellido2"
-            style="padding: 0em"
-          />
-        </div>
+        <label style="color: white">
+          Nombre y apellidos:
+          <div class="v-input borde" style="background-color: SNOW">
+            <input
+              class="inputletra"
+              type="text"
+              value="Nombre completo"
+              name="nombre"
+              style="padding: 0em"
+            />
+          </div>
+          <div class="v-input borde" style="background-color: SNOW">
+            <input
+              class="inputletra"
+              type="text"
+              value="Primer apellido"
+              name="apellido"
+              style="padding: 0em"
+            />
+          </div>
+          <div class="v-input borde" style="background-color: SNOW">
+            <input
+              class="inputletra"
+              type="text"
+              value="Segundo apellido"
+              name="apellido2"
+              style="padding: 0em"
+            />
+          </div>
+        </label>
       </div>
       <div class="esencia esmerilado">
         <div
@@ -307,7 +311,7 @@
       </div>
     </div>
 
-    <div id="ficha" style="position: absolute; left: 1105px; top: 88px"></div>
+    <div id="ficha" style="position: absolute; left: 1105px; top: 80px"></div>
     <div id="secreto" style="position: absolute; left: 1310px; top: 88px"></div>
 
     <script>
@@ -527,8 +531,8 @@
         [592, 181],
       ];
       if (fileSuelto) {
-        document.body.style.backgroundColor = "#0a1445";
-
+        //document.body.style.backgroundColor = "#0a1445";
+        document.body.style.backgroundColor = "#678fa7";
         //document.getElementsByClassName("losInputs")[0].style.top =          posiciones[5][0] - 114 + "px";
         //document.getElementsByClassName("losInputs2")[0].style.top =          posiciones[5][0] - 114 + 283 + "px";
       }
@@ -1844,7 +1848,7 @@
           sumavocales(v_apellido2);
         consonantes = reduccionA22(consonantes);
         document.getElementById("expresion").innerHTML =
-          consonantes + "/" + reduccionA0(consonantes);
+          "S" + consonantes + " / E" + reduccionA0(consonantes);
       }
       function caminodevida() {
         v_caminodevida =
@@ -2098,6 +2102,12 @@
           let tr = document.createElement("tr");
           let td = document.createElement("td");
           td.style.color = "#AA00AA";
+          if (b == 8) {
+            td.style.color = "red";
+          }
+          if (b == 9) {
+            td.style.color = "green";
+          }
           td.style.width = "18px";
           td.innerHTML = b;
           tr.appendChild(td);
