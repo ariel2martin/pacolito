@@ -144,7 +144,7 @@
         top: 0px;
         height: 750px;
         width: 800px;
-        background-image: url(https://imageup.me/images/ff9646bf-e797-4969-9fb9-da8d3d771f5c.png?v=285550);
+        background-image: url(https://imageup.me/images/cb0c3b73-4d42-43d3-8cd9-676cdd4da87b.png);
         background-size: 800px 800px;
         background-repeat: no-repeat;
         background-position: top left;
@@ -220,19 +220,19 @@
       <div class="esencia esmerilado">
         <div
           class="bordechico"
-          style="text-align: center; background-color: rgb(240, 243, 52)"
+          style="text-align: center; background-color: #f1b202"
         >
           <p>Esencia: <span id="esencia"></span></p>
         </div>
         <div
           class="bordechico"
-          style="text-align: center; background-color: rgb(240, 243, 52)"
+          style="text-align: center; background-color: #f1b202"
         >
           <p>Expresión: <span id="expresion"></span></p>
         </div>
         <div
           class="bordechico"
-          style="text-align: center; background-color: rgb(240, 243, 52)"
+          style="text-align: center; background-color: #f1b202"
         >
           <p>Camino de vida: <span id="caminodevida"></span></p>
         </div>
@@ -247,7 +247,7 @@
             </td>
             <td>
               <table id="tablatalento">
-                <th>Talentos a partir de</th>
+                <th>TALENTOS a partir de</th>
               </table>
             </td>
           </tr>
@@ -325,14 +325,14 @@
       const puntosRadio = 20;
 
       let v_alfabeto = "Castellano94";
-      let v_nombre = "JACOBA";
-      let v_apellido1 = "Ignacio";
-      let v_apellido2 = "Jáuregui";
+      let v_nombre = "maria del carmen";
+      let v_apellido1 = "pardo";
+      let v_apellido2 = "martinez";
       let v_apellido2P;
       let v_apellido2M;
-      let v_dia = 4;
-      let v_mes = 5;
-      let v_año = 1967;
+      let v_dia = 1;
+      let v_mes = 1;
+      let v_año = 1981;
       let muestraError = "";
       let v_caminodevida = 0;
 
@@ -532,7 +532,11 @@
       ];
       if (fileSuelto) {
         //document.body.style.backgroundColor = "#0a1445";
-        document.body.style.backgroundColor = "#678fa7";
+        //document.body.style.backgroundColor = "#678fa7";
+        document.body.style.backgroundColor = "black";
+        document.body.style.font = "inherit";
+        document.body.style.fontFamily = "sans-serif";
+
         //document.getElementsByClassName("losInputs")[0].style.top =          posiciones[5][0] - 114 + "px";
         //document.getElementsByClassName("losInputs2")[0].style.top =          posiciones[5][0] - 114 + 283 + "px";
       }
@@ -603,6 +607,21 @@
             ficha[qq][2] = intentaLlenar(qq);
           }
         }
+        // Ahora intento llenar las familias
+        for (let qq = 7; qq <= 14; qq++) {
+          if (ficha[qq][1] == null) {
+            ficha[qq][1] = intentaLlenar(qq);
+          } else if (ficha[qq][2] == null) {
+            ficha[qq][2] = intentaLlenar(qq);
+          }
+        }
+        for (let qq = 20; qq <= 22; qq++) {
+          if (ficha[qq][1] == null) {
+            ficha[qq][1] = intentaLlenar(qq);
+          } else if (ficha[qq][2] == null) {
+            ficha[qq][2] = intentaLlenar(qq);
+          }
+        }
 
         //ahora solo sobre las familias incompletas rellenamos con el numero secreto. sin repetidos
         for (let r = 1; r <= 3; r++) {
@@ -629,6 +648,7 @@
             fichaConSectreto[qq] = ficha[qq][2] || 0;
           }
         }
+
         flagFichaLlena = true;
       }
 
@@ -1025,10 +1045,17 @@
             muestraError = "la letra " + letra + " no está en el diccionario";
             return;
           }
-
+          if (que == "SANCHEZ") {
+            console.log(
+              letra,
+              "valor: " + alfabetoElegido[puntero][1],
+              sumaNormal + alfabetoElegido[puntero][1]
+            );
+          }
           sumaNormal = sumaNormal + alfabetoElegido[puntero][1];
           sumaOculta = sumaOculta + alfabetoElegido[puntero][2];
         }
+        console.log(v_alfabeto, que, sumaNormal);
         //console.log('filtrado: ', que);
         return [que, sumaNormal, sumaOculta];
       }
@@ -1133,13 +1160,13 @@
 
         //ahora, en karmaduplicado puede estar mas de una vez, lo reduzco
         /*
-                // No, en la nueva version no lo reduzco sino que lo mando a triplicado
-                for (var i = karmaduplicado.length - 1; i >= 0; i--) {
-                    if (karmaduplicado.indexOf(karmaduplicado[i]) !== i) {
-                        karmaduplicado.splice(i, 1);
-                    }
-                }
-                */
+                      // No, en la nueva version no lo reduzco sino que lo mando a triplicado
+                      for (var i = karmaduplicado.length - 1; i >= 0; i--) {
+                          if (karmaduplicado.indexOf(karmaduplicado[i]) !== i) {
+                              karmaduplicado.splice(i, 1);
+                          }
+                      }
+                      */
         for (var i = karmaduplicado.length - 1; i >= 0; i--) {
           if (karmaduplicado.indexOf(karmaduplicado[i]) !== i) {
             karmatriplicado.push(karmaduplicado[i]);
@@ -1795,12 +1822,12 @@
         let donde = document.getElementById("tablakarma");
         donde.innerHTML = "";
         let th = document.createElement("th");
-        th.innerHTML = "Karmas hasta la edad de:";
+        th.innerHTML = "KARMAS hasta la edad de:";
         donde.appendChild(th);
         donde = document.getElementById("tablatalento");
         donde.innerHTML = "";
         th = document.createElement("th");
-        th.innerHTML = "Talentos a partir de:";
+        th.innerHTML = "TALENTOS a partir de:";
         donde.appendChild(th);
       }
 
@@ -1836,7 +1863,7 @@
         while (vocales > 9) {
           vocales = reduccionA0(vocales);
         }
-        document.getElementById("esencia").innerHTML = vocales;
+        document.getElementById("esencia").innerHTML = "E" + vocales;
       }
       function expresion() {
         let consonantes =
@@ -2096,6 +2123,7 @@
 
       function poneTabla() {
         let table = document.getElementById("ficha");
+        table.style.textAlign = "center";
         table.innerHTML = "";
 
         for (let b = 1; b <= 14; b++) {
@@ -2153,29 +2181,28 @@
           table.appendChild(tr);
         }
         /*  ya no dibujo una seccion para el numero secreto sino que lo pongo en rojo e italica dentro de la tabla
-            let secreto = document.getElementById("secreto");
-            secreto.innerHTML = "";
- 
-            for (let b = 1; b <= 13; b++) {
-              let tr = document.createElement("tr");
- 
-              let td = document.createElement("td");
-              td.innerHTML = fichaConSectreto[b];
-              tr.appendChild(td);
- 
-              secreto.appendChild(tr);
-            }
- 
-            for (let b = 20; b <= 22; b++) {
-              let tr = document.createElement("tr");
- 
-              let td = document.createElement("td");
-              td.innerHTML = fichaConSectreto[b];
-              tr.appendChild(td);
- 
-              secreto.appendChild(tr);
-            }
-      */
+         */ let secreto = document.getElementById("secreto");
+        secreto.innerHTML = "";
+
+        for (let b = 1; b <= 13; b++) {
+          let tr = document.createElement("tr");
+
+          let td = document.createElement("td");
+          td.innerHTML = fichaConSectreto[b];
+          tr.appendChild(td);
+
+          secreto.appendChild(tr);
+        }
+
+        for (let b = 20; b <= 22; b++) {
+          let tr = document.createElement("tr");
+
+          let td = document.createElement("td");
+          td.innerHTML = fichaConSectreto[b];
+          tr.appendChild(td);
+
+          secreto.appendChild(tr);
+        }
       }
 
       class Point {
