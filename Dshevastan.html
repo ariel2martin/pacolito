@@ -325,14 +325,14 @@
       const puntosRadio = 20;
 
       let v_alfabeto = "Castellano94";
-      let v_nombre = "maria del carmen";
-      let v_apellido1 = "pardo";
-      let v_apellido2 = "martinez";
+      let v_nombre;
+      let v_apellido1;
+      let v_apellido2;
       let v_apellido2P;
       let v_apellido2M;
-      let v_dia = 1;
-      let v_mes = 1;
-      let v_año = 1981;
+      let v_dia;
+      let v_mes;
+      let v_año;
       let muestraError = "";
       let v_caminodevida = 0;
 
@@ -1045,17 +1045,18 @@
             muestraError = "la letra " + letra + " no está en el diccionario";
             return;
           }
-          if (que == "SANCHEZ") {
+          /* if (que == "SANCHEZ") {
             console.log(
               letra,
               "valor: " + alfabetoElegido[puntero][1],
               sumaNormal + alfabetoElegido[puntero][1]
             );
-          }
+            
+          }*/
           sumaNormal = sumaNormal + alfabetoElegido[puntero][1];
           sumaOculta = sumaOculta + alfabetoElegido[puntero][2];
         }
-        console.log(v_alfabeto, que, sumaNormal);
+        //console.log(v_alfabeto, que, sumaNormal);
         //console.log('filtrado: ', que);
         return [que, sumaNormal, sumaOculta];
       }
@@ -2174,6 +2175,10 @@
               span.style.fontStyle = "italic";
               span.style.color = "red";
             }
+            else{
+              span.style.fontStyle = "normal";
+              span.style.color = "white";
+            }
             td.appendChild(span);
             tr.appendChild(td);
           }
@@ -2181,7 +2186,7 @@
           table.appendChild(tr);
         }
         /*  ya no dibujo una seccion para el numero secreto sino que lo pongo en rojo e italica dentro de la tabla
-         */ let secreto = document.getElementById("secreto");
+        let secreto = document.getElementById("secreto");
         secreto.innerHTML = "";
 
         for (let b = 1; b <= 13; b++) {
@@ -2202,7 +2207,7 @@
           tr.appendChild(td);
 
           secreto.appendChild(tr);
-        }
+        } */
       }
 
       class Point {
