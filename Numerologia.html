@@ -47,6 +47,20 @@
 
         }
 
+        .nombre {
+
+            text-align: center;
+            vertical-align: middle;
+            line-height: 40px;
+            display: inline-block;
+
+            height: 40px;
+            margin: 6px;
+
+            margin-top: 30px;
+
+        }
+
         .numero {
 
             text-align: center;
@@ -126,13 +140,13 @@
                         </tr>
                         <tr>
                             <td class="bg-warning recuadro">Sum (Vocales)</td>
-                            <td class="recuadro"></td>
-                            <td class="recuadro"></td>
+                            <td class="recuadro" id="v"></td>
+                            <td class="recuadro" id="v1"></td>
                         </tr>
                         <tr>
                             <td class="bg-warning recuadro">Sum (Consonantes)</td>
-                            <td class="recuadro"></td>
-                            <td class="recuadro"></td>
+                            <td class="recuadro" id="c"></td>
+                            <td class="recuadro" id="c1"></td>
                         </tr>
                     </table>
                 </div>
@@ -155,7 +169,24 @@
 
 
         <div class="row">
-            <div class="col" style="margin-left: 80px;">
+            <div class="col-lg-3 col-md-3 col-sd-12">
+                <div id="margen1" class="row row-cols-auto">
+
+                </div>
+                <div id="margen2" class="row row-cols-auto">
+
+                </div>
+                <div id="margen3" class="row row-cols-auto">
+
+                </div>
+                <div id="margen4" class="row row-cols-auto">
+
+                </div>
+                <div id="margen5" class="row row-cols-auto">
+                </div>
+            </div>
+
+            <div class="col-lg-9 col-md-9 col-sd-12">
                 <div id="linea1" class="row row-cols-auto">
 
                 </div>
@@ -185,11 +216,11 @@
         const puntosRadio = 20;
 
         let v_alfabeto = "Castellano94";
-        let v_nombre;
-        let v_apellido1;
-        let v_apellido2;
-        let v_apellido2P;
-        let v_apellido2M;
+        let v_nombre = '';
+        let v_apellido1 = '';
+        let v_apellido2 = '';
+        let v_apellido2P = '';
+        let v_apellido2M = '';
         let numero1 = [];
         let numero2 = [];
         let tr;
@@ -198,12 +229,7 @@
         let muestraError = "";
         let v_caminodevida = 0;
 
-        let ficha = [];
-        let secreto = [];
-        let fichaConSectreto = [
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        ];
-        let flagFichaLlena = false;
+
 
         const alfabeto = [
             ["A", 1, 1],
@@ -423,7 +449,7 @@
 
         function desglosar(que, donde) {
             //que las letras esten en el alfabeto
-            que = que.toUpperCase();
+            que = que.toUpperCase().trim();
             que = eliminarDiacriticos(que);
             let sumaNormal = 0,
                 sumaOculta = 0;
@@ -493,6 +519,10 @@
                 sumaNormal = sumaNormal + alfabetoElegido[puntero][1];
                 sumaOculta = sumaOculta + alfabetoElegido[puntero][2];
             }
+            if (donde >= 1 && donde <= 5) {
+                mostrarNombreEntero(donde, que, reduccionA0(reduccionA22(sumaNormal)) + '&nbsp;' + '&nbsp;' + '&nbsp;' + '&nbsp;' + '&nbsp;' + '&nbsp;' + '&nbsp;' + '&nbsp;' + '&nbsp;' + '&nbsp;' + sumaNormal, reduccionA0(reduccionA22(sumaOculta)) + '&nbsp;' + '&nbsp;' + '&nbsp;' + '&nbsp;' + '&nbsp;' + '&nbsp;' + '&nbsp;' + '&nbsp;' + '&nbsp;' + '&nbsp;' + sumaOculta);
+            }
+
             //console.log(v_alfabeto, que, sumaNormal);
             //console.log('filtrado: ', que);
             return [que, sumaNormal, sumaOculta];
@@ -563,33 +593,61 @@
         for (let t = 0; t < inputletra.length; t++) {
 
             inputletra[t].onchange = function (e) {
-                console.log(this.name, this.value);
+                //console.log(this.name, this.value);
                 if (this.name == "nombre") {
                     limpiarLineas(1);
-                    v_nombre = this.value;
-                    desglosar(this.value, 1);
+                    v_nombre = desglosar(this.value, 1)[0];
+                    this.value = v_nombre;
                 }
                 if (this.name == "apellido") {
                     limpiarLineas(2);
-                    v_apellido1 = this.value;
-                    desglosar(this.value, 2);
+
+                    v_apellido1 = desglosar(this.value, 2)[0];
+                    this.value = v_apellido1;
                 }
 
                 if (this.name == "apellido2") {
                     limpiarLineas(3);
-                    v_apellido2 = this.value;
-                    desglosar(this.value, 3);
+
+                    v_apellido2 = desglosar(this.value, 3)[0];
+                    this.value = v_apellido2;
                 }
                 if (this.name == "apellido2P") {
                     limpiarLineas(4);
-                    apellido2P = this.value;
-                    desglosar(this.value, 4);
+
+                    apellido2P = desglosar(this.value, 4)[0];
+                    this.value = apellido2P;
                 }
                 if (this.name == "apellido2M") {
                     limpiarLineas(5);
-                    apellido2M = this.value;
-                    desglosar(this.value, 5);
+
+                    apellido2M = desglosar(this.value, 5)[0];
+                    this.value = apellido2M;
                 }
+                let sumvocales = sumavocales(v_nombre) + sumavocales(v_apellido1) + sumavocales(v_apellido2);
+
+
+
+                //console.log(sumavocales(v_nombre), sumavocales(v_apellido1), sumavocales(v_apellido2), sumavocales(v_nombre) + sumavocales(v_apellido1) + sumavocales(v_apellido2));
+
+                let consonantes =
+                    desglosar(v_nombre)[1] +
+                    desglosar(v_apellido1)[1] +
+                    desglosar(v_apellido2)[1] -
+                    sumvocales;
+                document.getElementById("v").innerHTML = sumvocales;
+                document.getElementById("c").innerHTML = consonantes;
+                document.getElementById("v1").innerHTML = reduccionA22(sumvocales);
+                document.getElementById("c1").innerHTML =
+
+                    " " + reduccionA22(consonantes) + " / " + reduccionA0(reduccionA22(consonantes));
+
+
+                ;
+
+
+
+
             };
         }
 
@@ -608,8 +666,43 @@
             inputletra[4].value = v_apellido2M;
 
             muestraErrorDiv.innerHTML = muestraError;
-        });
+            for (var t = 1; t <= 5; t++) {
+                limpiarLineas(t);
+            }
 
+        });
+        function mostrarNombreEntero(linea, nombre, numero1, numero2) {
+
+            var mostrar = document.getElementById('margen' + linea);
+            var new_div_col = document.createElement('div');
+            new_div_col.className = "col";
+            var new_div_row = document.createElement('div');
+            new_div_row.className = "row";
+            var new_div_row2 = document.createElement('div');
+            new_div_row2.className = "row";
+            var new_div_row3 = document.createElement('div');
+            new_div_row3.className = "row";
+            var new_span_letra = document.createElement('span');
+            new_span_letra.className = "nombre";
+            var new_span_numero1 = document.createElement('span');
+            new_span_numero1.className = "numero";
+            var new_span_numero2 = document.createElement('span');
+            new_span_numero2.className = "numero";
+
+            new_span_letra.innerHTML = nombre;
+            new_span_numero1.innerHTML = numero1;
+            new_span_numero2.innerHTML = numero2;
+
+            new_div_row.appendChild(new_span_letra);
+            new_div_row2.appendChild(new_span_numero1);
+            new_div_row3.appendChild(new_span_numero2);
+            new_div_col.appendChild(new_div_row);
+            new_div_col.appendChild(new_div_row2);
+            new_div_col.appendChild(new_div_row3);
+
+            mostrar.appendChild(new_div_col);
+
+        }
         function mostrarNombreLetraPorLetra(linea, letra, numero1, numero2) {
 
             var mostrar = document.getElementById('linea' + linea);
@@ -642,11 +735,11 @@
             mostrar.appendChild(new_div_col);
 
         }
-
-
         function limpiarLineas(linea) {
 
-            const contenidoEliminar0 = document.getElementById('linea' + linea);
+            var contenidoEliminar0 = document.getElementById('linea' + linea);
+            contenidoEliminar0.innerHTML = '';
+            contenidoEliminar0 = document.getElementById('margen' + linea);
             contenidoEliminar0.innerHTML = '';
         }
 
