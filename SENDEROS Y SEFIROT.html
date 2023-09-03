@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap-grid.min.css"
+        integrity="sha512-JQksK36WdRekVrvdxNyV3B0Q1huqbTkIQNbz1dlcFVgNynEMRl0F8OSqOGdVppLUDIvsOejhr/W5L3G/b3J+8w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"
+        integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Esferas del arbol de la vida</title>
+    <style>
+        .losInputs {
+            position: absolute;
+            left: 350px;
+            top: 50px;
+            width: 270px;
+            margin: 0;
+
+        }
+
+        .titulodeinputs {
+            position: absolute;
+            left: 470px;
+            top: 100px;
+
+            color: white;
+            text-decoration: underline;
+
+        }
+
+        .losInputs2 {
+            position: absolute;
+            left: 470px;
+            top: 120px;
+            width: 100px;
+
+
+        }
+
+        .losInputs3 {
+            position: absolute;
+            left: 470px;
+            top: 180px;
+            width: 100px;
+
+
+        }
+
+        .losInputs4 {
+            position: absolute;
+            left: 470px;
+            top: 240px;
+            width: 100px;
+
+
+        }
+
+        .losInputs5 {
+            position: absolute;
+            left: 470px;
+            top: 360px;
+            width: 150px;
+
+
+        }
+
+        .inputcolor {
+            position: absolute;
+            left: 470px;
+            top: 500px;
+            width: 150px;
+
+
+        }
+
+        #msgPuntos {
+            transition: width 2s, height 4s;
+            transition-delay: 1s;
+            transition-property: width;
+            transition-duration: 2s;
+            transition-timing-function: linear;
+            transition-delay: 1s;
+
+        }
+
+
+        .esmerilado {
+            box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 5px;
+        }
+
+        .borde {
+            background: hsla(0, 0%, 100%, 0.3);
+            box-shadow: 0 8px 32px 0 rgb(31 38 135 / 37%);
+            backdrop-filter: blur(1.5px);
+            -webkit-backdrop-filter: blur(1.5px);
+            border-radius: 10px;
+            border: 4px solid hsla(0, 0%, 100%, 0.6);
+        }
+
+        .v-input {
+            flex: 1 1 auto;
+            font-size: 16px;
+            letter-spacing: normal;
+
+            margin-top: 4px;
+
+            max-width: 100%;
+            width: auto;
+
+            background-color: "snow";
+            font: inherit;
+            padding-left: 8px;
+        }
+
+        input,
+        label {
+            color: white;
+        }
+
+        inputx,
+        selectx {
+            outline: none;
+            padding-left: 10px;
+            background-color: transparent;
+            border-style: none;
+            border-radius: 0;
+            padding: 0.7 0 0 0;
+            writing-mode: horizontal-tb !important;
+
+            text-rendering: auto;
+
+            letter-spacing: normal;
+            word-spacing: normal;
+
+            text-transform: none;
+            text-indent: 0px;
+            text-shadow: none;
+            display: inline-block;
+            text-align: start;
+            appearance: auto;
+            border: 0 !important;
+            margin-top: 10px;
+            margin-bottom: 10px;
+
+            appearance: none;
+        }
+
+        .arbolsinuso {
+            background-color: #0a1445;
+        }
+
+        .fondo {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            height: 750px;
+            width: 800px;
+            background-image: url(https://elarboldemivida.es/wp-content/uploads/2023/02/1500.jpg);
+            background-size: 800px 800px;
+            background-repeat: no-repeat;
+            background-position: top left;
+
+            background-position-x: -200px;
+            background-position-y: -50px;
+            opacity: 0.3;
+        }
+
+        #arbolCanvas {
+            position: absolute;
+            left: 20px;
+            top: 19px;
+        }
+
+        .titulo {
+            position: absolute;
+            left: 700px;
+            top: 650px;
+            color: antiquewhite;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid;
+            padding: 5px;
+            color: honeydew;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <div class="arbolsinuso">
+        <div class="fondo"></div>
+        <div class="titulo">
+            <h3 style="color: red" id="muestraError">&nbsp;</h3>
+        </div>
+        <canvas id="arbolCanvas" width="500" height="700">
+            Su navegador no admite el uso de Canvas</canvas>
+        <div class="losInputs esmerilado">
+            <div class=" borde" style="background-color: SNOW">
+                <span id="msgPuntos">&nbsp;</span>
+            </div>
+
+        </div>
+        <div class="titulodeinputs ">Forma de la linea</div>
+        <div class="losInputs2 esmerilado">
+
+            <form name="formZig">
+
+                <input type="radio" name="zig" value="false" checked="checked">
+                <label for="zig">recto</label><br>
+                <input type="radio" name="zig" value="true">
+                <label for="zig">zigzag</label><br>
+
+
+
+            </form>
+        </div>
+        <div class="losInputs3 esmerilado">
+            <form name="formDash">
+
+                <input type="radio" name="dash" value="false" checked="checked">
+                <label for="dash">recto</label><br>
+                <input type="radio" name="dash" value="true">
+                <label for="dash">dash</label><br>
+
+
+
+            </form>
+        </div>
+        <div class="losInputs4 esmerilado">
+            <form name="formDashSize">
+
+                <input type="radio" name="dashSize" value="1" checked="checked">
+                <label for="dashSize">_ _ _ _ </label><br>
+                <input type="radio" name="dashSize" value="2">
+                <label for="dashSize">_ . _ . _</label><br>
+                <input type="radio" name="dashSize" value="3">
+                <label for="dashSize">. . . . . . .</label><br>
+                <input type="radio" name="dashSize" value="4">
+                <label for="dashSize">°°°°°°°°</label><br>
+            </form>
+        </div>
+        <div class="losInputs5 esmerilado">
+            <div style="color: white;
+            text-decoration: underline;   margin: 4px;">Líneas Kármicas</div>
+
+            <form name="formKarma">
+
+                <input type="radio" name="karma" value="K0" checked="checked">
+                <label for="karma">no</label><br>
+                <input type="radio" name="karma" value="K1">
+                <label for="karma">sí, karma sencillo</label><br>
+                <input type="radio" name="karma" value="K2">
+                <label for="karma">sí, doble karma</label><br>
+                <input type="radio" name="karma" value="K3">
+                <label for="karma">sí, tripe karma</label><br>
+            </form>
+        </div>
+
+
+        <div class="container text-center inputcolor" style="
+    padding-left: 0px;
+    padding-right: 0px;">
+
+            <div style="color: white;
+                        text-decoration: underline;   margin: 4px;">Color de línea</div>
+            <input type="color" class="
+                            form-control form-control-color" id="GFG_Color" value="#15fad9" style="    width: 110px;">
+        </div>
+
+    </div>
+</body>
+<script>
+    const fileSuelto = true;
+    let color1 = "#15fad9";
+    const color2 = "#ff1aff";
+    const color3 = "#ffb900";
+    const colorKarmaTriplicado = "red";
+    let auxcolorpormodificaciones = color1;
+    const colorfosforito = "#15fad9";
+    const puntosRadio = 20;
+
+    let muestraError = "";
+
+    let ficha = [];
+    let secreto = [];
+    let fichaConSectreto = [
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ];
+    let flagFichaLlena = false;
+    let desdeP1 = 0;
+    let opZig = false;
+    let opDash = false;
+    let opDashSize = 1;
+    let opKarma = "K0";
+
+    const posiciones = [
+        [70, 181],
+        [134, 294],
+        [134, 67],
+        [265, 294],
+        [265, 67],
+
+        [330, 181],
+        [396, 294],
+        [396, 67],
+
+        [461, 181],
+        [592, 181],
+    ];
+    if (fileSuelto) {
+        document.body.style.backgroundColor = "#0a1445";
+
+    }
+
+    function dibujaLinea(
+        cual,
+        color,
+        zig = false,
+        dash = false,
+        dashType = 1
+    ) {
+        //console.log(cual, zig);
+        //cuando hay mas de una linea, que se dibujen una al lado de la otra, si es impar sera a la izq de la pricipal
+        let separacionOffset = 5;
+        let offset =
+            Math.pow(-1, linea[cual]) *
+            separacionOffset *
+            Math.ceil(linea[cual] / 2);
+        //console.log("cuantos:", linea[cual], offset);
+        linea[cual]++;
+        switch (cual) {
+            case 1:
+                punto[1].cuantos++;
+                punto[3].cuantos++;
+                new Line(punto[1], punto[3], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    offset * 0.5,
+                    offset * 0.8
+                );
+                break;
+            case 2:
+                punto[1].cuantos++;
+                punto[6].cuantos++;
+                new Line(punto[1], punto[6], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    offset
+                );
+                break;
+            case 3:
+                punto[2].cuantos++;
+                punto[3].cuantos++;
+                new Line(punto[2], punto[3], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    0,
+                    offset
+                );
+                break;
+            case 4:
+                punto[2].cuantos++;
+                punto[6].cuantos++;
+                new Line(punto[2], punto[6], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    offset * 0.8,
+                    offset * 0.5
+                );
+                break;
+            case 5:
+                punto[2].cuantos++;
+                punto[4].cuantos++;
+                new Line(punto[2], punto[4], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    offset
+                );
+                break;
+            case 6:
+                punto[3].cuantos++;
+                punto[6].cuantos++;
+                new Line(punto[3], punto[6], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    offset * -0.8,
+                    offset * 0.5
+                );
+                break;
+            case 7:
+                punto[5].cuantos++;
+                punto[3].cuantos++;
+                new Line(punto[5], punto[3], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    offset,
+                    0
+                );
+                break;
+            case 8:
+                punto[4].cuantos++;
+                punto[5].cuantos++;
+                new Line(punto[4], punto[5], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    0,
+                    offset
+                );
+                break;
+            case 9:
+                punto[4].cuantos++;
+                punto[6].cuantos++;
+                new Line(punto[4], punto[6], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    offset * 0.5,
+                    offset * 0.8
+                );
+                break;
+            case 10:
+                punto[4].cuantos++;
+                punto[7].cuantos++;
+                new Line(punto[4], punto[7], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    offset
+                );
+                break;
+            case 11:
+                punto[5].cuantos++;
+                punto[6].cuantos++;
+                new Line(punto[6], punto[5], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    offset * -0.5,
+                    offset * 0.8
+                );
+                break;
+            case 12:
+                punto[5].cuantos++;
+                punto[8].cuantos++;
+                new Line(punto[8], punto[5], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    offset
+                );
+                break;
+            case 13:
+                punto[7].cuantos++;
+                punto[6].cuantos++;
+                new Line(punto[6], punto[7], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    offset * -0.5,
+                    offset * 0.8
+                );
+                break;
+            case 14:
+                punto[9].cuantos++;
+                punto[6].cuantos++;
+                new Line(punto[9], punto[6], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    offset
+                );
+                break;
+            case 15:
+                punto[8].cuantos++;
+                punto[6].cuantos++;
+                new Line(punto[6], punto[8], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    offset * 0.5,
+                    offset * 0.8
+                );
+                break;
+            case 16:
+                punto[7].cuantos++;
+                punto[8].cuantos++;
+                new Line(punto[7], punto[8], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    0,
+                    offset
+                );
+                break;
+            case 17:
+                punto[7].cuantos++;
+                punto[9].cuantos++;
+                new Line(punto[7], punto[9], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    offset * 0.5,
+                    offset * 0.8
+                );
+                break;
+            case 18:
+                punto[7].cuantos++;
+                punto[10].cuantos++;
+                new Line(punto[7], punto[10], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    offset * 0.8,
+                    offset * 0.5
+                );
+                break;
+            case 19:
+                punto[8].cuantos++;
+                punto[9].cuantos++;
+                new Line(punto[8], punto[9], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    offset * -0.5,
+                    offset * 0.8
+                );
+                break;
+
+            case 20:
+                punto[10].cuantos++;
+                punto[8].cuantos++;
+                new Line(punto[8], punto[10], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    offset * 0.5,
+                    offset * -0.8
+                );
+                break;
+            case 21:
+                punto[10].cuantos++;
+                punto[9].cuantos++;
+                new Line(punto[9], punto[10], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    offset
+                );
+                break;
+            case 22:
+                punto[1].cuantos++;
+                punto[2].cuantos++;
+                new Line(punto[2], punto[1], zig, dash).draw(
+                    dashType,
+                    ctx,
+                    color,
+                    offset * -0.5,
+                    offset * 0.8
+                );
+                break;
+            default:
+                return false;
+        }
+        ponecirculos();
+        //console.log('linea', linea[19]);
+    }
+    function dibujaKarmaaux(desde, hasta, offsetx = 1, offsety = 1) {
+        //ejemplo linea torcida de estrellas
+        let xx = (length * 2.6) / 2;
+        let region = new Path2D();
+        let to = hasta;
+        let from = desde;
+
+        let lineRadians = Math.atan2(to.y - from.y, to.x - from.x);
+        const a = from.x - to.x;
+        const b = from.y - to.y;
+        let lineLength = Math.sqrt(a * a + b * b);
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.translate(from.x + xx * offsetx, from.y + xx * offsety);
+        ctx.rotate(lineRadians);
+        ctx.moveTo(0, 0);
+
+        region.moveTo(0, 0);
+        region.lineTo(0, 0 + xx * 2);
+        region.lineTo(lineLength, 0 + xx * 2);
+        region.lineTo(lineLength, 0);
+        region.lineTo(0, 0);
+        region.closePath();
+
+        ctx.fill(region);
+        ctx.restore();
+    }
+
+    function dibujaKarma(cual, duplicado = false, triplicado = false) {
+        if (duplicado) ctx.fillStyle = asteriscopattern;
+        else if (triplicado) ctx.fillStyle = karma3pattern;
+        else ctx.fillStyle = estrellapattern;
+        linea[cual]++;
+        switch (cual) {
+            case 1:
+                dibujaKarmaaux(punto[1], punto[3], 0.5, 0.8);
+                break;
+            case 2:
+                dibujaKarmaaux(punto[1], punto[6]);
+                break;
+            case 3:
+                dibujaKarmaaux(punto[2], punto[3]);
+                break;
+            case 4:
+                dibujaKarmaaux(punto[2], punto[6], 0.8, 0.5);
+                break;
+            case 5:
+                dibujaKarmaaux(punto[2], punto[4]);
+                break;
+            case 6:
+                dibujaKarmaaux(punto[3], punto[6], 0.8, -0.5);
+                break;
+            case 7:
+                dibujaKarmaaux(punto[3], punto[5]);
+                break;
+            case 8:
+                dibujaKarmaaux(punto[4], punto[5]);
+                break;
+            case 9:
+                dibujaKarmaaux(punto[4], punto[6], 0.5, 0.8);
+                break;
+            case 10:
+                dibujaKarmaaux(punto[4], punto[7]);
+                break;
+            case 11:
+                dibujaKarmaaux(punto[6], punto[5], -0.5, 0.8);
+                break;
+            case 12:
+                dibujaKarmaaux(punto[5], punto[8]);
+                break;
+            case 13:
+                dibujaKarmaaux(punto[7], punto[6], -0.5, 0.8);
+                break;
+            case 14:
+                dibujaKarmaaux(punto[6], punto[9]);
+                break;
+            case 15:
+                dibujaKarmaaux(punto[6], punto[8], 0.5, 0.8);
+                break;
+            case 16:
+                dibujaKarmaaux(punto[7], punto[8]);
+                break;
+            case 17:
+                dibujaKarmaaux(punto[7], punto[9], 0.5, 0.8);
+                break;
+            case 18:
+                dibujaKarmaaux(punto[7], punto[10], 0.8, 0.5);
+                break;
+            case 19:
+                dibujaKarmaaux(punto[9], punto[8], -0.5, 0.8);
+                break;
+            case 20:
+                dibujaKarmaaux(punto[8], punto[10], 0.8, -0.5);
+                break;
+            case 21:
+                dibujaKarmaaux(punto[9], punto[10]);
+                break;
+            case 22:
+                dibujaKarmaaux(punto[2], punto[1], -0.5, 0.8);
+                break;
+            default:
+                return false;
+        }
+        ponecirculos();
+        //console.log('linea', linea[19]);
+    }
+
+    function dibujaKarmaDuplicado(cual) {
+        dibujaKarma(cual, true);
+    }
+    function dibujaKarmaTriplicado(cual) {
+        dibujaKarma(cual, false, true);
+    }
+    function clear() {
+        linea = [
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        ];
+        for (let p = 0; p < posiciones.length; p++) {
+            punto[p + 1].cuantos = 0;
+        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ponecirculos();
+    }
+
+    function ponecirculos() {
+        var innerRadius = 5;
+
+        let gradient;
+        for (let p = 0; p < posiciones.length; p++) {
+            ctx.beginPath();
+            ctx.arc(
+                posiciones[p][1],
+                posiciones[p][0],
+                puntosRadio,
+                0,
+                2 * Math.PI
+            );
+            gradient = ctx.createRadialGradient(
+                posiciones[p][1],
+                posiciones[p][0],
+                innerRadius,
+                posiciones[p][1],
+                posiciones[p][0],
+                puntosRadio
+            );
+            gradient.addColorStop(0, colorfosforito);
+            gradient.addColorStop(1, "blue");
+            ctx.setLineDash([]);
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "white";
+            ctx.fillStyle = colorfosforito;
+            ctx.fill();
+
+            // ctx.lineWidth = 3;
+            ctx.stroke();
+        }
+        dibujaRecuadro();
+    }
+
+
+    function dibujaRecuadro() {
+        for (let cual = 1; cual <= 10; cual++) {
+            switch (cual) {
+                case 1:
+                    dibujaRecuadroaux(170 + 7, 28 + 53, "I");
+                    //dibujaRecuadroaux(170, 28, punto[cual].cuantos, 3);
+
+                    break;
+                case 2:
+                    dibujaRecuadroaux(294 - 7, 134 + 10, "II");
+                    //dibujaRecuadroaux(294 + 45, 134 + 7, punto[cual].cuantos, 4);
+                    break;
+                case 3:
+                    dibujaRecuadroaux(67 - 10, 134 + 10, "III");
+                    //dibujaRecuadroaux(67 - 65, 134 + 7, punto[cual].cuantos, 4);
+                    break;
+                case 4:
+                    dibujaRecuadroaux(294 - 11, 265 + 10, "IV");
+                    //dibujaRecuadroaux(294 + 45, 265 + 7, punto[cual].cuantos, 4);
+                    //     dibujaRecuadroaux(294 - 10, 265 + 7, , 4);
+                    break;
+                case 5:
+                    dibujaRecuadroaux(67 - 8, 265 + 10, "V");
+                    //dibujaRecuadroaux(67 - 65, 265 + 7, punto[cual].cuantos, 4);
+                    break;
+                case 6:
+                    dibujaRecuadroaux(182 - 12, 330 + 10, "VI");
+                    //dibujaRecuadroaux(182 + 55, 330 + 7, punto[cual].cuantos, 8);
+                    break;
+                case 7:
+                    dibujaRecuadroaux(294 - 14, 396 + 10, "VII");
+                    //dibujaRecuadroaux(294 + 45, 396 + 7, punto[cual].cuantos, 5);
+                    break;
+                case 8:
+                    dibujaRecuadroaux(67 - 16, 396 + 10, "VIII");
+                    //dibujaRecuadroaux(67 - 65, 396 + 7, punto[cual].cuantos, 5);
+                    break;
+                case 9:
+                    dibujaRecuadroaux(182 - 12, 461 + 10, "IX");
+                    //dibujaRecuadroaux(182 + 45, 461 + 7, punto[cual].cuantos, 4);
+                    break;
+                case 10:
+                    dibujaRecuadroaux(182 - 9, 592 + 10, "X");
+                    //dibujaRecuadroaux(182 + 55, 592 + 7, punto[cual].cuantos, 3);
+                    break;
+
+                default:
+                    return false;
+            }
+        }
+    }
+
+    function dibujaRecuadroaux(x, y, numerador, denominador) {
+
+        denominador = 0;
+        y = y + 10;
+        let tamaño = 20;
+        let chico = tamaño / 2;
+        let aux = numerador < 10 ? chico - 4 : chico - 9;
+        ctx.beginPath();
+        ctx.strokeStyle = "black";
+        ctx.font = "20px sans-serif";
+        ctx.lineWidth = 1;
+        ctx.setLineDash([]);
+        ctx.moveTo(x + 1, y - chico);
+
+        //ctx.lineTo(x + tamaño, y - tamaño);
+        ctx.strokeText(numerador, x + aux, y - chico - 3);
+
+        ctx.stroke();
+    }
+
+
+
+    class Point {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.cuantos = 0;
+        }
+    }
+    let linea = [
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    ];
+
+    let punto = [];
+    for (let p = 0; p < posiciones.length; p++) {
+        punto[p + 1] = new Point(posiciones[p][1], posiciones[p][0]);
+    }
+    class Line {
+        constructor(
+            fromPoint = null,
+            toPoint = null,
+            zigZagged = false,
+            dashed = false
+        ) {
+            this.from = fromPoint;
+            this.to = toPoint;
+            this.dashed = dashed;
+            this.zigZagged = zigZagged;
+
+            this.prepareZigZag();
+        }
+
+        setFrom(point) {
+            dashType;
+            this.from = point;
+        }
+
+        setTo(point) {
+            this.to = toPoint;
+        }
+
+        getFrom() {
+            return this.from;
+        }
+
+        getTo() {
+            return this.to;
+        }
+
+        prepareZigZag() {
+            // Get the radian angle of the line
+            this.lineRadians = Math.atan2(
+                this.to.y - this.from.y,
+                this.to.x - this.from.x
+            );
+
+            // Get the length of the line
+            const a = this.from.x - this.to.x;
+            const b = this.from.y - this.to.y;
+            this.lineLength = Math.sqrt(a * a + b * b);
+
+            // 10 pixels between each zig zag "wave"
+            this.zigzagSpacing = 5;
+
+            // Length of one zig zag line - will in reality be doubled see below usage
+            this.oneZigZagLength = 1;
+
+            //Length of the last straight bit - so we do not zig zag all the line
+            this.straightLengthWhenZigZag = 5;
+
+            // The length of the zig zag lines
+            this.zigZagLength = this.lineLength - this.straightLengthWhenZigZag;
+        }
+
+        draw(
+            dashType = 1,
+            ctx,
+            color = "#0ff",
+            offsetx = 0,
+            offsety = 0,
+            lineWidth = 2.0
+        ) {
+            if (this.dashed) {
+                switch (dashType) {
+                    case 1:
+                        ctx.setLineDash([12, 4]);
+                        break;
+                    case 2:
+                        ctx.setLineDash([15, 3, 3, 3]);
+                        break;
+                    case 3:
+                        ctx.lineCap = "round";
+                        lineWidth = 1;
+                        ctx.setLineDash([0, 6]);
+                        break;
+                    case 4:
+                        ctx.setLineDash([0, 5]);
+                        ctx.lineCap = "round";
+                        lineWidth = 3;
+                        break;
+                    default:
+                        ctx.setLineDash([12, 4]);
+                        break;
+                }
+            } else {
+                ctx.setLineDash([]);
+            }
+
+            if (this.zigZagged) {
+                this.drawZigZagged(ctx, offsetx, offsety);
+            } else {
+                ctx.beginPath();
+                ctx.moveTo(this.from.x + offsetx, this.from.y + offsety);
+                ctx.lineTo(this.to.x + offsetx, this.to.y + offsety);
+            }
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = color;
+
+            ctx.stroke();
+            ctx.lineCap = "butt"; //reset
+            ctx.setLineDash([]);
+        }
+
+        drawZigZagged(ctx, offsetx = 0, offsety = 0) {
+            // Save the current drawing state
+            ctx.save();
+
+            // Begin the new path
+            ctx.beginPath();
+
+            //Set the new 0, 0
+            ctx.translate(this.from.x + offsetx, this.from.y + offsety);
+
+            // Rotate the canvas so we can treat it like straight
+            ctx.rotate(this.lineRadians);
+
+            // Begin from 0, 0 (ie this.from.x, this.from.y)
+            ctx.moveTo(0, 0);
+            let zx = 0;
+            // Create zig zag lines
+            for (let n = 0; zx < this.zigZagLength; n++) {
+                // The new zig zag x position
+                zx = (n + 1) * this.zigzagSpacing;
+
+                // The new zig zag y position - each and other time up and down
+                const zy =
+                    n % 2 == 0 ? -this.oneZigZagLength : this.oneZigZagLength;
+
+                // Draw the an actual line of the zig zag line
+                ctx.lineTo(zx, zy);
+            }
+            // Back to the center vertically
+            ctx.lineTo(this.lineLength - this.straightLengthWhenZigZag / 2, 0);
+
+            // Draw the last bit straight
+            ctx.lineTo(this.lineLength, 0);
+
+            // Restore the previous drawing state
+            ctx.restore();
+        }
+
+        setDashed(enable) {
+            this.dashed = enable;
+        }
+
+        setZigZagged(enable) {
+            this.zigZagged = enable;
+        }
+    }
+
+    const muestraErrorDiv = document.getElementById("muestraError");
+
+    let canvas = document.getElementById("arbolCanvas");
+    canvas.style.position = "absolute";
+    let ctx = canvas.getContext("2d");
+
+    var length = 6;
+    // forma de estrella
+    const estrellaCanvas = document.createElement("canvas");
+    const estrella = estrellaCanvas.getContext("2d");
+    estrellaCanvas.width = length * 3;
+    estrellaCanvas.height = length * 3;
+    estrella.fillStyle = "transparent";
+    estrella.translate(length, length);
+    estrella.beginPath();
+    estrella.globalAlpha = 1;
+    estrella.rotate((Math.PI / 180) * 72);
+    estrella.scale(1, 1);
+    estrella.strokeStyle = color1;
+    estrella.fillStyle = color1;
+    estrella.lineWidth = 1;
+    for (var i = 5; i--;) {
+        estrella.lineTo(0, length);
+        estrella.translate(0, length);
+        estrella.rotate((Math.PI * 2) / 10);
+        estrella.lineTo(0, -length);
+        estrella.translate(0, -length);
+        estrella.rotate(-((Math.PI * 6) / 10));
+    }
+    estrella.lineTo(0, length);
+    estrella.closePath();
+    estrella.fill();
+    estrella.stroke();
+    const estrellapattern = ctx.createPattern(estrellaCanvas, "repeat");
+
+    // forma de asterisco
+    let lengthnueva = 7;
+    const asteriscoCanvas = document.createElement("canvas");
+    const asterisco = asteriscoCanvas.getContext("2d");
+    asteriscoCanvas.width = length * 3;
+    asteriscoCanvas.height = length * 3;
+    asterisco.fillStyle = "transparent";
+    asterisco.translate((length * 3) / 2, (length * 3) / 2);
+    asterisco.beginPath();
+    asterisco.globalAlpha = 1;
+    //asterisco.rotate((Math.PI / 180) * 72);
+    asterisco.scale(1, 1);
+    asterisco.strokeStyle = color1;
+    asterisco.fillStyle = color1;
+    asterisco.lineWidth = 2;
+    for (var i = 9; i--;) {
+        asterisco.lineTo(0, lengthnueva);
+        asterisco.translate(0, lengthnueva);
+        //    asterisco.rotate((Math.PI * 2) / 10);
+        asterisco.lineTo(0, -lengthnueva);
+        asterisco.translate(0, -lengthnueva);
+        asterisco.rotate(-((Math.PI / 180) * 40));
+    }
+    asterisco.lineTo(0, lengthnueva);
+    asterisco.closePath();
+    asterisco.fill();
+    asterisco.stroke();
+    const asteriscopattern = ctx.createPattern(asteriscoCanvas, "repeat");
+
+    const karma3Canvas = document.createElement("canvas");
+    const karma3 = karma3Canvas.getContext("2d");
+    karma3Canvas.width = length * 3;
+    karma3Canvas.height = length * 3;
+    karma3.fillStyle = "transparent";
+    karma3.translate((length * 3) / 2, (length * 3) / 2);
+    karma3.beginPath();
+    karma3.globalAlpha = 1;
+    //karma3.rotate((Math.PI / 180) * 72);
+    karma3.scale(1, 1);
+    karma3.strokeStyle = colorKarmaTriplicado;
+    karma3.fillStyle = colorKarmaTriplicado;
+    karma3.lineWidth = 2;
+    for (var i = 9; i--;) {
+        karma3.lineTo(0, lengthnueva);
+        karma3.translate(0, lengthnueva);
+        //    karma3.rotate((Math.PI * 2) / 10);
+        karma3.lineTo(0, -lengthnueva);
+        karma3.translate(0, -lengthnueva);
+        karma3.rotate(-((Math.PI / 180) * 40));
+    }
+    karma3.lineTo(0, lengthnueva);
+    karma3.closePath();
+    karma3.fill();
+    karma3.stroke();
+    const karma3pattern = ctx.createPattern(karma3Canvas, "repeat");
+
+    // //esto es solo para probar cómo se ve en pantalla
+    for (let y = 1; y <= 22; y++) {
+        let zig = false;
+        let disc = false;
+        // dibujaLinea(y, color1, zig, disc, 4);
+        // dibujaLinea(y, color1, zig, disc, 2);
+        //dibujaLinea(y, color1, zig, disc, 3);
+        // dibujaLinea(y, color1, zig, disc, 3);
+        //dibujaLinea(y, color1, zig, disc, 4);
+
+        //poneSimboloSuma(y);
+        //poneSimboloSumaduplicado(y);
+        // if (y % 2 == 1) dibujaKarma(y);
+        // else dibujaKarmaDuplicado(y);
+    }
+
+
+
+
+
+
+
+
+
+
+    ponecirculos();
+    //ponenumerosendero();
+
+    var inputletra = document.getElementsByClassName("inputletra");
+    for (let t = 0; t < inputletra.length; t++) {
+        inputletra[t].onfocus = function () {
+            this.value = "";
+        };
+        inputletra[t].onchange = function (e) {
+            clear();
+            if (this.name == "nombre") v_nombre = this.value;
+
+            if (this.name == "apellido") v_apellido1 = this.value;
+            if (this.name == "apellido2") v_apellido2 = this.value;
+            if (this.name == "dia") {
+                var d = new Date(this.value + "T00:00:00");
+                v_año = d.getFullYear();
+                v_mes = d.getMonth() + 1;
+                v_dia = d.getDate();
+                // console.log(v_dia, v_mes, v_año);
+            }
+
+            // console.log(v_nombre && v_apellido1 && v_apellido2 && v_dia);
+
+            if (v_nombre && v_apellido1 && v_apellido2 && v_dia) {
+                llenarFicha();
+                inputletra[0].value = v_nombre;
+                inputletra[1].value = v_apellido1;
+                inputletra[2].value = v_apellido2;
+                clear();
+                dibujarFicha();
+                //console.log(ficha);
+                //console.log(fichaConSectreto);
+            }
+            muestraErrorDiv.innerHTML = muestraError;
+            //setTimeout(resultado, 10);
+        };
+    }
+
+
+
+
+
+
+
+    function clikCanvasPosition(canvas, event) {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        //console.log(">>>x: " + x + " y: " + y);
+        let margenDeError = 15;
+        let cual;
+        for (let p = 0; p < posiciones.length; p++) {
+
+            if (
+                Math.abs(posiciones[p][1] - x) < margenDeError
+                && Math.abs(posiciones[p][0] - y) < margenDeError) {
+
+
+                if (desdeP1 > 0) {
+                    cual = ubicarCualLineaEs(desdeP1, p + 1);
+                    if (cual == 0) {
+
+                        document.getElementById("msgPuntos").innerHTML = "&nbsp;";;
+                    }
+                    else {
+
+
+                        switch (opKarma) {
+                            case "K0": dibujaLinea(cual, color1, opZig, opDash, opDashSize); break;
+
+                            case "K1": dibujaKarma(cual); break;
+                            case "K2": dibujaKarmaDuplicado(cual); break;
+                            case "K3": dibujaKarmaTriplicado(cual); break;
+
+                        }
+                        document.getElementById("msgPuntos").innerHTML = "Esfera: " + desdeP1 + " y esfera: " + (p + 1) + " son el sendero " + cual;
+
+
+                        desdeP1 = 0;
+                        //                    console.log(cual);
+                    }
+                } else {
+                    desdeP1 = p + 1;
+                    document.getElementById("msgPuntos").innerHTML = "Esfera: " + (p + 1);
+                }
+
+
+
+
+
+            }
+
+        }
+
+
+
+    }
+
+    const canvasClick = document.querySelector('canvas');
+    canvasClick.addEventListener('mousedown', function (e) {
+        clikCanvasPosition(canvas, e);
+    });
+
+    var rad = document.formZig.zig;
+    var prev = null;
+    for (var i = 0; i < rad.length; i++) {
+        rad[i].addEventListener('change', function () {
+
+            if (this !== prev) {
+                prev = this;
+            }
+
+            if (this.value == 'true') {
+                opZig = true;
+            } else {
+                opZig = false;
+            }
+
+        });
+    }
+    var rad2 = document.formDash.dash;
+    var prev2 = null;
+    for (var i = 0; i < rad2.length; i++) {
+        rad2[i].addEventListener('change', function () {
+
+            if (this !== prev) {
+                prev2 = this;
+            }
+
+            if (this.value == 'true') {
+                opDash = true;
+            } else {
+                opDash = false;
+            }
+
+        });
+    }
+    var rad3 = document.formDashSize.dashSize;
+    var prev3 = null;
+    for (var i = 0; i < rad3.length; i++) {
+        rad3[i].addEventListener('change', function () {
+
+            if (this !== prev) {
+                prev3 = this;
+            }
+
+
+            opDashSize = parseInt(this.value);
+
+
+        });
+    }
+
+    var rad4 = document.formKarma.karma;
+    var prev4 = null;
+    for (var i = 0; i < rad4.length; i++) {
+        rad4[i].addEventListener('change', function () {
+
+            if (this !== prev) {
+                prev4 = this;
+            }
+
+
+            opKarma = this.value;
+
+
+        });
+    }
+
+    var colorpicker = document.getElementById("GFG_Color");
+    colorpicker.onchange = function (e) { color1 = colorpicker.value; };
+
+
+
+    function ubicarCualLineaEs(P1, P2) {
+
+        let Linea = hubicalinea(P1, P2);
+        if (Linea == 0) { Linea = hubicalinea(P2, P1); }
+
+        function hubicalinea(a, b) {
+            let Linea = 0;
+            if (a == 1) {
+                if (b == 2) { Linea = 22; }
+                if (b == 3) { Linea = 1; }
+                if (b == 6) { Linea = 2; }
+            }
+            if (a == 2) {
+                if (b == 3) { Linea = 3; }
+                if (b == 4) { Linea = 5; }
+                if (b == 6) { Linea = 4; }
+            }
+            if (a == 3) {
+
+                if (b == 5) { Linea = 7; }
+                if (b == 6) { Linea = 6; }
+            }
+            if (a == 4) {
+                if (b == 5) { Linea = 8; }
+                if (b == 6) { Linea = 9; }
+                if (b == 7) { Linea = 10; }
+            }
+            if (a == 5) {
+                if (b == 6) { Linea = 11; }
+                if (b == 8) { Linea = 12; }
+            }
+            if (a == 6) {
+                if (b == 7) { Linea = 13; }
+                if (b == 8) { Linea = 15; }
+                if (b == 9) { Linea = 14; }
+            }
+            if (a == 7) {
+                if (b == 8) { Linea = 16; }
+                if (b == 9) { Linea = 17; }
+                if (b == 10) { Linea = 18; }
+            }
+            if (a == 8) {
+                if (b == 9) { Linea = 19; }
+                if (b == 10) { Linea = 20; }
+            }
+            if (a == 9) {
+                if (b == 10) { Linea = 21; }
+
+            }
+            return Linea;
+        }
+        return Linea;
+    }
+
+
+
+</script>
+
+
+</html>
