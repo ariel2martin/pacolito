@@ -36,7 +36,7 @@
             position: absolute;
             left: 470px;
             top: 120px;
-            width: 100px;
+            width: 150px;
 
 
         }
@@ -45,7 +45,7 @@
             position: absolute;
             left: 470px;
             top: 180px;
-            width: 100px;
+            width: 150px;
 
 
         }
@@ -54,7 +54,7 @@
             position: absolute;
             left: 470px;
             top: 240px;
-            width: 100px;
+            width: 150px;
 
 
         }
@@ -213,8 +213,10 @@
             </div>
 
         </div>
-        <div class="titulodeinputs ">Forma de la linea</div>
+
         <div class="losInputs2 esmerilado">
+            <div style="color: white;
+                        text-decoration: underline;     font-size: 12px;  margin: 4px;">FORMA DE LA LÍNEA</div>
 
             <form name="formZig">
 
@@ -231,15 +233,17 @@
             <form name="formDash">
 
                 <input type="radio" name="dash" value="false" checked="checked">
-                <label for="dash">recto</label><br>
+                <label for="dash">recta</label><br>
                 <input type="radio" name="dash" value="true">
-                <label for="dash">dash</label><br>
+                <label for="dash">discontinua</label><br>
 
 
 
             </form>
         </div>
         <div class="losInputs4 esmerilado">
+            <div style="color: white;
+                        text-decoration: underline;     font-size: 12px;  margin: 4px;">TIPO DE DISCONTINUA</div>
             <form name="formDashSize">
 
                 <input type="radio" name="dashSize" value="1" checked="checked">
@@ -254,7 +258,7 @@
         </div>
         <div class="losInputs5 esmerilado">
             <div style="color: white;
-            text-decoration: underline;   margin: 4px;">Líneas Kármicas</div>
+            text-decoration: underline;     font-size: 12px;  margin: 4px;">LÍNEAS KÁRMICAS</div>
 
             <form name="formKarma">
 
@@ -743,6 +747,7 @@
             ctx.stroke();
         }
         dibujaRecuadro();
+        ponenumerosendero();
     }
 
 
@@ -818,6 +823,69 @@
         ctx.stroke();
     }
 
+    function ponenumerosendero() {
+        const pos = [
+            [106, 117, 1],
+            [106, 245, 22],
+            [134, 134, 3],
+            [396, 134, 16],
+            [265, 164, 8],
+            [200, 67, 7],
+            [200, 294, 5],
+            [331, 294, 10],
+            [331, 67, 12],
+            [200, 181, 2],
+            [220, 245, 4],
+            [220, 117, 6],
+
+            [295, 245, 9],
+            [295, 117, 11],
+            [365, 245, 13],
+            [365, 117, 15],
+            [425, 245, 17],
+            [425, 117, 19],
+
+            [480, 245, 18],
+            [480, 117, 20],
+            [370, 181, 14],
+            [500, 181, 21],
+        ];
+
+        let diam = puntosRadio / 2;
+        let gap = diam / 2;
+        let gapx = gap;
+        let gapy = gap - 1;
+
+        for (let p = 0; p < pos.length; p++) {
+            ctx.font = "12px sans-serif";
+            if (pos[p][2] < 10) {
+                //     ctx.font = "16px Arial";
+                gapx = gap - 2;
+                //gapy = gap;
+            } else {
+                //     if (pos[p][2] < 20) {
+                // ctx.font = "12px Arial";
+                gapx = gap + 2;
+                //gapy = gap;
+                //     } else {
+                //         ctx.font = "10px Arial";
+                //         gapx = gap;
+                //         gapy = gap - 2;
+                //     }
+            }
+
+            ctx.beginPath();
+            ctx.arc(pos[p][1], pos[p][0], diam, 0, 2 * Math.PI);
+            ctx.fillStyle = "white";
+            ctx.fill();
+            ctx.setLineDash([]);
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "black";
+            ctx.strokeText(pos[p][2], pos[p][1] - gapx, pos[p][0] + gapy);
+
+            //ctx.stroke();
+        }
+    }
 
 
     class Point {
