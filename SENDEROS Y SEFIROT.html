@@ -8,11 +8,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap-grid.min.css"
         integrity="sha512-JQksK36WdRekVrvdxNyV3B0Q1huqbTkIQNbz1dlcFVgNynEMRl0F8OSqOGdVppLUDIvsOejhr/W5L3G/b3J+8w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"
         integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>Esferas del arbol de la vida</title>
     <style>
+        body {
+            font-family: 'EB Garamond', serif;
+        }
+
         .losInputs {
             position: absolute;
             left: 350px;
@@ -53,7 +62,7 @@
         .losInputs4 {
             position: absolute;
             left: 470px;
-            top: 240px;
+            top: 230px;
             width: 150px;
 
 
@@ -68,12 +77,30 @@
 
         }
 
+        .losInputs6 {
+            position: absolute;
+            left: 470px;
+            top: 600px;
+            width: 150px;
+
+
+        }
+
         .inputcolor {
             position: absolute;
             left: 470px;
             top: 500px;
             width: 150px;
 
+
+        }
+
+        .inputcolor2 {
+
+            position: absolute;
+            left: 770px;
+            top: 450px;
+            width: 150px;
 
         }
 
@@ -190,7 +217,8 @@
         th,
         td {
             border: 1px solid;
-            padding: 5px;
+            border-collapse: collapse;
+            padding: 25px;
             color: honeydew;
         }
     </style>
@@ -201,7 +229,7 @@
 
 
     <div class="arbolsinuso">
-        <div class="fondo"></div>
+        <div class="fondo" id="a"></div>
         <div class="titulo">
             <h3 style="color: red" id="muestraError">&nbsp;</h3>
         </div>
@@ -218,29 +246,19 @@
             <div style="color: white;
                         text-decoration: underline;     font-size: 12px;  margin: 4px;">FORMA DE LA LÍNEA</div>
 
-            <form name="formZig">
+            <form name="formFormaLinea">
 
-                <input type="radio" name="zig" value="false" checked="checked">
-                <label for="zig">recto</label><br>
-                <input type="radio" name="zig" value="true">
-                <label for="zig">zigzag</label><br>
-
-
-
-            </form>
-        </div>
-        <div class="losInputs3 esmerilado">
-            <form name="formDash">
-
-                <input type="radio" name="dash" value="false" checked="checked">
-                <label for="dash">recta</label><br>
-                <input type="radio" name="dash" value="true">
-                <label for="dash">discontinua</label><br>
-
+                <input type="radio" id="lineaRecta" name="formFormaLinea" value="false" checked="checked">
+                <label for="zig">Recta</label><br>
+                <input type="radio" id="lineazig" name="formFormaLinea" value="true">
+                <label for="zig">Zigzag</label><br>
+                <input type="radio" id="lineadisconinua" name="formFormaLinea" value="true">
+                <label for="dash">Discontinua</label><br>
 
 
             </form>
         </div>
+
         <div class="losInputs4 esmerilado">
             <div style="color: white;
                         text-decoration: underline;     font-size: 12px;  margin: 4px;">TIPO DE DISCONTINUA</div>
@@ -253,7 +271,7 @@
                 <input type="radio" name="dashSize" value="3">
                 <label for="dashSize">. . . . . . .</label><br>
                 <input type="radio" name="dashSize" value="4">
-                <label for="dashSize">°°°°°°°°</label><br>
+                <label for="dashSize">°°°°°°°°°°</label><br>
             </form>
         </div>
         <div class="losInputs5 esmerilado">
@@ -265,15 +283,31 @@
                 <input type="radio" name="karma" value="K0" checked="checked">
                 <label for="karma">no</label><br>
                 <input type="radio" name="karma" value="K1">
-                <label for="karma">sí, karma sencillo</label><br>
+                <label for="karma">sí, sencillo</label><br>
                 <input type="radio" name="karma" value="K2">
-                <label for="karma">sí, doble karma</label><br>
+                <label for="karma">sí, doble</label><br>
                 <input type="radio" name="karma" value="K3">
-                <label for="karma">sí, tripe karma</label><br>
+                <label for="karma">sí, tripe</label><br>
             </form>
         </div>
+        <!-- ////////////////////////////////////////////// -->
+        <div class="losInputs6 esmerilado">
+            <div style="color: white;
+            text-decoration: underline;     font-size: 12px;  margin: 4px;">FONDO</div>
 
+            <form name="formFondo">
+                <input type="checkbox" name="Fondo" value="first_checkbox" id="circulos" />
+                <label for="Fondo">N° sendero</label><br>
 
+                <input type="radio" name="Fondo" id="azul">
+                <label for="Fondo">Azul</label><br>
+                <input type="radio" name="Fondo" id="negro">
+                <label for="Fondo">Negro</label><br>
+                <input type="radio" name="Fondo" id="flor" checked="checked">
+                <label for="Fondo">Flor de la vida</label><br>
+            </form>
+        </div>
+        <!-- ////////////////////////////////////////////// -->
         <div class="container text-center inputcolor" style="
     padding-left: 0px;
     padding-right: 0px;">
@@ -283,11 +317,51 @@
             <input type="color" class="
                             form-control form-control-color" id="GFG_Color" value="#15fad9" style="    width: 110px;">
         </div>
+        <div class="inputcolor2" style="
+        padding-left: 0px;
+        padding-right: 0px;">
+            <table>
+                <tr><!-- filas   -->
+                    <td style="background-color: #D98880 ;"></td><!-- columnas   -->
+
+                    <td style="background-color: #E74C3C;"></td>
+
+                    <td style="background-color: #FADBD8 ;"></td>
+                </tr>
+                <tr><!-- filas   -->
+                    <td style="background-color: #48C9B0 ;"></td><!-- columnas   -->
+
+                    <td style="background-color: #52BE80;"></td>
+
+                    <td style="background-color: #F4D03F;"></td>
+                </tr>
+                <tr><!-- filas   -->
+                    <td style="background-color:#5DADE2 ;"></td><!-- columnas   -->
+
+                    <td style="background-color:#CACFD2 ;"></td>
+
+                    <td style="background-color: #F5B041;"></td>
+                </tr>
+            </table>
+
+        </div>
+
 
     </div>
 </body>
 <script>
-    const fileSuelto = true;
+    //////////////////////////////////////////////
+    var btn1 = document.getElementById("azul"),
+        btn2 = document.getElementById("negro"),
+        btn3 = document.getElementById("flor"),
+        btn4 = document.getElementById("circulos");
+    btn5 = document.getElementById("lineaRecta");
+    btn6 = document.getElementById("lineazig");
+    btn7 = document.getElementById("lineadisconinua");
+
+    var contador = 0;
+    var contador2 = 0;
+    //////////////////////////////////////////////
     let color1 = "#15fad9";
     const color2 = "#ff1aff";
     const color3 = "#ffb900";
@@ -324,11 +398,61 @@
         [461, 181],
         [592, 181],
     ];
-    if (fileSuelto) {
-        document.body.style.backgroundColor = "#0a1445";
 
+    //////////////////////////////////////////////
+    btn1.addEventListener("click", () => {
+        document.body.style.backgroundColor = "#000083";
+        var fondo = document.getElementById("a");
+        fondo.classList.remove('fondo');
+    });
+    btn2.addEventListener("click", () => {
+        document.body.style.backgroundColor = "#000000";
+        var fondo = document.getElementById("a");
+        fondo.classList.remove('fondo');
+    });
+    btn3.addEventListener("click", () => {
+        document.body.style.backgroundColor = "#0a1445";
+        var fondo2 = document.getElementById("a");
+        fondo2.classList.add("fondo");
+    });
+    btn4.addEventListener("click", Circulos);
+    btn5.addEventListener("click", () => {
+        opZig = false;
+        opDash = false;
+    });
+    btn6.addEventListener("click", () => {
+        opZig = true;
+        opDash = false;
+    });
+    btn7.addEventListener("click", () => {
+        opZig = false;
+        opDash = true;
+    });
+    function Circulos() {
+        var x;
+        contador++;
+        console.log(contador);
+        if (contador % 2 == 0) {
+            x = 0;
+        } else x = 1;
+        console.log("x=", x);
+
+        console.log("contador2=", contador2);
+        if (contador2 > 1) {
+            if (x == 0) {
+                No_ponenumerosendero();
+                ponecirculos();
+                dibujaRecuadro();
+            } else
+                ponenumerosendero();
+        }
     }
 
+    document.body.style.backgroundColor = "#0a1445";
+    //////////////////////////////////////////////
+    function No_ponenumerosendero() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
     function dibujaLinea(
         cual,
         color,
@@ -747,7 +871,11 @@
             ctx.stroke();
         }
         dibujaRecuadro();
-        ponenumerosendero();
+        //////////////////////////////////////////////
+        if (contador2 == 0) {
+            ponenumerosendero();
+        }
+        //////////////////////////////////////////////
     }
 
 
@@ -812,7 +940,7 @@
         let aux = numerador < 10 ? chico - 4 : chico - 9;
         ctx.beginPath();
         ctx.strokeStyle = "black";
-        ctx.font = "20px sans-serif";
+        ctx.font = "normal normal 100 20px arial";
         ctx.lineWidth = 1;
         ctx.setLineDash([]);
         ctx.moveTo(x + 1, y - chico);
@@ -824,6 +952,7 @@
     }
 
     function ponenumerosendero() {
+        contador2++;
         const pos = [
             [106, 117, 1],
             [106, 245, 22],
@@ -1235,7 +1364,7 @@
                     cual = ubicarCualLineaEs(desdeP1, p + 1);
                     if (cual == 0) {
 
-                        document.getElementById("msgPuntos").innerHTML = "&nbsp;";;
+                        // document.getElementById("msgPuntos").innerHTML = "&nbsp;";;
                     }
                     else {
 
@@ -1276,46 +1405,46 @@
         clikCanvasPosition(canvas, e);
     });
 
-    var rad = document.formZig.zig;
-    var prev = null;
-    for (var i = 0; i < rad.length; i++) {
-        rad[i].addEventListener('change', function () {
+    // var rad = document.formFormaLinea.zig;
+    // var prev = null;
+    // for (var i = 0; i < rad.length; i++) {
+    //     rad[i].addEventListener('change', function () {
 
-            if (this !== prev) {
-                prev = this;
-            }
+    //         if (this !== prev) {
+    //             prev = this;
+    //         }
 
-            if (this.value == 'true') {
-                opZig = true;
-            } else {
-                opZig = false;
-            }
+    //         if (this.value == 'true') {
+    //             opZig = true;
+    //         } else {
+    //             opZig = false;
+    //         }
 
-        });
-    }
-    var rad2 = document.formDash.dash;
-    var prev2 = null;
-    for (var i = 0; i < rad2.length; i++) {
-        rad2[i].addEventListener('change', function () {
+    //     });
+    // }
+    // var rad2 = document.formDash.dash;
+    // var prev2 = null;
+    // for (var i = 0; i < rad2.length; i++) {
+    //     rad2[i].addEventListener('change', function () {
 
-            if (this !== prev) {
-                prev2 = this;
-            }
+    //         if (this !== prev) {
+    //             prev2 = this;
+    //         }
 
-            if (this.value == 'true') {
-                opDash = true;
-            } else {
-                opDash = false;
-            }
+    //         if (this.value == 'true') {
+    //             opDash = true;
+    //         } else {
+    //             opDash = false;
+    //         }
 
-        });
-    }
+    //     });
+    // }
     var rad3 = document.formDashSize.dashSize;
     var prev3 = null;
     for (var i = 0; i < rad3.length; i++) {
         rad3[i].addEventListener('change', function () {
 
-            if (this !== prev) {
+            if (this !== prev3) {
                 prev3 = this;
             }
 
@@ -1331,7 +1460,7 @@
     for (var i = 0; i < rad4.length; i++) {
         rad4[i].addEventListener('change', function () {
 
-            if (this !== prev) {
+            if (this !== prev4) {
                 prev4 = this;
             }
 
@@ -1400,8 +1529,14 @@
         }
         return Linea;
     }
-
-
+    //////////////////////////////////////////////
+    if (contador2 == 1) {
+        No_ponenumerosendero();
+        ponecirculos();
+        dibujaRecuadro();
+        contador2++;
+    }
+    //////////////////////////////////////////////
 
 </script>
 
