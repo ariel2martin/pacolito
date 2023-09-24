@@ -24,7 +24,7 @@
 
         .losInputs {
             position: absolute;
-            left: 350px;
+            left: 410px;
             top: 50px;
             width: 270px;
             margin: 0;
@@ -259,12 +259,12 @@
             </form>
         </div>
 
-        <div class="losInputs4 esmerilado">
+        <div class="losInputs4 esmerilado" id="opciondiscontinua" style="display: none;">
             <div style="color: white;
                         text-decoration: underline;     font-size: 12px;  margin: 4px;">TIPO DE DISCONTINUA</div>
             <form name="formDashSize">
 
-                <input type="radio" name="dashSize" value="1" checked="checked">
+                <input type="radio" name="dashSize" id="defaultd" value="1" checked="checked">
                 <label for="dashSize">_ _ _ _ </label><br>
                 <input type="radio" name="dashSize" value="2">
                 <label for="dashSize">_ . _ . _</label><br>
@@ -272,6 +272,20 @@
                 <label for="dashSize">. . . . . . .</label><br>
                 <input type="radio" name="dashSize" value="4">
                 <label for="dashSize">°°°°°°°°°°</label><br>
+            </form>
+        </div>
+        <div class="losInputs4 esmerilado" id="opcionzigzag" style="display: none;">
+            <div style="color: white;
+                            text-decoration: underline;     font-size: 12px;  margin: 4px;">TIPO DE DISCONTINUA</div>
+            <form name="formDashSizezig">
+                <input type="radio" name="dashSizezig" value="0" id="defaultz" checked="checked">
+                <label for="dashSizezig">______</label><br>
+                <input type="radio" name="dashSizezig" value="1">
+                <label for="dashSizezig">_ _ _ _ </label><br>
+                <input type="radio" name="dashSizezig" value="2">
+                <label for="dashSizezig">_ . _ . _</label><br>
+
+
             </form>
         </div>
         <div class="losInputs5 esmerilado">
@@ -287,7 +301,7 @@
                 <input type="radio" name="karma" value="K2">
                 <label for="karma">sí, doble</label><br>
                 <input type="radio" name="karma" value="K3">
-                <label for="karma">sí, tripe</label><br>
+                <label for="karma">sí, triple</label><br>
             </form>
         </div>
         <!-- ////////////////////////////////////////////// -->
@@ -355,12 +369,12 @@
         btn2 = document.getElementById("negro"),
         btn3 = document.getElementById("flor"),
         btn4 = document.getElementById("circulos");
-    btn5 = document.getElementById("lineaRecta");
-    btn6 = document.getElementById("lineazig");
-    btn7 = document.getElementById("lineadisconinua");
+    var btn5 = document.getElementById("lineaRecta");
+    var btn6 = document.getElementById("lineazig");
+    var btn7 = document.getElementById("lineadisconinua");
 
     var contador = 0;
-    var contador2 = 0;
+    var contador2 = 1;
     //////////////////////////////////////////////
     let color1 = "#15fad9";
     const color2 = "#ff1aff";
@@ -382,6 +396,7 @@
     let opZig = false;
     let opDash = false;
     let opDashSize = 1;
+
     let opKarma = "K0";
 
     const posiciones = [
@@ -419,14 +434,23 @@
     btn5.addEventListener("click", () => {
         opZig = false;
         opDash = false;
+        document.getElementById("opcionzigzag").style.display = "none";
+        document.getElementById("opciondiscontinua").style.display = "none";
     });
     btn6.addEventListener("click", () => {
         opZig = true;
         opDash = false;
+        document.getElementById("opcionzigzag").style.display = "inline";
+        document.getElementById("opciondiscontinua").style.display = "none";
+        opDashSize = 0;
+        document.getElementById("defaultz").checked = true;
     });
     btn7.addEventListener("click", () => {
         opZig = false;
         opDash = true;
+        document.getElementById("opcionzigzag").style.display = "none";
+        document.getElementById("opciondiscontinua").style.display = "inline";
+        opDashSize = 1;
     });
     function Circulos() {
         var x;
@@ -451,7 +475,8 @@
     document.body.style.backgroundColor = "#0a1445";
     //////////////////////////////////////////////
     function No_ponenumerosendero() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // ctx.clearRect(0, 0, canvas.width, canvas.height);
+        clear();
     }
     function dibujaLinea(
         cual,
@@ -460,7 +485,7 @@
         dash = false,
         dashType = 1
     ) {
-        //console.log(cual, zig);
+        console.log(cual, zig, dash, dashType);
         //cuando hay mas de una linea, que se dibujen una al lado de la otra, si es impar sera a la izq de la pricipal
         let separacionOffset = 5;
         let offset =
@@ -836,6 +861,7 @@
         }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ponecirculos();
+        console.log("clear");
     }
 
     function ponecirculos() {
@@ -1124,7 +1150,27 @@
             }
 
             if (this.zigZagged) {
-                this.drawZigZagged(ctx, offsetx, offsety);
+                switch (dashType) {
+                    case 0:
+                        ctx.setLineDash([]);
+                        this.drawZigZagged(ctx, offsetx, offsety);
+                        break;
+                    case 1:
+                        ctx.setLineDash([12, 4]);
+                        this.drawZigZagged(ctx, offsetx, offsety);
+                        break;
+                    case 2:
+                        ctx.setLineDash([15, 3, 3, 3]);
+                        this.drawZigZagged(ctx, offsetx, offsety);
+                        break;
+                    default:
+                        ctx.setLineDash([]);
+                        this.drawZigZagged(ctx, offsetx, offsety);
+                        break;
+                }
+
+
+
             } else {
                 ctx.beginPath();
                 ctx.moveTo(this.from.x + offsetx, this.from.y + offsety);
@@ -1278,16 +1324,15 @@
 
     // //esto es solo para probar cómo se ve en pantalla
     for (let y = 1; y <= 22; y++) {
-        let zig = false;
+        let zig = true;
         let disc = false;
-        // dibujaLinea(y, color1, zig, disc, 4);
-        // dibujaLinea(y, color1, zig, disc, 2);
-        //dibujaLinea(y, color1, zig, disc, 3);
+        //dibujaLinea(y, color1, zig, disc, 1);
+        //dibujaLinea(y, color1, zig, disc, 2);
+        //dibujaLinea(y, color1, zig, disc, 0);
         // dibujaLinea(y, color1, zig, disc, 3);
-        //dibujaLinea(y, color1, zig, disc, 4);
+        // dibujaLinea(y, color1, zig, disc, 4);
 
-        //poneSimboloSuma(y);
-        //poneSimboloSumaduplicado(y);
+        // console.log(y);
         // if (y % 2 == 1) dibujaKarma(y);
         // else dibujaKarmaDuplicado(y);
     }
@@ -1454,7 +1499,21 @@
 
         });
     }
+    var rad3b = document.formDashSizezig.dashSizezig;
+    var prev3b = null;
+    for (var i = 0; i < rad3b.length; i++) {
+        rad3b[i].addEventListener('change', function () {
 
+            if (this !== prev3b) {
+                prev3b = this;
+            }
+
+
+            opDashSize = parseInt(this.value);
+
+
+        });
+    }
     var rad4 = document.formKarma.karma;
     var prev4 = null;
     for (var i = 0; i < rad4.length; i++) {
@@ -1531,7 +1590,7 @@
     }
     //////////////////////////////////////////////
     if (contador2 == 1) {
-        No_ponenumerosendero();
+        // No_ponenumerosendero();
         ponecirculos();
         dibujaRecuadro();
         contador2++;
