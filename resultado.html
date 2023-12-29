@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        .resultado {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="resultado" id="resultado1">Esto se verá cuando el resultado es 1</div>
+    <div class="resultado" id="resultado2">Esto se verá cuando el resultado es 2</div>
+    <div class="resultado" id="resultado3">Esto se verá cuando el resultado es 3</div>
+    <div class="resultado" id="resultado4">Esto se verá cuando el resultado es 4</div>
+    <div class="resultado" id="resultado5">Esto se verá cuando el resultado es 5</div>
+    <div class="resultado" id="resultado6">Esto se verá cuando el resultado es 6</div>
+    <div class="resultado" id="resultado7">Esto se verá cuando el resultado es 7</div>
+    <div class="resultado" id="resultado8">Esto se verá cuando el resultado es 8</div>
+    <div class="resultado" id="resultado9">Esto se verá cuando el resultado es 9</div>
+    <div class="resultado" id="resultado10">Esto se verá cuando el resultado es 10</div>
+
+    <script>
+
+
+        let url = window.location.href;
+        let aux = url.split('?');
+        let aux2 = aux[1].split('&');
+        let aux3 = aux2[0].replace('resultado=', '');
+        let resultados = aux3.split(',');
+        resultados.forEach(x => {
+            document.getElementById("resultado" + x).style.display = "block";
+        });
+
+    </script>
+</body>
+
+</html>
