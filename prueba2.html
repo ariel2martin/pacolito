@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es  ">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        .letra {
+
+            text-align: center;
+            vertical-align: middle;
+            line-height: 40px;
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            margin: 6px;
+            background-color: #a39999;
+
+        }
+
+        .numero {
+
+            text-align: center;
+            vertical-align: middle;
+            line-height: 40px;
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            margin: 6px;
+
+        }
+
+        .container-md {
+            margin-top: 20px;
+        }
+
+        .col {
+            text-align: justify;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <div class="container-fluid p-5 bg-primary text-white text-center">
+        <h1>My First Bootstrap Page</h1>
+        <p>Resize this responsive page to see the effect!</p>
+    </div>
+    <!-- <button type="button" class="btn btn-danger" id="limpiar">Limpiar</button> -->
+
+    <div class="container-md">
+
+        <div id="linea0" class="row row-cols-auto">
+            <h6>Linea1</h6>
+        </div>
+        <div id="linea1" class="row row-cols-auto">
+            <h6>Linea2</h6>
+        </div>
+        <div id="linea2" class="row row-cols-auto">
+            <h6>Linea3</h6>
+        </div>
+        <div id="linea3" class="row row-cols-auto">
+            <h6>Linea4</h6>
+        </div>
+
+    </div>
+
+</body>
+<script>
+
+    function mostrarNombreLetraPorLetra(linea, nombre) {
+
+        let i;
+
+        let numero1 = [1, 2, 3, 4, 20, 30, 100];
+        let numero2 = [5, 6, 7, 8, 30, 40, 90];
+
+
+        console.log(numero2[0], numero1[1]);
+
+        if (linea == 1) {
+            for (i = 0; i < nombre.length; i++) {
+
+                var mostrar = document.getElementById('linea0');
+
+                var new_div_col = document.createElement('div');
+                new_div_col.className = "col";
+
+                var new_div_row = document.createElement('div');
+                new_div_row.className = "row";
+                var new_div_row2 = document.createElement('div');
+                new_div_row2.className = "row";
+                var new_div_row3 = document.createElement('div');
+                new_div_row3.className = "row";
+
+                var new_span_letra = document.createElement('span');
+                new_span_letra.className = "letra rounded-4";
+                var new_span_numero1 = document.createElement('span');
+                new_span_numero1.className = "numero";
+                var new_span_numero2 = document.createElement('span');
+                new_span_numero2.className = "numero";
+
+                new_span_letra.innerHTML = nombre[i];
+                new_span_numero1.innerHTML = numero1[i];
+                new_span_numero2.innerHTML = numero2[i];
+
+                new_div_row.appendChild(new_span_letra);
+                new_div_row2.appendChild(new_span_numero1);
+                new_div_row3.appendChild(new_span_numero2);
+                new_div_col.appendChild(new_div_row);
+                new_div_col.appendChild(new_div_row2);
+                new_div_col.appendChild(new_div_row3);
+
+                mostrar.appendChild(new_div_col);
+
+
+
+            }
+        }
+        if (linea == 2) {
+            for (i = 0; i < nombre.length; i++) {
+
+                var mostrar = document.getElementById('linea1');
+
+                var new_div_col = document.createElement('div');
+                new_div_col.className = "col";
+
+                var new_div_row = document.createElement('div');
+                new_div_row.className = "row";
+                var new_div_row2 = document.createElement('div');
+                new_div_row2.className = "row";
+                var new_div_row3 = document.createElement('div');
+                new_div_row3.className = "row";
+
+                var new_span_letra = document.createElement('span');
+                new_span_letra.className = "letra rounded-4";
+                var new_span_numero1 = document.createElement('span');
+                new_span_numero1.className = "numero";
+                var new_span_numero2 = document.createElement('span');
+                new_span_numero2.className = "numero";
+
+                new_span_letra.innerHTML = nombre[i];
+                new_span_numero1.innerHTML = numero1[i];
+                new_span_numero2.innerHTML = numero2[i];
+
+                new_div_row.appendChild(new_span_letra);
+                new_div_row2.appendChild(new_span_numero1);
+                new_div_row3.appendChild(new_span_numero2);
+                new_div_col.appendChild(new_div_row);
+                new_div_col.appendChild(new_div_row2);
+                new_div_col.appendChild(new_div_row3);
+
+                mostrar.appendChild(new_div_col);
+
+
+
+            }
+        }
+        if (linea == 3) {
+            for (i = 0; i < nombre.length; i++) {
+
+                var mostrar = document.getElementById('linea2');
+
+                var new_div_col = document.createElement('div');
+                new_div_col.className = "col";
+
+                var new_div_row = document.createElement('div');
+                new_div_row.className = "row";
+                var new_div_row2 = document.createElement('div');
+                new_div_row2.className = "row";
+                var new_div_row3 = document.createElement('div');
+                new_div_row3.className = "row";
+
+                var new_span_letra = document.createElement('span');
+                new_span_letra.className = "letra rounded-4";
+                var new_span_numero1 = document.createElement('span');
+                new_span_numero1.className = "numero";
+                var new_span_numero2 = document.createElement('span');
+                new_span_numero2.className = "numero";
+
+                new_span_letra.innerHTML = nombre[i];
+                new_span_numero1.innerHTML = numero1[i];
+                new_span_numero2.innerHTML = numero2[i];
+
+                new_div_row.appendChild(new_span_letra);
+                new_div_row2.appendChild(new_span_numero1);
+                new_div_row3.appendChild(new_span_numero2);
+                new_div_col.appendChild(new_div_row);
+                new_div_col.appendChild(new_div_row2);
+                new_div_col.appendChild(new_div_row3);
+
+                mostrar.appendChild(new_div_col);
+
+
+
+            }
+        }
+        if (linea == 4) {
+            for (i = 0; i < nombre.length; i++) {
+
+                var mostrar = document.getElementById('linea3');
+
+                var new_div_col = document.createElement('div');
+                new_div_col.className = "col";
+
+                var new_div_row = document.createElement('div');
+                new_div_row.className = "row";
+                var new_div_row2 = document.createElement('div');
+                new_div_row2.className = "row";
+                var new_div_row3 = document.createElement('div');
+                new_div_row3.className = "row";
+
+                var new_span_letra = document.createElement('span');
+                new_span_letra.className = "letra rounded-4";
+                var new_span_numero1 = document.createElement('span');
+                new_span_numero1.className = "numero";
+                var new_span_numero2 = document.createElement('span');
+                new_span_numero2.className = "numero";
+
+                new_span_letra.innerHTML = nombre[i];
+                new_span_numero1.innerHTML = numero1[i];
+                new_span_numero2.innerHTML = numero2[i];
+
+                new_div_row.appendChild(new_span_letra);
+                new_div_row2.appendChild(new_span_numero1);
+                new_div_row3.appendChild(new_span_numero2);
+                new_div_col.appendChild(new_div_row);
+                new_div_col.appendChild(new_div_row2);
+                new_div_col.appendChild(new_div_row3);
+
+                mostrar.appendChild(new_div_col);
+
+
+
+            }
+        }
+
+    }
+
+    // const botonLimpiar = document.getElementById('limpiar');
+    // botonLimpiar.onclick = function () {
+    //     r = 1;
+    //     limpiarLineas(r);
+    // }
+
+    function limpiarLineas(linea) {
+        if (linea == 1) {
+
+            const contenidoEliminar0 = document.getElementById('linea0');
+            contenidoEliminar0.innerHTML = '';
+
+        }
+        if (linea == 2) {
+            const contenidoEliminar1 = document.getElementById('linea1');
+            contenidoEliminar1.innerHTML = '';
+
+        }
+        if (linea == 3) {
+            const contenidoEliminar2 = document.getElementById('linea2');
+            contenidoEliminar2.innerHTML = '';
+
+        }
+        if (linea == 4) {
+            const contenidoEliminar3 = document.getElementById('linea3');
+            contenidoEliminar3.innerHTML = '';
+        }
+
+    }
+    mostrarNombreLetraPorLetra(1, "alfredo");
+    mostrarNombreLetraPorLetra(3, "Juan");
+    limpiarLineas(3);
+    mostrarNombreLetraPorLetra(3, "otronombre");
+</script>
+
+</html>
